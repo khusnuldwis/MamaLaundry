@@ -13,7 +13,7 @@ class ManageUserController extends Controller
     public function index()
     {
     $data= User::orderBy('id', 'desc')->get();
-    return response()->json($data, 200);
+    return view('admin.user.index');
 }
 
     /**
@@ -43,7 +43,7 @@ class ManageUserController extends Controller
             'password' => Hash::make($request->get('password')),
                 ]);
         $data->save();
-        return response()->with('success', 'Data Berhasil Ditambahkan!');
+        return redirect()->route('karyawan.index')->with('success', 'Data Berhasil Ditambahkan!');
     
     }
 
