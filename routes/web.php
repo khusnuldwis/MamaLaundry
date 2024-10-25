@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Back\CategoryLayananController;
+use App\Http\Controllers\Back\KaryawanController;
+use App\Http\Controllers\Back\LayananController;
+use App\Http\Controllers\Back\MetodeLayananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', function () {
     return view('LandingPage');
 });
+Route::resource('karyawan', KaryawanController::class);
+Route::resource('metode_layanan', MetodeLayananController::class);
+Route::resource('jenis_layanan', CategoryLayananController::class);
+Route::resource('layanan', LayananController::class);
