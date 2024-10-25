@@ -19,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', function () {
     return view('LandingPage');
 });
+Route::get('/orderMasuk', function () {
+    return view('layout/orderMasuk');
+});
