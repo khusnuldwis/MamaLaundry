@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('layanans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->unsignedBigInteger('role_id'); // Relasi ke tabel roles
-            $table->timestamps();
+
+            $table->string('nama_layanan');
+            $table->string('thumbnail');
+            $table->string('jenis_layanan');
+            $table->enum('unit', ['1', '2'])->comment('1=Kg, 2=Pcs');
+            $table->integer('harga');
+         $table->timestamps();
         });
-        
     }
 
     /**
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('layanans');
     }
 };

@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.app')
 
 @section('title')
 Data layanan
@@ -47,11 +47,11 @@ Data layanan
       </div>
       <div class="mb-3">
         <label for="thumbnail" class="form-label">Tanggal Pemesanan</label>
-        <input type="textarea" class="form-control" name="thumbnail" id="thumbnail">
+        <input type="date" class="form-control" name="thumbnail" id="thumbnail">
       </div>
       <div class="mb-3">
         <label for="nama_layanan" class="form-label">Tanggal Selesai</label>
-        <input type="text" class="form-control" name="nama_layanan" id="nama_layanan">
+        <input type="date" class="form-control" name="nama_layanan" id="nama_layanan">
       </div>
       <div class="mb-3">
         <label for="jenis_layanan" class="form-label">Status Barang</label>
