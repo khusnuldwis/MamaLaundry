@@ -84,7 +84,7 @@
                                     <div class="notif-center">
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src=assets/rimg/jm_denis.jpg" alt="Img Profile">
+                                                <img src="assets/rimg/jm_denis.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="subject">Jimmy Denis</span>
@@ -96,7 +96,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src=assets/rimg/chadengle.jpg" alt="Img Profile">
+                                                <img src="assets/rimg/chadengle.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="subject">Chad</span>
@@ -108,7 +108,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src=assets/rimg/mlane.jpg" alt="Img Profile">
+                                                <img src="assets/rimg/mlane.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="subject">Jhon Doe</span>
@@ -120,7 +120,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src=assets/rimg/talha.jpg" alt="Img Profile">
+                                                <img src="assets/rimg/talha.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="subject">Talha</span>
@@ -174,7 +174,7 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img">
-                                                <img src=assets/rimg/profile2.jpg" alt="Img Profile">
+                                                <img src="assets/rimg/profile2.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">
@@ -271,7 +271,7 @@
                         <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                             aria-expanded="false">
                             <div class="avatar-sm">
-                                <img src=assets/rimg/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                <img src="assets/rimg/profile.jpg" alt="..." class="avatar-img rounded-circle">
                             </div>
                             <span class="profile-username">
                                 <span class="op-7">Hi,</span> <span class="fw-bold">Hizrian</span>
@@ -281,7 +281,7 @@
                             <div class="dropdown-user-scroll scrollbar-outer">
                                 <li>
                                     <div class="user-box">
-                                        <div class="avatar-lg"><img src=assets/rimg/profile.jpg" alt="image profile"
+                                        <div class="avatar-lg"><img src="assets/rimg/profile.jpg" alt="image profile"
                                                 class="avatar-img rounded"></div>
                                         <div class="u-text">
                                             <h4>Hizrian</h4>
@@ -333,7 +333,7 @@
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
                                     <!-- <p class="card-category">Orderan Masuk</p> -->
-                                    <h4 class="card-title">Orderan Masuk</h4>
+                                    <a href="{{ route('orderMasuk.index') }}" class="card-title">Orderan Masuk</a>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +350,7 @@
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
                                     <!-- <p class="card-category">Layanan</p> -->
-                                    <a href="/layanan" class="card-title">Layanan</a>
+                                    <a href="{{ route('daftarLayanan.index') }}" class="card-title">Layanan</a>
                                 </div>
                             </div>
                         </div>
@@ -367,7 +367,8 @@
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
                                     <!-- <p class="card-category">Belum Diambil</p> -->
-                                    <h4 class="card-title">Belum Diambil</h4>
+                                    {{-- <h4 class="card-title">Belum Diambil</h4> --}}
+                                    <a href="{{ route('daftarLayanan.index') }}" class="card-title">Belum Diambil</a>
                                 </div>
                             </div>
                         </div>

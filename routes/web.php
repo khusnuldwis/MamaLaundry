@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Back\CategoryLayananController;
 use App\Http\Controllers\Back\KaryawanController;
-use App\Http\Controllers\Back\LayananController;
+// use App\Http\Controllers\Back\LayananController;
 use App\Http\Controllers\Back\MetodeLayananController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\OrderMasukController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,17 +21,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/home', function () {
-    return view('LandingPage');
-});
+// Route::get('/home', function () {
+//     return view('LandingPage');
+// });
 Route::get('/order', function () {
     return view('belumDiambil');
 });
-Route::get('/order', function () {
-    return view('layout/orderMasuk');
+Route::get('/daftarLayanan', function () {
+    return view('layouts/daftarLayanan');
 });
 Route::resource('karyawan', KaryawanController::class);
 Route::resource('metode_layanan', MetodeLayananController::class);
@@ -38,9 +42,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Register only the index route
+Route::resource('daftarLayanan', LayananController::class)->only(['index']);
+Route::resource('orderMasuk', OrderMasukController::class)->only(['index']);
+
 Route::resource('layanan', LayananController::class);
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index']);

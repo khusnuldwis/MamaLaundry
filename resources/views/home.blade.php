@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-Data layanan
+Data Orderan
 @endsection
 @section('content')
     
@@ -167,9 +167,4 @@ Data layanan
                     </div>
                 </div>
             </div>
-        
-
-
-
-
         @endsection
