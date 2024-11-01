@@ -15,10 +15,10 @@ Data layanan
   <div class="container">
     <form action="{{ route('layanan.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
-      <!-- <div class="mb-3">
+      <div class="mb-3">
         <label for="thumbnail" class="form-label">No</label>
         <input type="number" class="form-control" name="thumbnail" id="thumbnail">
-      </div> -->
+      </div>
       <div class="mb-3">
         <label for="nama_layanan" class="form-label">Nama Pelanggan</label>
         <input type="text" class="form-control" name="nama_layanan" id="nama_layanan">
