@@ -41,7 +41,7 @@
         <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom shadow-sm rounded">
 
             <div class="container-fluid">
-		
+
                 <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -382,18 +382,7 @@
                             <div class="card-head-row">
                                 <div class="card-title">Data Masuk</div>
                                 <div class="card-tools">
-                                    <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
-                                        <span class="btn-label">
-                                            <i class="fa fa-pencil"></i>
-                                        </span>
-                                        Export
-                                    </a>
-                                    <a href="#" class="btn btn-label-info btn-round btn-sm">
-                                        <span class="btn-label">
-                                            <i class="fa fa-print"></i>
-                                        </span>
-                                        Print
-                                    </a>
+                                    <a href="#" class="btn btn-primary btn-round">Add Customer</a>
                                 </div>
                             </div>
                         </div>
@@ -470,17 +459,20 @@
                                             </td>
                                             <td>Rp 50,000</td>
                                             <td>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <button class="btn btn-icon btn-round btn-primary btn-sm me-2">
+                                                <div class="card-tools">
+                                                    <a href="#"
+                                                        class="btn btn-label-success btn-round btn-sm me-2">
+                                                        <span class="btn-label">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </span>
+                                                        Edit
+                                                    </a>
+                                                    <a href="#" class="btn btn-label-info btn-round btn-sm">
+                                                        <span class="btn-label">
                                                             <i class="fa fa-print"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <button class="btn btn-icon btn-round btn-warning btn-sm me-2">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                    </div>
+                                                        </span>
+                                                        Print
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -515,17 +507,20 @@
                                             </td>
                                             <td>Rp 76,000</td>
                                             <td>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <button class="btn btn-icon btn-round btn-primary btn-sm me-2">
+                                                <div class="card-tools">
+                                                    <a href="#"
+                                                        class="btn btn-label-success btn-round btn-sm me-2">
+                                                        <span class="btn-label">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </span>
+                                                        Edit
+                                                    </a>
+                                                    <a href="#" class="btn btn-label-info btn-round btn-sm">
+                                                        <span class="btn-label">
                                                             <i class="fa fa-print"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <button class="btn btn-icon btn-round btn-warning btn-sm me-2">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-                                                    </div>
+                                                        </span>
+                                                        Print
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -538,21 +533,21 @@
                 </div>
             </div>
         </div>
-    
 
-  
+
+
 
         <footer>
-			<div class="card card-round">
-				<div class="card-header">
-					<div class="card-head-row card-tools-still-right">
-						<div class="copyright">
-							2024, made with <i class="fa fa-heart heart text-danger"></i> by <a
-								href="http://www.themekita.com">ThemeKita</a>
-						</div>
-					</div>
-				</div>
-			</div>
+            <div class="card card-round">
+                <div class="card-header">
+                    <div class="card-head-row card-tools-still-right">
+                        <div class="copyright">
+                            2024, made with <i class="fa fa-heart heart text-danger"></i> by <a
+                                href="http://www.themekita.com">ThemeKita</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
 
