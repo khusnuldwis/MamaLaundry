@@ -321,12 +321,12 @@
                 </div>
                 <div class="ms-md-auto py-2 py-md-0 float-end">
                     <!-- <a href="#" class="btn btn-label-info btn-round me-2">Manage</a> -->
-                    <!-- <a href="#" class="btn btn-primary btn-round">Add Customer</a> -->
+                    <a href="#" class="btn btn-primary btn-round">Add Customer</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 col-md-4 mt-3">
-                    <button class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
+                    <a href="{{ route('orderMasuk.index') }}" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-primary bubble-shadow-small">
@@ -335,15 +335,15 @@
                             </div>
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
-                                    <!-- <p class="card-category">Orderan Masuk</p> -->
-                                    <a href="{{ route('orderMasuk.index') }}" class="card-title">Orderan Masuk</a>
+                                    <p class="card-title">Orderan Masuk</p>
                                 </div>
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
+                
                 <div class="col-sm-6 col-md-4 mt-3">
-                    <button class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+                    <a href="{{ route('daftarLayanan.index') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-info bubble-shadow-small">
@@ -352,15 +352,15 @@
                             </div>
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
-                                    <!-- <p class="card-category">Layanan</p> -->
-                                    <a href="{{ route('daftarLayanan.index') }}" class="card-title">Layanan</a>
+                                    <p class="card-title">Layanan</p>
                                 </div>
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
+                
                 <div class="col-sm-6 col-md-4 mt-3">
-                    <button class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
+                    <a href="{{ route('daftarLayanan.index') }}" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-warning bubble-shadow-small">
@@ -369,21 +369,17 @@
                             </div>
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
-                                    <!-- <p class="card-category">Belum Diambil</p> -->
-                                    {{-- <h4 class="card-title">Belum Diambil</h4> --}}
-                                    <a href="{{ route('daftarLayanan.index') }}" class="card-title">Belum Diambil</a>
+                                    <p class="card-title">Belum Diambil</p>
                                 </div>
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
+                
             </div>
             <br>
             @yield('content')
         </div>
-    
-
-  
 
         <footer>
 			<div class="card card-round">
