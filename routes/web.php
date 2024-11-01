@@ -25,7 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', function () {
     return view('LandingPage');
 });
-
+Route::get('/order', function () {
+    return view('belumDiambil');
+});
+Route::get('/order', function () {
+    return view('layout/orderMasuk');
+});
 Route::resource('karyawan', KaryawanController::class);
 Route::resource('metode_layanan', MetodeLayananController::class);
 Route::resource('jenis_layanan', CategoryLayananController::class);
