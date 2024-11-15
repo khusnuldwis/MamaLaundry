@@ -36,8 +36,8 @@ Route::get('/daftarLayanan', function () {
     return view('layouts/daftarLayanan');
 });
 Route::resource('karyawan', KaryawanController::class);
-Route::resource('metode_layanan', MetodeLayananController::class);
-Route::resource('jenis_layanan', CategoryLayananController::class);
+// Route::resource('metode_layanan', MetodeLayananController::class);
+// Route::resource('jenis_layanan', CategoryLayananController::class);
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -50,7 +50,12 @@ Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage'
 Route::resource('daftarLayanan', LayananController::class)->only(['index']);
 Route::resource('orderMasuk', OrderMasukController::class)->only(['index']);
 
-Route::resource('layanan', LayananController::class);
+Route::get('/layanan', function () {
+    return view('layanan');
+});
+Route::get('/kategori', function () {
+    return view('kategori');
+});
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index']);
 // });

@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Layanan extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'nama_layanan',
-        'jenis_layanan',
-        'thumbnail',
-        'harga',
-        'unit',
-        
-    ];
+    protected $guarded = [];
+    public function category()
+    {
+        return $this->belongsTo(CategoriLayanan::class);
+    }
    
 }

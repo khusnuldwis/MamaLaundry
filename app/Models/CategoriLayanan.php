@@ -9,5 +9,8 @@ class CategoriLayanan extends Model
 {
     use HasFactory;
     protected $guarded = [];
-
+    public function layanan()
+    {
+        return $this->hasMany(Layanan::class);
+    }
 }

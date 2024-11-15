@@ -9,7 +9,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
+    <link rel="stylesheet" href="{{ url('dist/css/dataTables.css') }}">
+
     <!-- Fonts and icons -->
     <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}" ></script>
     <script>
@@ -343,7 +344,7 @@
                 </div>
                 
                 <div class="col-sm-6 col-md-4 mt-3">
-                    <a href="{{ route('daftarLayanan.index') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+                    <a href="/layanan" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-info bubble-shadow-small">
@@ -353,6 +354,22 @@
                             <div class="col col-stats ps-3 ms-sm-0">
                                 <div class="numbers">
                                     <p class="card-title">Layanan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-4 mt-3">
+                    <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+                        <div class="d-flex align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ps-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-title">Kategori</p>
                                 </div>
                             </div>
                         </div>

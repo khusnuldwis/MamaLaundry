@@ -16,8 +16,9 @@ return new class extends Migration
 
             $table->string('nama_layanan');
             $table->string('thumbnail');
-            $table->string('jenis_layanan');
+            $table->enum('jenis_layanan', ['1', '2'])->comment('1=Reguler, 2=Kilat,3=Express');
             $table->enum('unit', ['1', '2'])->comment('1=Kg, 2=Pcs');
+            $table->unsignedBigInteger('category_id')->index();
             $table->integer('harga');
          $table->timestamps();
         });

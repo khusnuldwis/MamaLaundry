@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CategoriLayanan;
+use App\Models\Metode_Layanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class CategoryLayananController extends Controller
+class MetodeLayananController extends Controller
 {
     public function index()
     {
         
-        $data=CategoriLayanan::orderBy('id', 'desc')->get();
-        return view('admin.jenis_layanan.index',compact('data'));
+        $data=Metode_Layanan::orderBy('id', 'desc')->get();
+        return view('admin.metode_layanan.index',compact('data'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryLayananController extends Controller
     public function create()
     {
 
-        return view('admin.jenis_layanan.create');
+        return view('admin.metode_layanan.create');
     }
 
     /**
@@ -33,17 +33,18 @@ class CategoryLayananController extends Controller
     {
         
         // $request->validate([
-        //     'nama_jenis_layanan' => 'required',
+        //     'nama_metode_layanan' => 'required',
         //     'harga' => 'required',
             
             
         // ]);
 
-        $data = new CategoriLayanan([
-            'nama_jenis_layanan' => $request->get('nama_jenis_layanan'),
+        $data = new Metode_Layanan([
+            'nama_metode_layanan' => $request->get('nama_metode_layanan'),
+            'harga' => $request->get('harga'),
                 ]);
         $data->save();
-        return redirect()->route('jenis_layanan.index')->with('success', 'Data Berhasil Ditambahkan!');
+        return redirect()->route('metode_layanan.index')->with('success', 'Data Berhasil Ditambahkan!');
     
     }
 
@@ -52,9 +53,9 @@ class CategoryLayananController extends Controller
      */
     public function show(string $id)
     {
-        $data = CategoriLayanan::find($id);
+        $data = Metode_Layanan::find($id);
 
-        return view('admin.jenis_layanan.detail', compact('data'));
+        return view('admin.metode_layanan.detail', compact('data'));
     }
 
     /**
@@ -62,9 +63,9 @@ class CategoryLayananController extends Controller
      */
     public function edit(string $id)
     {
-        $data = CategoriLayanan::find($id);
+        $data = Metode_Layanan::find($id);
 
-        return view('admin.jenis_layanan.edit', compact('data'));
+        return view('admin.metode_layanan.edit', compact('data'));
     }
 
     /**
@@ -72,22 +73,24 @@ class CategoryLayananController extends Controller
      */
     public function update(Request $request, string $id)
 {
-    $data = CategoriLayanan::findOrFail($id);
+    $data = Metode_Layanan::findOrFail($id);
 
     // Validasi data
     $request->validate([
-        'nama_jenis_layanan' => 'required',
+        'nama_metode_layanan' => 'required',
+        'harga' => 'required',
        
     ]);
 
     // Update data
     $data->update([
-        'nama_jenis_layanan' => $request->input('nama_jenis_layanan'),
+        'nama_metode_layanan' => $request->input('nama_metode_layanan'),
+        'harga' => $request->input('harga'),
        
     ]);
 
     // Redirect setelah berhasil update
-    return redirect()->route('jenis_layanan.index')->with('success', 'Data Berhasil Diperbarui!');
+    return redirect()->route('metode_layanan.index')->with('success', 'Data Berhasil Diperbarui!');
 }
 
 
@@ -96,8 +99,8 @@ class CategoryLayananController extends Controller
      */
     public function destroy($id)
 {
-    $jenis_layanan = CategoriLayanan::findOrFail($id);
-    $jenis_layanan->delete();
+    $metode_layanan = Metode_Layanan::findOrFail($id);
+    $metode_layanan->delete();
 
     return response()->json([
         'status' => true,
