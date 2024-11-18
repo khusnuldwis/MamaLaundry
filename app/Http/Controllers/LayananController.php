@@ -13,6 +13,7 @@ class LayananController extends Controller
     {
         $layanans = Layanan::with('category')->get();
         return response()->json($layanans);
+        return view('layanan.index');
     }
 
     // Menampilkan detail layanan berdasarkan ID

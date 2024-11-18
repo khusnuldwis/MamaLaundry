@@ -1,71 +1,72 @@
 @extends('layout.app')
 
 @section('title')
-Single Tabel
+    Single Tabel
 @endsection
 @section('content')
 
-<div class="mt-5">
-    <h1 class="text-white">List Layanan</h1>
-    <div class="mt-5">
-        <div class="card">
-            <div class="card-header">
-                Layanan
-                <button class="btn btn-primary float-end" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</button>
-
-            </div>
-
-            <div class="card-body">
-                <div class="container">
-                    <table class="table table-sm table-bordered" id="example">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Layanan</th>
-                                <th scope="col">Gambar Layanan</th>
-                                <th scope="col">Jenis Layanan</th>
-                                <th scope="col">Unit</th>
-                                <th scope="col">category_id</th>
-                                <th scope="col">Harga</th>
-                                <th scope="col">Aksi</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                        </tbody>
-                    </table>
+    <div class="card card-round">
+        <div class="card-header">
+            <div class="card-head-row">
+                <div class="card-title">Layanan</div>
+                <div class="card-tools">
+                    <div class="ms-md-auto py-2 py-md-0 float-end">
+                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-jenis="Tambah">Tambah</a>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <table class="table table-sm table-bordered" id="example">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Layanan</th>
+                            <th scope="col">Gambar Layanan</th>
+                            <th scope="col">Jenis Layanan</th>
+                            <th scope="col">Unit</th>
+                            <th scope="col">category_id</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">Aksi</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
     <form id="dataForm">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label for="thumbnail" class="col-sm-4 col-form-label">Gambar
                                 Layanan</label>
                             <div class="col-sm-8">
-                                <input type="file" class="form-control" id="thumbnail"
-                                    name="thumbnail" placeholder="Masukkan gambar Layanan">
+                                <input type="file" class="form-control" id="thumbnail" name="thumbnail"
+                                    placeholder="Masukkan gambar Layanan">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Layanan</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama_layanan"
-                                    name="nama_layanan" placeholder="Masukkan nama_layanan ">
+                                <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
+                                    placeholder="Masukkan nama_layanan ">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -107,8 +108,7 @@ Single Tabel
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
@@ -127,72 +127,72 @@ Single Tabel
     <script>
         // new DataTable('#example');
         $(document).ready(function() {
-    // Enum mappings
-    const jenisLayananMapping = {
-        1: 'Reguler',
-        2: 'Kilat',
-        3: 'Express'
-    };
+            // Enum mappings
+            const jenisLayananMapping = {
+                1: 'Reguler',
+                2: 'Kilat',
+                3: 'Express'
+            };
 
-    const unitMapping = {
-        1: 'Kg',
-        2: 'Pcs'
-    };
+            const unitMapping = {
+                1: 'Kg',
+                2: 'Pcs'
+            };
 
-    $('#example').DataTable({
-        ajax: {
-            url: 'http://127.0.0.1:8000/api/layanans', // Your API endpoint
-            dataSrc: ''
-        },
-        columns: [
-            {
-                "data": null,
-                "render": function(data, type, row, index) {
-                    return index.row + 1; // Auto numbering
-                }
-            },
-            {
-                "data": "nama_layanan" // Display service name directly
-            },
-            {
-                "data": "thumbnail",
-                "render": function(data) {
-                    return `<img src="/storage/${data}" width="50" height="50">`; // Thumbnail image
-                }
-            },
-            {
-                "data": "jenis_layanan",
-                "render": function(data) {
-                    return jenisLayananMapping[data] || 'N/A'; // Map to readable name
-                }
-            },
-            {
-                "data": "unit",
-                "render": function(data) {
-                    return unitMapping[data] || 'N/A'; // Map to readable name
-                }
-            },
-            {
-                "data": null,
-                "render": function(data, type, row) {
-                    return row.category ? row.category.nama_kategori : 'N/A'; // Display category name
-                }
-            },
-            {
-                "data": "harga" // Display price
-            },
-            {
-                "data": null,
-                "render": function(data, type, row) {
-                    return `
+            $('#example').DataTable({
+                ajax: {
+                    url: 'http://127.0.0.1:8000/api/layanans', // Your API endpoint
+                    dataSrc: ''
+                },
+                columns: [{
+                        "data": null,
+                        "render": function(data, type, row, index) {
+                            return index.row + 1; // Auto numbering
+                        }
+                    },
+                    {
+                        "data": "nama_layanan" // Display service name directly
+                    },
+                    {
+                        "data": "thumbnail",
+                        "render": function(data) {
+                            return `<img src="/storage/${data}" width="50" height="50">`; // Thumbnail image
+                        }
+                    },
+                    {
+                        "data": "jenis_layanan",
+                        "render": function(data) {
+                            return jenisLayananMapping[data] || 'N/A'; // Map to readable name
+                        }
+                    },
+                    {
+                        "data": "unit",
+                        "render": function(data) {
+                            return unitMapping[data] || 'N/A'; // Map to readable name
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return row.category ? row.category.nama_kategori :
+                                'N/A'; // Display category name
+                        }
+                    },
+                    {
+                        "data": "harga" // Display price
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return `
                         <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">Ubah</button>
                         <button class="btn btn-danger btn-sm" onclick="hapusData(${row.id})">Hapus</button>
                     `;
-                }
-            }
-        ]
-    });
-});
+                        }
+                    }
+                ]
+            });
+        });
 
 
         //const data tidak bisa diubah  dan let bisa diubah 
@@ -210,7 +210,8 @@ Single Tabel
                 // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
                 if (jenisModal === "Ubah") {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/layanans/' + setIdlayanan, // Menggunakan endpoint show
+                        url: 'http://127.0.0.1:8000/api/layanans/' +
+                            setIdlayanan, // Menggunakan endpoint show
                         method: 'GET',
                         success: function(data) {
                             $('#nama_layanan').val(data.data.nama_layanan);
@@ -333,5 +334,4 @@ Single Tabel
             });
         }
     </script>
-
-    @endsection
+@endsection

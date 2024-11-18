@@ -320,14 +320,10 @@
                     <h3 class="fw-bold mb-3">Dashboard</h3>
                     <!-- <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6> -->
                 </div>
-                <div class="ms-md-auto py-2 py-md-0 float-end">
-                    <!-- <a href="#" class="btn btn-label-info btn-round me-2">Manage</a> -->
-                    <a href="#" class="btn btn-primary btn-round">Add Customer</a>
-                </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-md-4 mt-3">
-                    <a href="{{ route('orderMasuk.index') }}" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
+                <div class="col-sm-4 col-md-3 mt-3">
+                    <a href="/orderMasuk" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-primary bubble-shadow-small">
@@ -343,7 +339,7 @@
                     </a>
                 </div>
                 
-                <div class="col-sm-6 col-md-4 mt-3">
+                <div class="col-sm-4 col-md-3 mt-3">
                     <a href="/layanan" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
@@ -359,7 +355,8 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-6 col-md-4 mt-3">
+                
+                <div class="col-sm-4 col-md-3 mt-3">
                     <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
@@ -376,8 +373,8 @@
                     </a>
                 </div>
                 
-                <div class="col-sm-6 col-md-4 mt-3">
-                    <a href="{{ route('daftarLayanan.index') }}" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
+                <div class="col-sm-4 col-md-3 mt-3">
+                    <a href="/belumDiambil" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-warning bubble-shadow-small">
@@ -403,8 +400,7 @@
 				<div class="card-header">
 					<div class="card-head-row card-tools-still-right">
 						<div class="copyright">
-							2024, made with <i class="fa fa-heart heart text-danger"></i> by <a
-								href="http://www.themekita.com">ThemeKita</a>
+							2024, dibuat <i class="fa fa-heart heart text-danger"></i> oleh Kelompok PKK</a>
 						</div>
 					</div>
 				</div>

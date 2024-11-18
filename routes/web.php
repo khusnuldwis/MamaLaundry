@@ -48,6 +48,7 @@ Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage'
 
 // Register only the index route
 Route::resource('daftarLayanan', LayananController::class)->only(['index']);
+Route::resource('layanan', LayananController::class)->only(['index']);
 Route::resource('orderMasuk', OrderMasukController::class)->only(['index']);
 
 Route::get('/layanan', function () {
@@ -55,6 +56,9 @@ Route::get('/layanan', function () {
 });
 Route::get('/kategori', function () {
     return view('kategori');
+});
+Route::get('/belumDiambil', function () {
+    return view('belumDiambil');
 });
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index']);
