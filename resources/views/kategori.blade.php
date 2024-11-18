@@ -6,7 +6,7 @@ Single Tabel
 @section('content')
 
 <div class="mt-5">
-    <h1 class="text-white">List Kategori</h1>
+    <h1 class="text-blue">List Kategori</h1>
     <div class="mt-5">
         <div class="card">
             <div class="card-header">
