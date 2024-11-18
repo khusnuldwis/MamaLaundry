@@ -48,15 +48,17 @@ class LayananController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $data = Layanan::where('id', $id)->first();
-        return response()->json(
-            ['data' => $data],
-            200
-        );
-    }
+        // Ambil data layanan berdasarkan ID, jika tidak ditemukan, kirimkan response error
+        $layanan = Layanan::with('category')->find($id);
 
+        if (!$layanan) {
+            return response()->json(['error' => 'Layanan tidak ditemukan'], 404);
+        }
+
+        return response()->json($layanan);
+    }
     /**
      * Show the form for editing the specified resource.
      */
