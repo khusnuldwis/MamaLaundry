@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi_Detail extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    public function transaksi()
+    {
+        return $this->belongsTo(Transaksi::class, 'transaksi_id');
+    }
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id');
+    }
+    public function metode()
+    {
+        return $this->belongsTo(Metode_Layanan::class, 'metode_layanan_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

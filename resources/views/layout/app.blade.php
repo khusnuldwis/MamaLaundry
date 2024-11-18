@@ -418,18 +418,22 @@
                                 <label for="no_hp" class="form-label">No Hp</label>
                                 <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Hp Pelanggan">
                             </div>
-                            
-                            <div class="mb-3 row">
-                            <label for="category_id" class="col-sm-4 col-form-label">Pilih Metode</label>
-                            <div class="col-sm-8">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="metode_layanan_id" id="metode_layanan_id" value="option1">
-                                    <label class="form-check-label" for="metode_layanan_id"></label>
-                                 </div>
-                               
+                            <div id="selected-services" class="mt-4">
+                                <!-- Layanan yang dipilih akan ditampilkan di sini -->
                             </div>
-                        </div>
+                            <div class="mb-3 row">
+                                <label for="category_id" class="col-sm-4 col-form-label">Pilih Metode</label>
+                                <div class="col-sm-8">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="metode_layanan_id" id="metode_layanan_id" value="option1">
+                                        <label class="form-check-label" for="metode_layanan_id"></label>
+                                    </div>
+                                
+                                </div>
+                            </div>
+
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#layanan">Pilih Layanan -></button>
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -461,7 +465,7 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Input Quantity -->
+        <!-- Modal Input jumlah -->
         <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel"  aria-hidden="true">
             <div class="modal-dialog modal-sm"> <!-- Kelas modal-sm untuk ukuran kecil -->
                 <div class="modal-content">
@@ -478,8 +482,8 @@
 
                             <form>
                             <div class="mb-3">
-                                <label for="quantity" class="form-label">Kuantitas</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity">
+                                <label for="jumlah" class="form-label">Kuantitas</label>
+                                <input type="number" class="form-control" id="jumlah" name="jumlah">
                             </div>
                             
                         
@@ -611,32 +615,39 @@
         });
 
         // Menangani klik pada card layanan
-        $(document).on('click', '.layanan-card', function () {
-            const layananId = $(this).data('id'); // Ambil ID layanan dari card
+        
+        
+    $(document).on("click", ".layanan-card", function () {
+        const layananId = $(this).data("id");
+        const layananNama = $(this).data("nama");
 
-            // Memanggil API untuk mengambil detail layanan berdasarkan ID
-            $.ajax({
-                url: `/api/layanans/${layananId}`, // Ganti dengan endpoint API yang sesuai
-                method: 'GET',
-                success: layanan => {
-                    // Mengisi informasi layanan ke modal
-                    $('#layanan-name').text(layanan.nama_layanan || 'Nama Layanan Tidak Ditemukan');
-                    $('#layanan-category').text(layanan.category?.nama_kategori || 'N/A');
-                    $('#layanan-jenis_layanan').text(` ${jenisLayananMapping[layanan.jenis_layanan] || 'N/A'}`);
+        $("#layanan-name").text(layananNama);
+        $("#quantityModal").modal("show");
 
-                    // Tampilkan modal kuantitas
-                    $('#quantityModal').modal('show');
-                },
-                error: () => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal Memuat Detail',
-                        text: 'Tidak dapat memuat detail layanan.'
-                    });
-                }
-            });
+        $("#save-quantity").off("click").on("click", function () {
+            const quantity = $("#quantity").val();
+            if (quantity) {
+                selectedServices.push({ id: layananId, nama: layananNama, quantity });
+                updateSelectedServices();
+                $("#quantityModal").modal("hide");
+                $("#layananModal").modal("hide");
+            }
         });
     });
+
+    const updateSelectedServices = () => {
+        const container = $("#selected-services");
+        container.empty();
+        selectedServices.forEach((service, index) => {
+            container.append(`
+                <div>
+                    <p>${service.nama} - ${service.quantity}</p>
+                </div>
+            `);
+        });
+    };
+    });
+
 </script>
 
     </script>

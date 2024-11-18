@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('metode_layanan_id'); 
             $table->unsignedBigInteger('transaksi_id'); 
             $table->unsignedBigInteger('user_id'); 
+            $table->integer('jumlah'); 
             $table->timestamps();
         });
     }
