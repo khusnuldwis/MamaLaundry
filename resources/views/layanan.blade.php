@@ -47,35 +47,23 @@
 
     <form id="dataForm">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        @foreach([
-                            ['thumbnail', 'Gambar Layanan', 'file', 'Masukkan gambar layanan'],
-                            ['nama_layanan', 'Nama Layanan', 'text', 'Masukkan nama layanan'],
-                            ['harga', 'Harga', 'text', 'Masukkan harga layanan']
-                        ] as $field)
                         <div class="mb-3 row">
-                            <label for="{{ $field[0] }}" class="col-sm-4 col-form-label">{{ $field[1] }}</label>
+                            <label for="thumbnail" class="col-sm-4 col-form-label">Gambar
+                                Layanan</label>
                             <div class="col-sm-8">
                                 <input type="file" class="form-control" id="thumbnail" name="thumbnail"
                                     placeholder="Masukkan gambar Layanan">
                             </div>
                         </div>
-                        @endforeach
-
-                        @foreach([
-                            ['jenis_layanan', 'Jenis Layanan', [1 => 'Reguler', 2 => 'Kilat', 3 => 'Express']],
-                            ['unit', 'Unit', [1 => 'Kg', 2 => 'Pcs']]
-                        ] as $field)
                         <div class="mb-3 row">
-                            <label for="{{ $field[0] }}" class="col-sm-4 col-form-label">{{ $field[1] }}</label>
+                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Layanan</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
                                     placeholder="Masukkan nama_layanan ">
@@ -92,19 +80,34 @@
                                 </select>
                             </div>
                         </div>
-                        @endforeach
-
                         <div class="mb-3 row">
-                            <label for="category_id" class="col-sm-4 col-form-label">Kategori</label>
+                            <label for="unit" class="col-sm-4 col-form-label">Unit</label>
                             <div class="col-sm-8">
-                                <select class="form-select" id="category_id" name="category_id">
-                                    <option value="">Pilih Kategori</option>
+                                <select class="form-select" id="unit" name="unit">
+                                    <option value="">Pilih Unit</option>
+                                    <option value="1">Kg</option>
+                                    <option value="2">Pcs</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="category_id" class="col-sm-4 col-form-label">category</label>
+                            <div class="col-sm-8">
+                                <select class="form-select" id="category_id" name="category_id">
+                                    <option value="">Pilih category</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="harga" class="col-sm-4 col-form-label">Harga</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="harga" name="harga"
+                                    placeholder="Masukkan Nama Panggilan">
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
@@ -112,7 +115,6 @@
             </div>
         </div>
     </form>
-</div>
 
 
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
@@ -197,14 +199,15 @@
         // Event listener untuk membuka modal
 
         const targetModal = document.getElementById('exampleModal');
-        let setIdlayanan = null;
+        let setIdlayanan = null; // Inisialisasi ID tim
 
         if (targetModal) {
             targetModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget;
-                const jenisModal = button.getAttribute('data-bs-jenis');
-                setIdlayanan = button.getAttribute('data-bs-id');
+                const button = event.relatedTarget; // Tombol yang memicu modal
+                const jenisModal = button.getAttribute('data-bs-jenis'); // Ambil jenis modal
+                setIdlayanan = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
 
+                // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
                 if (jenisModal === "Ubah") {
                     $.ajax({
                         url: 'http://127.0.0.1:8000/api/layanans/' +
@@ -220,25 +223,30 @@
                             $('#pr_thumbnail').remove();
                             if (data.data.thumbnail) {
                                 $('#thumbnail').after(
-                                    `<div id="pr_thumbnail"><img src="/storage/${data.data.thumbnail}" width="30px"></div>`
+                                    `<div id="pr_thumbnail"><img src="/storage/${data.data.thumbnail}" width="30px">`
                                 );
                             }
+
                         },
                         error: function(xhr, status, error) {
                             console.error('Error fetching data for edit:', error);
                         }
                     });
                 } else {
+                    // Kosongkan input saat menambah data baru
                     $('#thumbnail').val('');
                     $('#unit').val('');
                     $('#harga').val('');
                     $('#nama_layanan').val('');
                     $('#jenis_layanan').val('');
                     $('#category_id').val('');
-                    setIdlayanan = null;
-                    $('#pr_thumbnail').remove();
+                    setIdlayanan = null; // Reset ID tim
+
+                    $('#pr_gambar_tim').remove();
+
                 }
 
+                // Update judul modal
                 const modalTitle = targetModal.querySelector('.modal-title');
                 modalTitle.textContent = `${jenisModal} Layanan`;
             });
@@ -248,21 +256,24 @@
         $("#dataForm").submit(function(event) {
             event.preventDefault();
             let formData = new FormData(this);
-            let sendData = '/api/layanans/';
-            let setMethod = 'POST';
+            let sendData = 'http://127.0.0.1:8000/api/layanans/';
+            let setMethod = 'POST'; // Default method adalah POST
 
+            // Jika ada ID, gunakan PUT untuk update
             if (setIdlayanan) {
                 sendData += setIdlayanan;
-                setMethod = 'POST'; 
+                setMethod =
+                    'POST'; // Method harus tetap POST karena Anda menggunakan _method untuk menyimulasikan PUT
                 formData.append('_method', 'PUT');
             }
 
+            // Kirim data ke server
             $.ajax({
                 url: sendData,
                 method: setMethod,
                 data: formData,
-                contentType: false,
-                processData: false,
+                contentType: false, // Pastikan untuk tidak mengatur konten tipe
+                processData: false, // Pastikan untuk tidak memproses data
                 success: function(response) {
                     Swal.fire({
                         title: "Sukses!",
@@ -279,7 +290,8 @@
                     console.error('Error saving data:', error);
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON.pesan,
+                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON
+                            .pesan,
                         icon: "error"
                     });
                 }

@@ -60,6 +60,8 @@ Route::get('/kategori', function () {
 Route::get('/belumDiambil', function () {
     return view('belumDiambil');
 });
+
+
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index']);
 // });
