@@ -394,6 +394,101 @@
             <br>
             @yield('content')
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah/Edit Pelanggan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Pelanggan</label>
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Pelanggan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Pelanggan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp" class="form-label">No Hp</label>
+                                <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Hp Pelanggan">
+                            </div>
+                            
+                            <div class="mb-3 row">
+                            <label for="category_id" class="col-sm-4 col-form-label">Pilih Metode</label>
+                            <div class="col-sm-8">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="metode_layanan_id" id="metode_layanan_id" value="option1">
+                                    <label class="form-check-label" for="metode_layanan_id"></label>
+                                 </div>
+                               
+                            </div>
+                        </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#layanan">Pilih Layanan -></button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Pilih Layanan -->
+        <div class="modal fade" id="layanan" tabindex="-1" aria-labelledby="layananLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="layananLabel">Daftar Layanan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" id="card-container">
+                                <!-- Cards layanan akan dirender di sini -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal">Back to first</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Input Quantity -->
+        <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel"  aria-hidden="true">
+            <div class="modal-dialog modal-sm"> <!-- Kelas modal-sm untuk ukuran kecil -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="smallModalLabel">Small Modal Title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <div id="layanan-info" class="mb-3 text-start">
+                        <h5 id="layanan-name" class="fw-bold">Nama Item</h5>
+                        <p id="layanan-category" class="text-muted">Kategori</p>
+                        <p id="layanan-jenis_layanan" class="text-muted">Jenis Layanan</p>
+                    </div>
+
+                            <form>
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Kuantitas</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity">
+                            </div>
+                            
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <footer>
 			<div class="card card-round">
@@ -446,6 +541,103 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="{{asset('assets//setting-demo.')}}"></script>
     <script src="{{asset('assets//demo.')}}"></script>
+    <script src="{{ url('dist/js/jquery1.js') }}"></script>
+    <script src="{{ url('dist/js/Tables.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        const jenisLayananMapping = {
+            1: 'Reguler',
+            2: 'Kilat',
+            3: 'Express'
+        };
+        const unitMapping = {
+            1: 'Kg',
+            2: 'Pcs'
+        };
+
+        // Fetch data layanan
+        const fetchLayanan = () => {
+            $.ajax({
+                url: '/api/layanans', // Endpoint API
+                method: 'GET',
+                success: data => {
+                    const container = $('#card-container');
+                    container.empty();
+                    data.forEach(layanan => {
+                        // Menyertakan data layanan dalam atribut data-layanan
+                        container.append(`
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <div class="card h-100 shadow-lg border-0 rounded-4 layanan-card" data-id="${layanan.id}">
+                                    <div class="position-relative">
+                                        <img src="/storage/${layanan.thumbnail}" class="card-img-top rounded-top" alt="Thumbnail Layanan" 
+                                            style="width: 100%; height: 180px; object-fit: cover;">
+                                    </div>
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <h5 class="card-title text-center fw-bold text-truncate mb-2" style="font-size: 1.1rem; line-height: 1.4;">
+                                            ${layanan.nama_layanan}
+                                        </h5>
+                                        <div class="text-center mb-3">
+                                            <span class="badge text-bg-light px-4 py-2 rounded-pill" style="font-size: 0.9rem; font-weight: 500; color: #495057;">
+                                                ${layanan.category?.nama_kategori || 'N/A'}
+                                            </span>
+                                        </div>
+                                        <div class="text-center">
+                                            <span class="badge bg-primary py-2 px-4 rounded-pill" style="font-size: 0.9rem; font-weight: 500;">
+                                                ${jenisLayananMapping[layanan.jenis_layanan] || 'N/A'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                },
+                error: () => Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Memuat',
+                    text: 'Tidak dapat memuat data layanan.'
+                })
+            });
+        };
+
+        // Panggil fetchLayanan saat modal layanan dibuka
+        $('#layanan').on('show.bs.modal', function() {
+            fetchLayanan();
+        });
+
+        // Menangani klik pada card layanan
+        $(document).on('click', '.layanan-card', function () {
+            const layananId = $(this).data('id'); // Ambil ID layanan dari card
+
+            // Memanggil API untuk mengambil detail layanan berdasarkan ID
+            $.ajax({
+                url: `/api/layanans/${layananId}`, // Ganti dengan endpoint API yang sesuai
+                method: 'GET',
+                success: layanan => {
+                    // Mengisi informasi layanan ke modal
+                    $('#layanan-name').text(layanan.nama_layanan || 'Nama Layanan Tidak Ditemukan');
+                    $('#layanan-category').text(layanan.category?.nama_kategori || 'N/A');
+                    $('#layanan-jenis_layanan').text(` ${jenisLayananMapping[layanan.jenis_layanan] || 'N/A'}`);
+
+                    // Tampilkan modal kuantitas
+                    $('#quantityModal').modal('show');
+                },
+                error: () => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Memuat Detail',
+                        text: 'Tidak dapat memuat detail layanan.'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+    </script>
+
     <script>
         $('#lineChart').sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: 'line',
