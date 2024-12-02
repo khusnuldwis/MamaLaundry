@@ -6,7 +6,7 @@ use App\Models\CategoriLayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class KategoriController extends Controller
+class CategoriController extends Controller
 {
     // Menampilkan daftar kategori
     public function index()

@@ -139,6 +139,23 @@
                 1: 'Kg',
                 2: 'Pcs'
             };
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/categorys',
+                method: 'GET',
+                success: function(data) {
+                    let timSelect = $('#category_id');
+                    timSelect.empty(); // Hapus opsi yang ada
+                    timSelect.append(
+                        '<option value="">Pilih Categori</option>'); // Tambahkan opsi default
+                    $.each(data, function(key, category) {
+                        timSelect.append('<option value="' + category.id + '">' + category
+                            .jenis_kategori + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching proyek data:', error);
+                }
+            });
 
             $('#example').DataTable({
                 ajax: {
@@ -175,7 +192,7 @@
                     {
                         "data": null,
                         "render": function(data, type, row) {
-                            return row.category ? row.category.nama_kategori :
+                            return row.category ? row.category.jenis_kategori :
                                 'N/A'; // Display category name
                         }
                     },
