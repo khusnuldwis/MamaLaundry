@@ -164,11 +164,16 @@
                                         <td>Rp {{ number_format($order->berat * 10000, 0, ',', '.') }}</td>
                                         <td>
                                             <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
-                                                <span class="btn-label"><i class="fa fa-pencil"></i></span> Edit
+                                                <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
                                             </a>
                                             <a href="#" class="btn btn-label-danger btn-round btn-sm">
                                                 <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
                                             </a>
+                                            {{-- <form action="{{ route('transaksi.destroy', $transaksis->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form> --}}
                                         </td>
                                     </tr>
                                 @endforeach

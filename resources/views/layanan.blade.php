@@ -92,7 +92,7 @@
                             <div class="col-sm-8">
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Pilih category</option>
-                               
+
                                 </select>
                             </div>
                         </div>
@@ -201,24 +201,23 @@
                         "data": null,
                         "render": function(data, type, row) {
                             return `
-                                <td>
-                                    <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
+                                <div class="d-flex justify-content-start gap-2">
+                                    <a href="#" class="btn btn-label-success btn-round btn-sm" 
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                    data-bs-jenis="Ubah" data-bs-id="${row.id}">
                                         <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
                                     </a>
-                                    <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
+                                    <a href="#" class="btn btn-label-danger btn-round btn-sm" 
+                                    onclick="hapusData(${row.id})">
                                         <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
                                     </a>
-                                </td>
-                    `;
+                                </div>
+                            `;
                         }
                     }
                 ]
             });
         });
-
-
-        //const data tidak bisa diubah  dan let bisa diubah 
-        // Event listener untuk membuka modal
 
         const targetModal = document.getElementById('exampleModal');
         let setIdlayanan = null; // Inisialisasi ID tim
@@ -255,20 +254,18 @@
                         }
                     });
                 } else {
-                    // Kosongkan input saat menambah data baru
                     $('#thumbnail').val('');
                     $('#unit').val('');
                     $('#harga').val('');
                     $('#nama_layanan').val('');
                     $('#jenis_layanan').val('');
                     $('#category_id').val('');
-                    setIdlayanan = null; // Reset ID tim
+                    setIdlayanan = null; 
 
                     $('#pr_gambar_tim').remove();
 
                 }
 
-                // Update judul modal
                 const modalTitle = targetModal.querySelector('.modal-title');
                 modalTitle.textContent = `${jenisModal} Layanan`;
             });
@@ -279,23 +276,21 @@
             event.preventDefault();
             let formData = new FormData(this);
             let sendData = 'http://127.0.0.1:8000/api/layanans/';
-            let setMethod = 'POST'; // Default method adalah POST
+            let setMethod = 'POST'; 
 
-            // Jika ada ID, gunakan PUT untuk update
             if (setIdlayanan) {
                 sendData += setIdlayanan;
                 setMethod =
-                    'POST'; // Method harus tetap POST karena Anda menggunakan _method untuk menyimulasikan PUT
+                    'POST';
                 formData.append('_method', 'PUT');
             }
 
-            // Kirim data ke server
             $.ajax({
                 url: sendData,
                 method: setMethod,
                 data: formData,
-                contentType: false, // Pastikan untuk tidak mengatur konten tipe
-                processData: false, // Pastikan untuk tidak memproses data
+                contentType: false, 
+                processData: false,
                 success: function(response) {
                     Swal.fire({
                         title: "Sukses!",
@@ -304,7 +299,7 @@
                         timer: 2000,
                         timerProgressBar: true,
                         didClose: () => {
-                            location.reload(); // Refresh DataTable
+                            location.reload();
                         }
                     });
                 },
@@ -319,8 +314,6 @@
                 }
             });
         });
-
-
 
         function hapusData(id) {
             Swal.fire({
@@ -341,17 +334,15 @@
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
                                 icon: "success",
-                                timer: 2000, //timer dalam Milidetik (2000 ms = 2 detik)
-                                timerProgressBar: true, //menampilkan progress bar pada SweetAlert
+                                timer: 2000, 
+                                timerProgressBar: true, 
                                 didClose: () => {
                                     location
-                                        .reload(); //merefresh halaman setelah SweetAlert ditutup
+                                        .reload(); 
                                 }
                             })
                         }
                     });
-
-
                 }
             });
         }
