@@ -1,4 +1,3 @@
-
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -26,27 +25,7 @@
         <div class="card-body">
             <div class="col-md-12">
                 <div class="table-responsive table-hover table-sales">
-                    <table class="table">
-                        <style>
-                            table {
-                                width: 100%;
-                                table-layout: auto;
-                                border-collapse: collapse;
-                            }
-
-                            th,
-                            td {
-                                padding: 8px;
-                                white-space: nowrap;
-                                /* Prevents text from wrapping */
-                                border: 1px solid #ddd;
-                            }
-
-                            /* Optional: Add scroll if the table is too wide */
-                            .table-container {
-                                overflow-x: auto;
-                            }
-                        </style>
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -64,36 +43,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($transaksi as $index => $trans)
                             <tr>
-                                <td>1</td>
-                                <td>Ursa</td>
-                                <td>081234567890</td>
-                                <td>Ds. Jati, Jl. Marak</td>
-                                <td>Cuci Kering</td>
-                                <td>5 Kg</td>
-                                <td>Sep 22, 2024</td>
-                                <td>Sep 25, 2024</td>
-                                <td class="status-barang">
-                                    <select class="form-select status-dropdown"
-                                        onchange="updateDropdownColor(this)">
-                                        <option value="proses" data-color="lightsalmon">Proses
-                                        </option>
-                                        <option value="selesai" data-color="aquamarine">Selesai
-                                        </option>
-                                        <option value="diambil" data-color="darkturquoise">Diambil
-                                        </option>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $trans->nama_pelanggan }}</td>
+                                <td>{{ $trans->no_hp }}</td>
+                                <td>{{ $trans->alamat }}</td>
+                                <td>{{ $trans->layanan }}</td>
+                                <td>{{ $trans->berat }}</td>
+                                <td>{{ $trans->tanggal_pemesanan }}</td>
+                                <td>{{ $trans->tanggal_selesai }}</td>
+                                <td>
+                                    <select class="form-select status-dropdown" onchange="updateDropdownColor(this)">
+                                        <option value="proses" data-color="lightsalmon">Proses</option>
+                                        <option value="selesai" data-color="aquamarine">Selesai</option>
+                                        <option value="diambil" data-color="darkturquoise">Diambil</option>
                                     </select>
                                 </td>
-                                <td class="status-pembayaran">
-                                    <select class="form-select payment-dropdown"
-                                        onchange="updateDropdownColor(this)">
-                                        <option value="belum_dibayar" data-color="lightcoral">Belum
-                                            Dibayar</option>
-                                        <option value="dibayar" data-color="lightgreen">Dibayar
-                                        </option>
+                                <td>
+                                    <select class="form-select payment-dropdown" onchange="updateDropdownColor(this)">
+                                        <option value="belum_dibayar" data-color="lightcoral">Belum Dibayar</option>
+                                        <option value="dibayar" data-color="lightgreen">Dibayar</option>
                                     </select>
                                 </td>
-                                <td>Rp 50,000</td>
+                                <td>{{ $trans->total_pembayaran }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -109,51 +82,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Rasya</td>
-                                <td>081234567890</td>
-                                <td>Ds. Jati, Jl. Beru</td>
-                                <td>Cuci Setrika</td>
-                                <td>10 Pcs</td>
-                                <td>Sep 22, 2024</td>
-                                <td>Sep 25, 2024</td>
-                                <td class="status-barang">
-                                    <select class="form-select status-dropdown"
-                                        onchange="updateDropdownColor(this)">
-                                        <option value="proses" data-color="lightsalmon">Proses
-                                        </option>
-                                        <option value="selesai" data-color="aquamarine">Selesai
-                                        </option>
-                                        <option value="diambil" data-color="darkturquoise">Diambil
-                                        </option>
-                                    </select>
-                                </td>
-                                <td class="status-pembayaran">
-                                    <select class="form-select payment-dropdown"
-                                        onchange="updateDropdownColor(this)">
-                                        <option value="belum_dibayar" data-color="lightcoral">Belum
-                                            Dibayar</option>
-                                        <option value="dibayar" data-color="lightgreen">Dibayar
-                                        </option>
-                                    </select>
-                                </td>
-                                <td>Rp 76,000</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <button class="btn btn-icon btn-round btn-primary btn-sm me-2">
-                                                <i class="fa fa-print"></i>
-                                            </button>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <button class="btn btn-icon btn-round btn-warning btn-sm me-2">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

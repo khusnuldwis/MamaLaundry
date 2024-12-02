@@ -13,4 +13,9 @@ class Transaksi extends Model
 {
     return $this->hasMany(Transaksi_Detail::class, 'transaksi_id');
 }
+public function layanans()
+    {
+        return $this->belongsToMany(Layanan::class)
+                    ->withPivot('quantity'); // Menyertakan kolom quantity
+    }
 }

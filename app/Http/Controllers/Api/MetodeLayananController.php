@@ -14,7 +14,7 @@ class MetodeLayananController extends Controller
     {
         
         $data=Metode_Layanan::orderBy('id', 'desc')->get();
-        return view('admin.metode_layanan.index',compact('data'));
+        return response()->json($data, 200);
     }
 
     /**
