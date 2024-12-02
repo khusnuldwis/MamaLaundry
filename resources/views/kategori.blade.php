@@ -85,7 +85,7 @@
                         '<option value="">Pilih Category</option>'); // Tambahkan opsi default
                     $.each(data, function(key, category) {
                         CategorySelect.append('<option value="' + category.id + '">' + category
-                            .nama_category + '</option>');
+                            .jenis_category + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {
