@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_pelanggan');
             $table->string('no_hp'); 
             $table->text('alamat'); 
-        $table->unsignedBigInteger('layanan_id');  // Reference to the layanan table
+        $table->unsignedBigInteger('layanan_id')->index();  // Reference to the layanan table
         $table->float('berat');
             $table->date('tanggal_pemesanan');
             $table->date('tanggal_selesai');

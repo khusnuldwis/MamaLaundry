@@ -28,11 +28,11 @@ class CategoryLayananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kategori' => 'required|string',
+            'jenis_kategori' => 'required|string',
         ]);
 
         $categoriLayanan = CategoriLayanan::create([
-            'nama_kategori' => $request->nama_kategori,
+            'jenis_kategori' => $request->jenis_kategori,
             
         ]);
 

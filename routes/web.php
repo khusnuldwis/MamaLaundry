@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryLayananController as ApiCategoryLayananCont
 use App\Http\Controllers\Back\CategoryLayananController;
 use App\Http\Controllers\Back\KaryawanController;
 use App\Http\Controllers\Back\MetodeLayananController;
+use App\Http\Controllers\CategoriController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderMasukController;
@@ -44,14 +45,18 @@ Route::get('/', function () {
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
+    Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
+    
+    
+    // Register only the index route
+    Route::resource('daftarLayanan', LayananController::class)->only(['index']);
+    Route::resource('layanan', LayananController::class)->only(['index']);
+    Route::resource('orderMasuk', OrderMasukController::class);
+    Route::resource('belumDiambil', OrderMasukController::class);
+    Route::resource('categori',CategoriController::class);
 
 
-// Register only the index route
-Route::resource('daftarLayanan', LayananController::class)->only(['index']);
-Route::resource('layanan', LayananController::class)->only(['index']);
-Route::resource('orderMasuk', OrderMasukController::class);
-Route::resource('belumDiambil', OrderMasukController::class);
+
 
 Route::resource('kategori', ApiCategoryLayananController::class);
 

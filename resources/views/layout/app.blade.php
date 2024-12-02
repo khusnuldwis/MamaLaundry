@@ -6,6 +6,9 @@
     <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -567,26 +570,24 @@
                             </li>
 
                             <li class="nav-item topbar-user dropdown hidden-caret">
-                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
-                                    aria-expanded="false">
+                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="assets/img/profile.jpg" alt="..."
-                                            class="avatar-img rounded-circle">
+                                        <img src="assets/rimg/profile.jpg"  class="avatar-img rounded-circle">
                                     </div>
                                     <span class="profile-username">
-                                        <span class="op-7">Hi,</span> <span class="fw-bold">Hizrian</span>
+                                        <span class="op-7">Hi,</span> <span class="fw-bold">{{ Auth::user()->name }}</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
                                             <div class="user-box">
-                                                <div class="avatar-lg"><img src="assets/img/profile.jpg"
-                                                        alt="image profile" class="avatar-img rounded"></div>
+                                                <div class="avatar-lg">
+<i class="fas fa-user avatar-img rounded"></i>                                                </div>
                                                 <div class="u-text">
-                                                    <h4>Hizrian</h4>
-                                                    <p class="text-muted">hello@example.com</p><a href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                    <h4>{{ Auth::user()->name }}</h4>
+                                                    <p class="text-muted">{{ Auth::user()->email }}</p>
+                                                    <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                                 </div>
                                             </div>
                                         </li>
@@ -598,117 +599,25 @@
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Account Setting</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Logout</a>
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
                                         </li>
                                     </div>
                                 </ul>
                             </li>
+
                         </ul>
                     </div>
                 </nav>
                 <!-- End Navbar -->
             </div>
 
-            {{-- //Modal --}}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah/Edit Pelanggan</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama Pelanggan</label>
-                                    <input type="text" class="form-control" id="nama" name="nama"
-                                        placeholder="Masukkan Nama Pelanggan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat"
-                                        placeholder="Masukkan Alamat Pelanggan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="no_hp" class="form-label">No Hp</label>
-                                    <input type="text" class="form-control" id="no_hp" name="no_hp"
-                                        placeholder="Masukkan Nomor Hp Pelanggan">
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="category_id" class="col-sm-4 col-form-label">Pilih Metode</label>
-                                    <div class="col-sm-8">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="metode_layanan_id"
-                                                id="metode_layanan_id" value="option1">
-                                            <label class="form-check-label" for="metode_layanan_id"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#layanan">Pilih Layanan -></button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="layanan" tabindex="-1" aria-labelledby="layananLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="layananLabel">Daftar Layanan</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row" id="card-container">
-                                    <!-- Cards layanan akan dirender di sini -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" data-bs-target="#exampleModal"
-                                data-bs-toggle="modal">Back to first</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm"> 
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="smallModalLabel">Small Modal Title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="layanan-info" class="mb-3 text-start">
-                                <h5 id="layanan-name" class="fw-bold">Nama Item</h5>
-                                <p id="layanan-category" class="text-muted">Kategori</p>
-                                <p id="layanan-jenis_layanan" class="text-muted">Jenis Layanan</p>
-                            </div>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="quantity" class="form-label">Kuantitas</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             
             <div class="container">
                 <div class="page-inner">
@@ -1514,6 +1423,10 @@
             fillColor: 'rgba(255, 165, 52, .14)'
         });
     </script>
+    <!-- Bootstrap JS dan dependensi (Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
