@@ -38,7 +38,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="noHp" class="form-label">No HP</label>
-                                                        <input type="text" class="form-control" id="noHp" name="noHp"
+                                                        <input type="number" class="form-control" id="noHp" name="noHp"
                                                             required>
                                                     </div>
                                                     <div class="mb-3">
@@ -77,7 +77,6 @@
                                                         <select class="form-select" id="statusBarang" name="statusBarang"
                                                             required>
                                                             <option value="" selected>Pilih Status</option>
-                                                            <option value="Diterima">Diterima</option>
                                                             <option value="Proses">Proses</option>
                                                             <option value="Selesai">Selesai</option>
                                                             <option value="Diambil">Diambil</option>

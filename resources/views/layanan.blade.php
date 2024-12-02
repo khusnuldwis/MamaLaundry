@@ -92,7 +92,11 @@
                             <div class="col-sm-8">
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Pilih category</option>
+<<<<<<< HEAD
                                    
+=======
+                               
+>>>>>>> 96eb571fa7d0254ae6ce0ac57e2d048bd5589251
                                 </select>
                             </div>
                         </div>

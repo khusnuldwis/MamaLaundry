@@ -4,15 +4,14 @@
     Single Tabel
 @endsection
 @section('content')
-
     <div class="card card-round">
         <div class="card-header">
             <div class="card-head-row">
                 <div class="card-title">Kategori</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-bs-jenis="Tambah">Tambah</a>
+                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    </tbody>                    
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -63,7 +62,7 @@
             </div>
         </div>
     </form>
-    
+
 
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
     <script src="{{ url('dist/js/Tables.js') }}"></script>
@@ -110,10 +109,16 @@
                     {
                         "data": null,
                         "render": function(data, type, row) {
-                            return '<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="' +
-                                row.id + '" >Ubah</button>' +
-                                '<button class="btn btn-danger btn-sm" onclick="hapusData(' + row
-                                .id + ')">Hapus</button>'
+                            return `
+    <td>
+        <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
+            <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+        </a>
+        <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
+            <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+        </a>
+    </td>
+`;
                         }
                     }
 
