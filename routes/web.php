@@ -42,8 +42,8 @@ Route::resource('karyawan', KaryawanController::class);
 Route::get('/', function () {
     return view('auth.login');
 });
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
 
 
@@ -61,9 +61,7 @@ Route::get('/layanan', function () {
 Route::get('/kategori', function () {
     return view('kategori');
 });
-
-
-
+});
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index']);
 // });

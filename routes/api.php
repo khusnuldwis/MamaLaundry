@@ -3,7 +3,11 @@
 use App\Http\Controllers\Api\CategoryLayananController;
 use App\Http\Controllers\Api\LayananController;
 use App\Http\Controllers\Api\ManageUserController;
+use App\Http\Controllers\Api\MetodeLayananController;
+use App\Http\Controllers\Api\TransaksiController;
 use App\Http\Controllers\Back\ManageUserController as BackManageUserController;
+use App\Http\Controllers\TransaksiController as ControllersTransaksiController;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +28,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('user',ManageUserController::class);
 Route::apiResource('categorys',CategoryLayananController::class);
 Route::apiResource('layanans', LayananController::class);
+Route::apiResource('transaksi', TransaksiController::class);
+Route::apiResource('metode_layanans', MetodeLayananController::class);
