@@ -30,7 +30,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="namaPelanggan" class="form-label">Nama Pelanggan</label>
-                                                    <input type="text" class="form-control" id="namaPelanggan" name="namaPelanggan" required>
+                                                    <input type="text" class="form-control" id="namaPelanggan"   name="namaPelanggan" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -64,7 +64,6 @@
                                                     <label for="statusBarang" class="form-label">Status Barang</label>
                                                     <select class="form-select" id="statusBarang" name="statusBarang" required>
                                                         <option value="" selected>Pilih Status</option>
-                                                        <option value="Diterima">Diterima</option>
                                                         <option value="Proses">Proses</option>
                                                         <option value="Selesai">Selesai</option>
                                                         <option value="Diambil">Diambil</option>

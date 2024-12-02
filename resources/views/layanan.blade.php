@@ -66,7 +66,7 @@
                             <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Layanan</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
-                                    placeholder="Masukkan nama_layanan ">
+                                    placeholder="Masukkan nama layanan ">
                             </div>
                         </div>
                         <div class="mb-3 row">
