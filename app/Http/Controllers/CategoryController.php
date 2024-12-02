@@ -4,89 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriLayanan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
-class CategoryController extends Controller
+class KategoriController extends Controller
 {
-    // Menampilkan semua data category
+    // Menampilkan daftar kategori
     public function index()
     {
-        $categorys = CategoriLayanan::with('category')->get();
-        return response()->json($categorys);
+        $categorys = CategoriLayanan::all(); // Ambil semua data kategori
+        return view('category', compact('categorys'));
     }
 
-    // Menampilkan detail category berdasarkan ID
-    public function show($id)
-    {
-        $category = CategoriLayanan::with('category')->find($id);
-        if (!$category) {
-            return response()->json(['message' => 'category tidak ditemukan'], 404);
-        }
-        return response()->json(['data' => $category]);
-    }
-
-    // Menyimpan category baru
+    // Menyimpan kategori baru
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nama_kategori' => 'required|string|max:255', // Validasi nama kategori
+        ]);
+
         try {
-            $data = $request->all();
-
-            if ($request->hasFile('thumbnail')) {
-                $file = $data['thumbnail']->store('thumbnail', 'public');
-                $data['thumbnail'] = $file;
-            }
-
-
-            $create = CategoriLayanan::create($data);
-
-            return response()->json(['pesan' => "category berhasil ditambahkan"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['pesan' => "category berhasil ditambahkan"], 200);
+            CategoriLayanan::create($validated); // Simpan data ke database
+            return redirect()->back()->with('success', 'Kategori berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan kategori: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan kategori.');
         }
     }
 
-    // Mengupdate data category
+    // Menampilkan form edit kategori
+    public function edit($id)
+    {
+        $kategori = CategoriLayanan::findOrFail($id); // Ambil data kategori berdasarkan ID
+        return view('category', compact('kategori'));
+    }
+
+    // Memperbarui data kategori
     public function update(Request $request, $id)
     {
-        $category = CategoriLayanan::find($id);
-        if (!$category) {
-            return response()->json(['message' => 'category tidak ditemukan'], 404);
+        $validated = $request->validate([
+            'nama_kategori' => 'required|string|max:255', // Validasi nama kategori
+        ]);
+
+        try {
+            $kategori = CategoriLayanan::findOrFail($id);
+            $kategori->update($validated); // Update data di database
+            return redirect()->back()->with('success', 'Kategori berhasil diperbarui!');
+        } catch (\Exception $e) {
+            Log::error('Error saat memperbarui kategori: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui kategori.');
         }
-
-        // $validatedData = $request->validate([
-        //     'nama_category' => 'required|string|max:255',
-        //     'jenis_category' => 'required',
-        //     'unit' => 'required',
-        //     'harga' => 'required|numeric',
-        //     'category_id' => 'required|exists:categories,id',
-        //     'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
-        // ]);
-
-        if ($request->hasFile('thumbnail')) {
-            if ($category->thumbnail) {
-                Storage::delete($category->thumbnail);
-            }
-            $path = $request->file('thumbnail')->store('thumbnails');
-            $validatedData['thumbnail'] = $path;
-        }
-
-        $category->update($validatedData);
-        return response()->json(['data' => $category, 'message' => 'category berhasil diperbarui']);
     }
 
-    // Menghapus category
+    // Menghapus kategori
     public function destroy($id)
     {
-        $category = CategoriLayanan::find($id);
-        if (!$category) {
-            return response()->json(['message' => 'category tidak ditemukan'], 404);
+        try {
+            $kategori = CategoriLayanan::findOrFail($id);
+            $kategori->delete();
+            return redirect()->back()->with('success', 'Kategori berhasil dihapus!');
+        } catch (\Exception $e) {
+            Log::error('Error saat menghapus kategori: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus kategori.');
         }
-
-        if ($category->thumbnail) {
-            Storage::delete($category->thumbnail);
-        }
-
-        $category->delete();
-        return response()->json(['message' => 'category berhasil dihapus']);
     }
 }

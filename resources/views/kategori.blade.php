@@ -1,75 +1,83 @@
 @extends('layout.app')
 
 @section('title')
-Single Tabel
+    Single Tabel
 @endsection
 @section('content')
 
-<div class="mt-5">
-    <h1 class="text-blue">List Kategori</h1>
-    <div class="mt-5">
-        <div class="card">
-            <div class="card-header">
-            Kategori
-                <button class="btn btn-primary float-end" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</button>
-
-            </div>
-
-            <div class="card-body">
-                <div class="container">
-                    <table class="table table-sm table-bordered" id="example">
-                        <thead>
-                            <tr>
-                           
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Kategori</th>
-                                <th scope="col">Aksi</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                        </tbody>
-                    </table>
+    <div class="card card-round">
+        <div class="card-header">
+            <div class="card-head-row">
+                <div class="card-title">Kategori</div>
+                <div class="card-tools">
+                    <div class="ms-md-auto py-2 py-md-0 float-end">
+                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-jenis="Tambah">Tambah</a>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-    <form id="dataForm">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <table class="table table-sm table-bordered" id="example">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Kategori</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categorys as $key => $kategori)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $kategori->nama_kategori }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                                    <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>                    
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <form id="dataForm" method="POST" action="{{ route('kategori.store') }}">
+        @csrf
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Kategori</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label for="nama_kategori" class="col-sm-4 col-form-label">Nama Kategori</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama_kategori"
-                                    name="nama_kategori" placeholder="Masukkan Nama Lengkap">
+                                <input type="text" class="form-control" id="nama_kategori" name="nama_kategori"
+                                    placeholder="Masukkan Nama Kategori" required>
                             </div>
                         </div>
-                       
-                       
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-
+    
 
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
     <script src="{{ url('dist/js/Tables.js') }}"></script>
@@ -109,7 +117,7 @@ Single Tabel
                             return index.row + 1;
                         }
                     },
-                   
+
                     {
                         "data": "nama_kategori"
                     },
@@ -144,11 +152,12 @@ Single Tabel
                 // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
                 if (jenisModal === "Ubah") {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/categorys/' + setIdKategori, // Menggunakan endpoint show
+                        url: 'http://127.0.0.1:8000/api/categorys/' +
+                            setIdKategori, // Menggunakan endpoint show
                         method: 'GET',
                         success: function(data) {
                             $('#nama_kategori').val(data.data.nama_kategori);
-                           
+
 
                         },
                         error: function(xhr, status, error) {
@@ -157,9 +166,9 @@ Single Tabel
                     });
                 } else {
                     // Kosongkan input saat menambah data baru
-                   
+
                     $('#nama_kategori').val('');
-                   
+
                     setIdKategori = null; // Reset ID tim
 
 
@@ -253,5 +262,4 @@ Single Tabel
             });
         }
     </script>
-
-    @endsection
+@endsection

@@ -15,8 +15,6 @@ class Layanan extends Model
     }
     public function transaksi()
     {
-        return $this->belongsToMany(Transaksi::class)
-                    ->withPivot('quantity'); // Menyertakan kolom quantity
+        return $this->hasMany(Transaksi::class);
     }
-   
 }

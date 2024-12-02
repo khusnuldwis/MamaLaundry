@@ -13,13 +13,20 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama'); 
-            $table->string('alamat'); 
+            $table->string('nama_pelanggan');
             $table->string('no_hp'); 
-            $table->string('total'); 
-            $table->string('no_transaksi')->NULL(); 
+            $table->text('alamat'); 
+        $table->unsignedBigInteger('layanan_id');  // Reference to the layanan table
+        $table->float('berat');
+            $table->date('tanggal_pemesanan');
+            $table->date('tanggal_selesai');
+            $table->enum('status_barang', ['Diterima', 'Proses', 'Selesai', 'Diambil']);
+            $table->enum('status_pembayaran', ['Belum Dibayar', 'Lunas']);
             $table->timestamps();
-        });
+
+        $table->foreign('layanan_id')->references('id')->on('layanans')->onDelete('cascade');  // Foreign key for layanan
+
+        });            
     }
 
     /**
