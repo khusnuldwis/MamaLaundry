@@ -25,17 +25,15 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Nama Layanan</th>
-                            <th scope="col">Gambar Layanan</th>
+                            <th scope="col">Nama Item</th>
+                            <th scope="col">Gambar Item</th>
                             <th scope="col">Jenis Layanan</th>
                             <th scope="col">Unit</th>
                             <th scope="col">category_id</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Aksi</th>
-
                         </tr>
                     </thead>
-
                     <tbody>
 
                     </tbody>
@@ -185,8 +183,14 @@
                         "data": null,
                         "render": function(data, type, row) {
                             return `
-                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">Ubah</button>
-                        <button class="btn btn-danger btn-sm" onclick="hapusData(${row.id})">Hapus</button>
+                                <td>
+                                    <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
+                                        <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
+                                        <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                    </a>
+                                </td>
                     `;
                         }
                     }
