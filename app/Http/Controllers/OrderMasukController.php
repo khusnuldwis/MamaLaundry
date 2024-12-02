@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Layanan;
 use Illuminate\Http\Request;
 use App\Models\OrderMasuk; // Pastikan Anda memiliki model yang sesuai
 use App\Models\Transaksi;
@@ -11,41 +12,49 @@ class OrderMasukController extends Controller
 {
     public function index()
     {
-        $transaksis = Transaksi::all();
-
-        return view('orderMasuk', compact('transaksis'));
+        $transaksis = Transaksi::all(); 
+        $layanans = Layanan::get();  
+ 
+        return view('orderMasuk', compact('transaksis','layanans'));  
     }
-
+ 
     public function store(Request $request)
     {
-        $transaksi = Transaksi::create([
-            'nama_pelanggan' => $request->namaPelanggan,
-            'tanggal_pemesanan' => $request->tanggalPemesanan,
-            'tanggal_selesai' => $request->tanggalSelesai,
-            'status_barang' => $request->statusBarang,
-            'status_pembayaran' => $request->statusPembayaran,
+        $validatedData = $request->validate([
+            'namaPelanggan' => 'required',
+            'noHp' => 'required',
+            'alamat' => 'required',
+            'layanan_id' => 'required',
+            'berat' => 'required|numeric',
+            'tanggalPemesanan' => 'required|date',
+            'tanggalSelesai' => 'required|date',
+            'statusBarang' => 'required',
+            'statusPembayaran' => 'required',
         ]);
-
-        Transaksi_Detail::create([
-            'transaksi_id' => $transaksi->id,
-            'layanan' => $request->layanan,
-            'berat' => $request->berat,
-            // tambahkan kolom lain jika perlu
+    
+        Transaksi::create([
+            'nama_pelanggan' => $validatedData['namaPelanggan'],
+            'no_hp' => $validatedData['noHp'],
+            'alamat' => $validatedData['alamat'],
+            'layanan_id' => $validatedData['layanan_id'],
+            'berat' => $validatedData['berat'],
+            'tanggal_pemesanan' => $validatedData['tanggalPemesanan'],
+            'tanggal_selesai' => $validatedData['tanggalSelesai'],
+            'status_barang' => $validatedData['statusBarang'],
+            'status_pembayaran' => $validatedData['statusPembayaran'],
         ]);
-
-        return redirect()->route('orderMasuk.index');
+    
+        return redirect()->route('orderMasuk.index')->with('success', 'Data berhasil ditambahkan!');
     }
-
+    
     public function addDetail(Request $request, $transaksiId)
     {
-        // Validasi input
         $request->validate([
             'layanan' => 'required|string',
             'berat' => 'required|numeric',
             'total_pembayaran' => 'required|numeric',
         ]);
 
-        // Menambah transaksi detail ke transaksi tertentu
         Transaksi_Detail::create([
             'transaksi_id' => $transaksiId,
             'layanan' => $request->layanan,
@@ -58,17 +67,14 @@ class OrderMasukController extends Controller
 
     public function editDetail(Request $request, $id)
 {
-    // Validasi input
     $request->validate([
         'layanan' => 'required|string',
         'berat' => 'required|numeric',
         'total_pembayaran' => 'required|numeric',
     ]);
 
-    // Cari transaksi detail berdasarkan ID
     $transaksiDetail = Transaksi_Detail::findOrFail($id);
     
-    // Update transaksi detail
     $transaksiDetail->update([
         'layanan' => $request->layanan,
         'berat' => $request->berat,
@@ -80,10 +86,8 @@ class OrderMasukController extends Controller
 
 public function destroyDetail($id)
 {
-    // Cari transaksi detail berdasarkan ID
     $transaksiDetail = Transaksi_Detail::findOrFail($id);
     
-    // Hapus transaksi detail
     $transaksiDetail->delete();
 
     return redirect()->route('transaksi.show', $transaksiDetail->transaksi_id)->with('success', 'Detail transaksi berhasil dihapus');

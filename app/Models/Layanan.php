@@ -13,5 +13,8 @@ class Layanan extends Model
     {
         return $this->belongsTo(CategoriLayanan::class);
     }
-   
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

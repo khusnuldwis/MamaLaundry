@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryLayananController as ApiCategoryLayananController;
 use App\Http\Controllers\Back\CategoryLayananController;
 use App\Http\Controllers\Back\KaryawanController;
-// use App\Http\Controllers\Back\LayananController;
 use App\Http\Controllers\Back\MetodeLayananController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderMasukController;
+use App\Models\CategoriLayanan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/tes', function () {
+    return view('tes');
+});
 // Route::get('/home', function () {
 //     return view('LandingPage');
 // });
@@ -50,6 +51,9 @@ Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage'
 Route::resource('daftarLayanan', LayananController::class)->only(['index']);
 Route::resource('layanan', LayananController::class)->only(['index']);
 Route::resource('orderMasuk', OrderMasukController::class);
+Route::resource('belumDiambil', OrderMasukController::class);
+
+Route::resource('kategori', ApiCategoryLayananController::class);
 
 Route::get('/layanan', function () {
     return view('layanan');
@@ -57,9 +61,7 @@ Route::get('/layanan', function () {
 Route::get('/kategori', function () {
     return view('kategori');
 });
-Route::get('/belumDiambil', function () {
-    return view('belumDiambil');
-});
+
 
 
 // Route::middleware(['role:admin'])->group(function () {

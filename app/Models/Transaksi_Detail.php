@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi_Detail extends Model
 {
-    use HasFactory;
+    protected $table = 'transaksi_details'; // Explicitly set the table name
     protected $guarded = [];
+
     public function transaksi()
     {
         return $this->belongsTo(Transaksi::class, 'transaksi_id');
