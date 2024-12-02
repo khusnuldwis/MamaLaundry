@@ -31,20 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categorys as $key => $kategori)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $kategori->nama_kategori }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                       
                     </tbody>                    
                 </table>
             </div>
@@ -62,9 +49,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 row">
-                            <label for="nama_kategori" class="col-sm-4 col-form-label">Nama Kategori</label>
+                            <label for="jenis_kategori" class="col-sm-4 col-form-label">Nama Kategori</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama_kategori" name="nama_kategori"
+                                <input type="text" class="form-control" id="jenis_kategori" name="jenis_kategori"
                                     placeholder="Masukkan Nama Kategori" required>
                             </div>
                         </div>
@@ -99,7 +86,7 @@
                         '<option value="">Pilih Category</option>'); // Tambahkan opsi default
                     $.each(data, function(key, category) {
                         CategorySelect.append('<option value="' + category.id + '">' + category
-                            .nama_category + '</option>');
+                            .jenis_category + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {
@@ -119,7 +106,7 @@
                     },
 
                     {
-                        "data": "nama_kategori"
+                        "data": "jenis_kategori"
                     },
                     {
                         "data": null,
@@ -156,7 +143,7 @@
                             setIdKategori, // Menggunakan endpoint show
                         method: 'GET',
                         success: function(data) {
-                            $('#nama_kategori').val(data.data.nama_kategori);
+                            $('#jenis_kategori').val(data.data.jenis_kategori);
 
 
                         },
@@ -167,7 +154,7 @@
                 } else {
                     // Kosongkan input saat menambah data baru
 
-                    $('#nama_kategori').val('');
+                    $('#jenis_kategori').val('');
 
                     setIdKategori = null; // Reset ID tim
 

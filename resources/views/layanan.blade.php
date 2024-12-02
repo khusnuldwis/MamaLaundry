@@ -4,15 +4,14 @@
     Single Tabel
 @endsection
 @section('content')
-
     <div class="card card-round">
         <div class="card-header">
             <div class="card-head-row">
                 <div class="card-title">Layanan</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-bs-jenis="Tambah">Tambah</a>
+                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
             </div>
@@ -61,10 +60,10 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Layanan</label>
+                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Item</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
-                                    placeholder="Masukkan nama_layanan ">
+                                    placeholder="Masukkan Nama Item ">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -93,14 +92,18 @@
                             <div class="col-sm-8">
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Pilih category</option>
+                                    @foreach ($categorys as $item)
+                                        <option value="{{ $item->id_categori }}">{{ $item->nama_rak }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="harga" class="col-sm-4 col-form-label">Harga</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="harga" name="harga"
-                                    placeholder="Masukkan Nama Panggilan">
+                                <input type="number" class="form-control" id="harga" name="harga"
+                                    placeholder="Masukkan Harga">
                             </div>
                         </div>
 
