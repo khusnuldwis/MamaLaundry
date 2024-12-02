@@ -28,7 +28,7 @@
                             <th scope="col">Gambar Item</th>
                             <th scope="col">Jenis Layanan</th>
                             <th scope="col">Unit</th>
-                            <th scope="col">category_id</th>
+                            <th scope="col">Nama Kategori</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -53,7 +53,7 @@
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label for="thumbnail" class="col-sm-4 col-form-label">Gambar
-                                Layanan</label>
+                                Item</label>
                             <div class="col-sm-8">
                                 <input type="file" class="form-control" id="thumbnail" name="thumbnail"
                                     placeholder="Masukkan gambar Layanan">
