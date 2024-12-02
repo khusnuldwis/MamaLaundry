@@ -47,9 +47,9 @@
                                                             required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="layanan" class="form-label">Layanan</label>
+                                                        <label for="layanan" class="form-label">Item</label>
                                                         <select class="form-select" id="layanan" name="layanan_id" required>
-                                                            <option value="" selected>Pilih Layanan</option>
+                                                            <option value="" selected>Pilih Item</option>
                                                             @foreach ($layanans as $layanan)
                                                                 <option value="{{ $layanan->id }}">
                                                                     {{ $layanan->nama_layanan }}</option>

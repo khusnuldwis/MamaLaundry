@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>MamaLaundry</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
 <!-- Bootstrap CSS -->
@@ -170,8 +170,8 @@
                             <div class="collapse" id="forms">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">Basic Form</span>
+                                        <a href="/kategori">
+                                            <span class="sub-item">Kategori Layanan</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -186,13 +186,8 @@
                             <div class="collapse" id="tables">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="tables/tables.html">
-                                            <span class="sub-item">Basic Table</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tables/datatables.html">
-                                            <span class="sub-item">Datatables</span>
+                                        <a href="/belumDiambil">
+                                            <span class="sub-item">Pesanan Belum Diambil</span>
                                         </a>
                                     </li>
                                 </ul>
