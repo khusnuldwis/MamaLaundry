@@ -92,9 +92,7 @@
                             <div class="col-sm-8">
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Pilih category</option>
-                                    @foreach ($categorys as $item)
-                                        <option value="{{ $item->id_categori }}">{{ $item->nama_rak }}</option>
-                                    @endforeach
+                               
                                 </select>
                             </div>
                         </div>
