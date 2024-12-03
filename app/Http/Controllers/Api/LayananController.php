@@ -42,7 +42,7 @@ class LayananController extends Controller
 
             return response()->json(['pesan' => "Layanan berhasil ditambahkan"], 200);
         } catch (\Throwable $th) {
-            return response()->json(['pesan' => "Layanan berhasil ditambahkan"], 200);
+            return response()->json(['pesan' => "Layanan gaggal ditambahkan"], 200);
         }
     }
     /**

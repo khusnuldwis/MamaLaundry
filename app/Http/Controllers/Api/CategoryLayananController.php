@@ -44,12 +44,14 @@ class CategoryLayananController extends Controller
      */
     public function show($id)
     {
-        $categoriLayanan = CategoriLayanan::with(['tim', 'interior'])->find($id);
-        if ($categoriLayanan) {
-            return view('detail_categoriLayanan', compact('categoriLayanan'));
-        } else {
-            return response()->json(['message' => 'Kategori layanan tidak ditemukan'], 404);
-        }
+               // Ambil data layanan berdasarkan ID, jika tidak ditemukan, kirimkan response error
+               $category = CategoriLayanan::find($id);
+
+               if (!$category) {
+                   return response()->json(['error' => 'Layanan tidak ditemukan'], 404);
+               }
+       
+               return response()->json($category);
     }
 
     /**
@@ -65,10 +67,7 @@ class CategoryLayananController extends Controller
         try {
             $data = $request->all();
 
-            if ($request->hasFile('gambar_kategori_layanan')) {
-                $file = $request->file('gambar_kategori_layanan')->store('gambar_kategori_layanan', 'public');
-                $data['gambar_kategori_layanan'] = $file;
-            }
+            
 
             $update = CategoriLayanan::find($id)->update($data);
 

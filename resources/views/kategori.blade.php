@@ -3,6 +3,7 @@
 @section('title')
     Single Tabel
 @endsection
+
 @section('content')
     <div class="card card-round">
         <div class="card-header">
@@ -10,7 +11,7 @@
                 <div class="card-title">Kategori</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal"
+                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
                             data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
@@ -63,16 +64,15 @@
         </div>
     </form>
 
-
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
     <script src="{{ url('dist/js/Tables.js') }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Inisialisasi DataTable
             $('#example').DataTable({
                 ajax: {
@@ -81,7 +81,7 @@
                 },
                 columns: [{
                         "data": null,
-                        "render": function(data, type, row, index) {
+                        "render": function (data, type, row, index) {
                             return index.row + 1;
                         }
                     },
@@ -90,17 +90,17 @@
                     },
                     {
                         "data": null,
-                        "render": function(data, type, row) {
+                        "render": function (data, type, row) {
                             return `
-                        <a href="#" class="btn btn-label-success btn-round btn-sm me-2" 
-                           data-bs-toggle="modal" data-bs-target="#exampleModal" 
-                           data-bs-jenis="Ubah" data-bs-id="${row.id}">
-                            <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-                        </a>
-                        <a href="#" class="btn btn-label-danger btn-round btn-sm" 
-                           onclick="hapusData(${row.id})">
-                            <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-                        </a>`;
+                                <a href="#" class="btn btn-label-success btn-round btn-sm me-2" 
+                                   data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                   data-bs-jenis="Ubah" data-bs-id="${row.id}">
+                                    <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+                                </a>
+                                <a href="#" class="btn btn-label-danger btn-round btn-sm" 
+                                   onclick="hapusData(${row.id})">
+                                    <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                </a>`;
                         }
                     }
                 ]
@@ -120,13 +120,13 @@
                         $.ajax({
                             url: `http://127.0.0.1:8000/api/categorys/${setIdKategori}`, // Endpoint API untuk detail kategori
                             method: 'GET',
-                            success: function(response) {
+                            success: function (response) {
                                 if (response.data) {
                                     // Isi form dengan data yang sudah ada
                                     $('#jenis_kategori').val(response.data.jenis_kategori);
                                 }
                             },
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 console.error('Error fetching data for edit:', error);
                             }
                         });
@@ -143,7 +143,7 @@
             }
 
             // Submit form untuk tambah/ubah
-            $("#dataForm").submit(function(event) {
+            $("#dataForm").submit(function (event) {
                 event.preventDefault();
 
                 let formData = new FormData(this);
@@ -161,7 +161,7 @@
                     data: formData,
                     contentType: false,
                     processData: false,
-                    success: function(response) {
+                    success: function (response) {
                         Swal.fire({
                             title: "Sukses!",
                             text: response.pesan || "Data berhasil disimpan.",
@@ -173,7 +173,7 @@
                             }
                         });
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error saving data:', error);
                         Swal.fire({
                             title: "Gagal!",
@@ -199,7 +199,7 @@
                         $.ajax({
                             url: `http://127.0.0.1:8000/api/categorys/${id}`,
                             method: 'DELETE',
-                            success: function(data) {
+                            success: function (data) {
                                 Swal.fire({
                                     title: "Dihapus!",
                                     text: "Data berhasil dihapus.",
@@ -211,7 +211,7 @@
                                     }
                                 });
                             },
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 console.error('Error deleting data:', error);
                                 Swal.fire({
                                     title: "Gagal!",
