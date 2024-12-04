@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('daftarLayanan', LayananController::class)->only(['index']);
     Route::resource('layanan', LayananController::class)->only(['index']);
     Route::resource('orderMasuk', OrderMasukController::class);
-    Route::resource('belumDiambil', OrderMasukController::class);
+    Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
     Route::resource('categori',CategoriController::class);
 
 

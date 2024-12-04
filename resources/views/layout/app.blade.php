@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>MamaLaundry</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{asset('assets/img/kaiadmin/favicon.ico')}}" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
         WebFont.load({
             google: {
@@ -30,12 +30,12 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/kaiadmin.min.css')}}">
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                 <div class="logo-header" data-background-color="dark">
 
                     <a href="index.html" class="logo">
-                        <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
+                        <img src="{{asset('assets/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand"
                             height="20">
                     </a>
                     <div class="nav-toggle">
@@ -313,7 +313,7 @@
                     <div class="logo-header" data-background-color="dark">
 
                         <a href="index.html" class="logo">
-                            <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
+                            <img src="{{asset('assets/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand"
                                 height="20">
                         </a>
                         <div class="nav-toggle">
@@ -380,7 +380,7 @@
                                             <div class="notif-center">
                                                 <a href="#">
                                                     <div class="notif-img">
-                                                        <img src="assets/img/jm_denis.jpg" alt="Img Profile">
+                                                        <img src="{{asset('assets/img/jm_denis.jpg')}}" alt="Img Profile">
                                                     </div>
                                                     <div class="notif-content">
                                                         <span class="subject">Jimmy Denis</span>
@@ -392,7 +392,7 @@
                                                 </a>
                                                 <a href="#">
                                                     <div class="notif-img">
-                                                        <img src="assets/img/chadengle.jpg" alt="Img Profile">
+                                                        <img src="{{asset('assets/img/chadengle.jpg')}}" alt="Img Profile">
                                                     </div>
                                                     <div class="notif-content">
                                                         <span class="subject">Chad</span>
@@ -404,7 +404,7 @@
                                                 </a>
                                                 <a href="#">
                                                     <div class="notif-img">
-                                                        <img src="assets/img/mlane.jpg" alt="Img Profile">
+                                                        <img src="{{asset('assets/img/mlane.jpg')}}" alt="Img Profile">
                                                     </div>
                                                     <div class="notif-content">
                                                         <span class="subject">Jhon Doe</span>
@@ -416,7 +416,7 @@
                                                 </a>
                                                 <a href="#">
                                                     <div class="notif-img">
-                                                        <img src="assets/img/talha.jpg" alt="Img Profile">
+                                                        <img src="{{asset('assets/img/talha.jpg')}}" alt="Img Profile">
                                                     </div>
                                                     <div class="notif-content">
                                                         <span class="subject">Talha</span>
@@ -470,7 +470,7 @@
                                                 </a>
                                                 <a href="#">
                                                     <div class="notif-img">
-                                                        <img src="assets/img/profile2.jpg" alt="Img Profile">
+                                                        <img src="{{asset('assets/img/profile2.jpg')}}" alt="Img Profile">
                                                     </div>
                                                     <div class="notif-content">
                                                         <span class="block">
@@ -567,7 +567,7 @@
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="assets/rimg/profile.jpg"  class="avatar-img rounded-circle">
+                                        <img src="{{asset('assets/rimg/profile.jpg')}}" class="avatar-img rounded-circle">
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span> <span class="fw-bold">{{ Auth::user()->name }}</span>
@@ -578,7 +578,8 @@
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-<i class="fas fa-user avatar-img rounded"></i>                                                </div>
+                                                    <i class="fas fa-user avatar-img rounded"></i>
+                                                </div>
                                                 <div class="u-text">
                                                     <h4>{{ Auth::user()->name }}</h4>
                                                     <p class="text-muted">{{ Auth::user()->email }}</p>
@@ -595,8 +596,8 @@
                                             <a class="dropdown-item" href="#">Account Setting</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Logout
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                Logout
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
@@ -612,8 +613,8 @@
                 <!-- End Navbar -->
             </div>
 
-            
-            
+
+
             <div class="container">
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -721,7 +722,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
                             <a href="/layanan" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                                 <div class="d-flex align-items-center">
@@ -738,7 +739,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
                             <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                                 <div class="d-flex align-items-center">
@@ -755,26 +756,25 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/belumDiambil" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
-                                <div class="d-flex align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-warning bubble-shadow-small">
-                                            <i class="fas fa-luggage-cart"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ps-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-title fs-6 fw-bold">Belum Diambil</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+    <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+        <div class="d-flex align-items-center">
+            <div class="icon-big text-center icon-warning bubble-shadow-small">
+                <i class="fas fa-luggage-cart"></i>
+            </div>
+            <div class="col col-stats ps-3 ms-sm-0">
+                <div class="numbers">
+                    <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
                     </div>
                     <br>
-                    
+
                     @yield('content')
 
                     <div class="row">
@@ -878,7 +878,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/id.png"
+                                                                    <img src="{{asset('assets/img/flags/id.png')}}"
                                                                         alt="indonesia">
                                                                 </div>
                                                             </td>
@@ -893,7 +893,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/us.png"
+                                                                    <img src="{{asset('assets/img/flags/us.png')}}"
                                                                         alt="united states">
                                                                 </div>
                                                             </td>
@@ -908,7 +908,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/au.png"
+                                                                    <img src="{{asset('assets/img/flags/au.png')}}"
                                                                         alt="australia">
                                                                 </div>
                                                             </td>
@@ -923,7 +923,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/ru.png" alt="russia">
+                                                                    <img src="{{asset('assets/img/flags/ru.png')}}" alt="russia">
                                                                 </div>
                                                             </td>
                                                             <td>Russia</td>
@@ -937,7 +937,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/cn.png" alt="china">
+                                                                    <img src="{{asset('assets/img/flags/cn.png')}}" alt="china">
                                                                 </div>
                                                             </td>
                                                             <td>China</td>
@@ -951,7 +951,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/br.png" alt="brazil">
+                                                                    <img src="{{asset('assets/img/flags/br.png')}}" alt="brazil">
                                                                 </div>
                                                             </td>
                                                             <td>Brasil</td>
@@ -1000,7 +1000,7 @@
                                     <div class="card-list py-4">
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/jm_denis.jpg" alt="..."
+                                                <img src="{{asset('assets/img/jm_denis.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1031,7 +1031,7 @@
                                         </div>
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/talha.jpg" alt="..."
+                                                <img src="{{asset('assets/img/talha.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1047,7 +1047,7 @@
                                         </div>
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/chadengle.jpg" alt="..."
+                                                <img src="{{asset('assets/img/chadengle.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1355,41 +1355,42 @@
 
     </div>
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="{{asset('assets/js/core/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
 
     <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="{{asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
 
     <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="{{asset('assets/js/plugin/jsvectormap/jsvectormap.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugin/jsvectormap/world.js')}}"></script>
 
     <!-- Sweet Alert -->
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="{{asset('assets/js/kaiadmin.min.js')}}"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>
+    <script src="{{asset('assets/js/setting-demo.js')}}"></script>
+    <script src="{{asset('assets/js/demo.js')}}"></script>
+
     <script>
         $('#lineChart').sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: 'line',
@@ -1419,8 +1420,8 @@
         });
     </script>
     <!-- Bootstrap JS dan dependensi (Popper.js) -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 </body>
 
