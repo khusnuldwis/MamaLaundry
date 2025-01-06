@@ -14,11 +14,12 @@
                         <div class="card-tools">
                             <div class="ms-md-auto py-2 py-md-0 float-end">
                                 <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">Add Customer</a>
+                                    data-bs-target="#orderMasuk">Add Customer</a>
                             </div>
                             <!-- Modal -->
-                            <form id="dataForm" >
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form id="dataForm">
+                                <div class="modal fade" id="orderMasuk" tabindex="-1" aria-labelledby="orderMasukLabel"
+                                    aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -54,7 +55,8 @@
                                                         min="0" step="0.1" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="tanggalPemesanan" class="form-label">Tanggal Pemesanan</label>
+                                                    <label for="tanggalPemesanan" class="form-label">Tanggal
+                                                        Pemesanan</label>
                                                     <input type="date" class="form-control" id="tanggal_pemesanan"
                                                         name="tanggal_pemesanan" required>
                                                 </div>
@@ -65,7 +67,8 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="statusBarang" class="form-label">Status Barang</label>
-                                                    <select class="form-select" id="status_barang" name="status_barang" required>
+                                                    <select class="form-select" id="status_barang" name="status_barang"
+                                                        required>
                                                         <option value="" selected>Pilih Status</option>
                                                         <option value="Proses">Proses</option>
                                                         <option value="Selesai">Selesai</option>
@@ -74,7 +77,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="statusPembayaran" class="form-label">Status Pembayaran</label>
+                                                    <label for="statusPembayaran" class="form-label">Status
+                                                        Pembayaran</label>
                                                     <select class="form-select" id="status_pembayaran"
                                                         name="status_pembayaran" required>
                                                         <option value="" selected>Pilih Status</option>
@@ -86,8 +90,7 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Tutup</button>
-                                                <button type="submit" class="btn btn-primary"
-                                                    >Simpan</button>
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +131,9 @@
 
 <script src="{{ url('dist/js/jquery1.js') }}"></script>
 <script src="{{ url('dist/js/Tables.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -153,7 +158,8 @@
                 LayananSelect.empty(); // Clear existing options
                 LayananSelect.append('<option value="">Pilih Layanan</option>');
                 $.each(data, function(key, category) {
-                    LayananSelect.append('<option value="' + category.id + '">' + category.nama_layanan + '</option>');
+                    LayananSelect.append('<option value="' + category.id + '">' + category
+                        .nama_layanan + '</option>');
                 });
             },
             error: function(xhr, status, error) {
@@ -167,8 +173,7 @@
                 url: 'http://127.0.0.1:8000/api/transaksi',
                 dataSrc: ''
             },
-            columns: [
-                {
+            columns: [{
                     "data": null,
                     "render": function(data, type, row, index) {
                         return index.row + 1; // Auto numbering
@@ -186,7 +191,7 @@
                 {
                     "data": "layanan",
                     "render": function(data) {
-                        return data ? data.nama_layanan : 'N/A'; 
+                        return data ? data.nama_layanan : 'N/A';
                     }
                 },
                 {
@@ -201,39 +206,45 @@
                 {
                     "data": "status_barang",
                     "render": function(data) {
-                        return statusBarang[data] || 'N/A'; 
+                        return statusBarang[data] || 'N/A';
                     }
                 },
                 {
                     "data": "status_pembayaran",
                     "render": function(data) {
-                        return statusPembayaran[data] || 'N/A'; 
+                        return statusPembayaran[data] || 'N/A';
                     }
                 },
                 {
                     data: function(row) {
-                        return 'Rp ' + (row.berat * 10000).toLocaleString('id-ID'); 
+                        return 'Rp ' + (row.berat * 10000).toLocaleString('id-ID');
                     }
                 },
                 {
                     "data": null,
                     "render": function(data, type, row) {
                         return `
-                            <div class="d-flex justify-content-start gap-2">
-                                <a href="#" class="btn btn-label-success btn-round btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
-                                    <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-                                </a>
-                                <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
-                                    <span class="btn-label"><i class="fa fa-times"></i></span> Hapus
-                                </a>
-                            </div>`;
+                                <div class="d-flex justify-content-start gap-2">
+                                    <a href="#" class="btn btn-label-success btn-round btn-sm" 
+                                    data-bs-toggle="modal" data-bs-target="#orderMasuk" 
+                                    data-bs-jenis="Ubah" data-bs-id="${row.id}">
+                                        <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-label-danger btn-round btn-sm" 
+                                    onclick="hapusData(${row.id})">
+                                        <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                    </a>
+                                </div>
+                                `;
                     }
                 }
             ],
-            order: [[0, 'asc']]
+            order: [
+                [0, 'asc']
+            ]
         });
 
-        const targetModal = document.getElementById('exampleModal');
+        const targetModal = document.getElementById('orderMasuk');
         let setIdTransaksi = null; // Initialize transaction ID
 
         if (targetModal) {
@@ -245,7 +256,8 @@
                 // If modal type is "Ubah", fetch data for editing
                 if (jenisModal === "Ubah") {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/transaksi/' + setIdTransaksi, // Use the correct endpoint
+                        url: 'http://127.0.0.1:8000/api/transaksi/' +
+                            setIdTransaksi, // Use the correct endpoint
                         method: 'GET',
                         success: function(data) {
                             $('#nama_pelanggan').val(data.nama_pelanggan);
@@ -273,7 +285,7 @@
                     $('#tanggal_selesai').val('');
                     $('#status_barang').val('');
                     $('#status_pembayaran').val('');
-                    
+
                     setIdTransaksi = null; // Reset ID
                 }
 
@@ -287,7 +299,7 @@
             event.preventDefault();
             let formData = new FormData(this);
             let sendData = 'http://127.0.0.1:8000/api/transaksi/';
-            let setMethod = 'POST'; 
+            let setMethod = 'POST';
 
             if (setIdTransaksi) {
                 sendData += setIdTransaksi;
@@ -300,7 +312,7 @@
                 url: sendData,
                 method: setMethod,
                 data: formData,
-                contentType: false, 
+                contentType: false,
                 processData: false,
                 success: function(response) {
                     Swal.fire({
@@ -318,7 +330,8 @@
                     console.error('Error saving data:', error);
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON
+                        text: "Terjadi kesalahan saat menyimpan data: " + xhr
+                            .responseJSON
                             .pesan,
                         icon: "error"
                     });
@@ -351,4 +364,3 @@
         });
     }
 </script>
-

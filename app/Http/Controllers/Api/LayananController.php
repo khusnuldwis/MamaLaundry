@@ -26,7 +26,7 @@ class LayananController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
     public function store(Request $request)
     {
         try {
@@ -42,23 +42,34 @@ class LayananController extends Controller
 
             return response()->json(['pesan' => "Layanan berhasil ditambahkan"], 200);
         } catch (\Throwable $th) {
-            return response()->json(['pesan' => "Layanan gaggal ditambahkan"], 200);
+            return response()->json(['pesan' => "Layanan gagal ditambahkan"], 500);
         }
     }
     /**
      * Display the specified resource.
      */
+    // public function show($id)
+    // {
+    //     // Ambil data layanan berdasarkan ID, jika tidak ditemukan, kirimkan response error
+    //     $layanan = Layanan::with('category')->find($id);
+
+    //     if (!$layanan) {
+    //         return response()->json(['error' => 'Layanan tidak ditemukan'], 404);
+    //     }
+
+    //     return response()->json($layanan);
+    // }
     public function show($id)
     {
-        // Ambil data layanan berdasarkan ID, jika tidak ditemukan, kirimkan response error
-        $layanan = Layanan::with('category')->find($id);
+        $layanan = Layanan::find($id);
 
         if (!$layanan) {
-            return response()->json(['error' => 'Layanan tidak ditemukan'], 404);
+            return response()->json(['message' => 'Data not found'], 404);
         }
 
-        return response()->json($layanan);
+        return response()->json(['data' => $layanan], 200);
     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -70,22 +81,45 @@ class LayananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
+        // try {
+        //     // Ambil data layanan berdasarkan ID
+        //     $layanan = Layanan::find($id);
+        //     if (!$layanan) {
+        //         return response()->json(['pesan' => 'Layanan tidak ditemukan'], 404);
+        //     }
+
+        //     $data = $request->all();
+
+        //     // Cek apakah ada file thumbnail dan simpan
+        //     if ($request->hasFile('thumbnail')) {
+        //         $file = $request->file('thumbnail')->store('thumbnail', 'public');
+        //         $data['thumbnail'] = $file;
+        //     }
+
+        //     // Update data layanan
+        //     $layanan->update($data);
+
+        //     return response()->json(['pesan' => "Layanan berhasil diubah"], 200);
+        // } catch (\Throwable $th) {
+        //     return response()->json(['pesan' => "Layanan gagal diubah", 'error' => $th->getMessage()], 500);
+        // }
+
         try {
             $data = $request->all();
 
             if ($request->hasFile('thumbnail')) {
-                $file = $data['thumbnail']->store('thumbnail', 'public');
-                $data['thumbnail'] = $file;
-            }
-
+                        $file = $request->file('thumbnail')->store('thumbnail', 'public');
+                        $data['thumbnail'] = $file;
+                    }
+        
 
             $update = Layanan::find($id)->update($data);
 
-            return response()->json(['pesan' => "Layanan berhasil diubah"], 200);
+            return response()->json(['pesan' => "Kategori layanan berhasil diubah"], 200);
         } catch (\Throwable $th) {
-            return response()->json(['pesan' => "Layanan berhasil diubah"], 200);
+            return response()->json(['pesan' => "Gagal mengubah kategori layanan"], 500);
         }
     }
 

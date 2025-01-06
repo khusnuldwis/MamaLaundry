@@ -11,7 +11,7 @@
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
                         <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
+                            data-bs-target="#Layanan" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
             </div>
@@ -43,11 +43,11 @@
     </div>
 
     <form id="dataForm">
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="Layanan" tabindex="-1" aria-labelledby="LayananLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="LayananLabel">Modal title</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -124,7 +124,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
     <script>
-        // new DataTable('#example');
         $(document).ready(function() {
             // Enum mappings
             const jenisLayananMapping = {
@@ -132,43 +131,43 @@
                 2: 'Kilat',
                 3: 'Express'
             };
-
+    
             const unitMapping = {
                 1: 'Kg',
                 2: 'Pcs'
             };
+    
+            // Fetch categories for select input
             $.ajax({
                 url: 'http://127.0.0.1:8000/api/categorys',
                 method: 'GET',
                 success: function(data) {
                     let timSelect = $('#category_id');
-                    timSelect.empty(); // Hapus opsi yang ada
-                    timSelect.append(
-                        '<option value="">Pilih Categori</option>'); // Tambahkan opsi default
+                    timSelect.empty(); // Remove existing options
+                    timSelect.append('<option value="">Pilih Categori</option>'); // Add default option
                     $.each(data, function(key, category) {
-                        timSelect.append('<option value="' + category.id + '">' + category
-                            .jenis_kategori + '</option>');
+                        timSelect.append('<option value="' + category.id + '">' + category.jenis_kategori + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error fetching proyek data:', error);
+                    console.error('Error fetching category data:', error);
                 }
             });
-
+    
+            // Initialize DataTable
             $('#example').DataTable({
                 ajax: {
                     url: 'http://127.0.0.1:8000/api/layanans', // Your API endpoint
                     dataSrc: ''
                 },
-                columns: [{
+                columns: [
+                    {
                         "data": null,
                         "render": function(data, type, row, index) {
                             return index.row + 1; // Auto numbering
                         }
                     },
-                    {
-                        "data": "nama_layanan" // Display service name directly
-                    },
+                    { "data": "nama_layanan" },
                     {
                         "data": "thumbnail",
                         "render": function(data) {
@@ -190,20 +189,17 @@
                     {
                         "data": null,
                         "render": function(data, type, row) {
-                            return row.category ? row.category.jenis_kategori :
-                                'N/A'; // Display category name
+                            return row.category ? row.category.jenis_kategori : 'N/A'; // Category name
                         }
                     },
-                    {
-                        "data": "harga" // Display price
-                    },
+                    { "data": "harga" },
                     {
                         "data": null,
                         "render": function(data, type, row) {
                             return `
                                 <div class="d-flex justify-content-start gap-2">
                                     <a href="#" class="btn btn-label-success btn-round btn-sm" 
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                    data-bs-toggle="modal" data-bs-target="#Layanan" 
                                     data-bs-jenis="Ubah" data-bs-id="${row.id}">
                                         <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
                                     </a>
@@ -218,21 +214,20 @@
                 ]
             });
         });
-
-        const targetModal = document.getElementById('exampleModal');
-        let setIdlayanan = null; // Inisialisasi ID tim
-
+    
+        const targetModal = document.getElementById('Layanan');
+        let setIdlayanan = null;
+    
         if (targetModal) {
             targetModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget; // Tombol yang memicu modal
-                const jenisModal = button.getAttribute('data-bs-jenis'); // Ambil jenis modal
-                setIdlayanan = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
-
-                // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
+                const button = event.relatedTarget; // Button that triggered the modal
+                const jenisModal = button.getAttribute('data-bs-jenis'); // Get modal type
+                setIdlayanan = button.getAttribute('data-bs-id'); // Get service ID if present
+    
                 if (jenisModal === "Ubah") {
+                    // Fetch the service data for editing
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/layanans/' +
-                            setIdlayanan, // Menggunakan endpoint show
+                        url: `http://127.0.0.1:8000/api/layanans/${setIdlayanan}`,
                         method: 'GET',
                         success: function(data) {
                             $('#nama_layanan').val(data.data.nama_layanan);
@@ -240,20 +235,20 @@
                             $('#unit').val(data.data.unit);
                             $('#harga').val(data.data.harga);
                             $('#category_id').val(data.data.category_id);
-
-                            $('#pr_thumbnail').remove();
+    
+                            $('#pr_thumbnail').remove(); // Remove existing preview
                             if (data.data.thumbnail) {
                                 $('#thumbnail').after(
-                                    `<div id="pr_thumbnail"><img src="/storage/${data.data.thumbnail}" width="30px">`
+                                    `<div id="pr_thumbnail"><img src="/storage/${data.data.thumbnail}" width="30px"></div>`
                                 );
                             }
-
                         },
                         error: function(xhr, status, error) {
                             console.error('Error fetching data for edit:', error);
                         }
                     });
                 } else {
+                    // Clear form fields for adding new entry
                     $('#thumbnail').val('');
                     $('#unit').val('');
                     $('#harga').val('');
@@ -261,30 +256,27 @@
                     $('#jenis_layanan').val('');
                     $('#category_id').val('');
                     setIdlayanan = null; 
-
-                    $('#pr_gambar_tim').remove();
-
+    
+                    $('#pr_thumbnail').remove();
                 }
-
+    
                 const modalTitle = targetModal.querySelector('.modal-title');
                 modalTitle.textContent = `${jenisModal} Layanan`;
             });
         }
-
-        // Submit form untuk tambah dan ubah
+    
+        // Handle form submission for both adding and updating
         $("#dataForm").submit(function(event) {
             event.preventDefault();
             let formData = new FormData(this);
             let sendData = 'http://127.0.0.1:8000/api/layanans/';
-            let setMethod = 'POST'; 
-
+            let setMethod = 'POST'; // Default method for adding
+    
             if (setIdlayanan) {
                 sendData += setIdlayanan;
-                setMethod =
-                    'POST';
-                formData.append('_method', 'PUT');
+                setMethod = 'PUT'; // Use PUT for updating
             }
-
+    
             $.ajax({
                 url: sendData,
                 method: setMethod,
@@ -299,7 +291,7 @@
                         timer: 2000,
                         timerProgressBar: true,
                         didClose: () => {
-                            location.reload();
+                            location.reload(); // Reload the page after success
                         }
                     });
                 },
@@ -307,14 +299,14 @@
                     console.error('Error saving data:', error);
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON
-                            .pesan,
+                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON.pesan,
                         icon: "error"
                     });
                 }
             });
         });
-
+    
+        // Handle delete
         function hapusData(id) {
             Swal.fire({
                 title: "Bener Mau Hapus Dia?",
@@ -337,8 +329,7 @@
                                 timer: 2000, 
                                 timerProgressBar: true, 
                                 didClose: () => {
-                                    location
-                                        .reload(); 
+                                    location.reload(); // Reload the page after success
                                 }
                             })
                         }
@@ -347,4 +338,5 @@
             });
         }
     </script>
+    
 @endsection

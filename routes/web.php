@@ -49,7 +49,7 @@ Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage'
 
 // Register only the index route
 Route::resource('daftarLayanan', LayananController::class)->only(['index']);
-Route::resource('layanan', LayananController::class)->only(['index']);
+Route::resource('layanan', LayananController::class)->only(['index', 'store', 'update']);
 Route::resource('orderMasuk', OrderMasukController::class);
 Route::resource('belumDiambil', OrderMasukController::class);
 
