@@ -17,7 +17,18 @@ class OrderMasukController extends Controller
  
         return view('orderMasuk', compact('transaksis','layanans'));  
     }
- 
+    public function belumDiambil()
+{
+    $transaksis = Transaksi::with('layanan')
+        ->where('status_barang', 'Belum Diambil')
+        ->get();
+
+    return view('belum_diambil', compact('transaksis'));
+}
+
+
+
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([

@@ -4,15 +4,14 @@
     Single Tabel
 @endsection
 @section('content')
-
     <div class="card card-round">
         <div class="card-header">
             <div class="card-head-row">
                 <div class="card-title">Layanan</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-bs-jenis="Tambah">Tambah</a>
+                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +28,7 @@
                             <th scope="col">Gambar Item</th>
                             <th scope="col">Jenis Layanan</th>
                             <th scope="col">Unit</th>
-                            <th scope="col">category_id</th>
+                            <th scope="col">Nama Kategori</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -54,17 +53,21 @@
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label for="thumbnail" class="col-sm-4 col-form-label">Gambar
-                                Layanan</label>
+                                Item</label>
                             <div class="col-sm-8">
                                 <input type="file" class="form-control" id="thumbnail" name="thumbnail"
                                     placeholder="Masukkan gambar Layanan">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Layanan</label>
+                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Item</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
+<<<<<<< HEAD
                                     placeholder="Masukkan nama layanan ">
+=======
+                                    placeholder="Masukkan Nama Item ">
+>>>>>>> dd752ff0bcfd7ed3d136bd8f74ba61307971ccd8
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -93,14 +96,16 @@
                             <div class="col-sm-8">
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Pilih category</option>
+
                                 </select>
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="harga" class="col-sm-4 col-form-label">Harga</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="harga" name="harga"
-                                    placeholder="Masukkan Nama Panggilan">
+                                <input type="number" class="form-control" id="harga" name="harga"
+                                    placeholder="Masukkan Harga">
                             </div>
                         </div>
 
@@ -136,6 +141,23 @@
                 1: 'Kg',
                 2: 'Pcs'
             };
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/categorys',
+                method: 'GET',
+                success: function(data) {
+                    let timSelect = $('#category_id');
+                    timSelect.empty(); // Hapus opsi yang ada
+                    timSelect.append(
+                        '<option value="">Pilih Categori</option>'); // Tambahkan opsi default
+                    $.each(data, function(key, category) {
+                        timSelect.append('<option value="' + category.id + '">' + category
+                            .jenis_kategori + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching proyek data:', error);
+                }
+            });
 
             $('#example').DataTable({
                 ajax: {
@@ -172,7 +194,7 @@
                     {
                         "data": null,
                         "render": function(data, type, row) {
-                            return row.category ? row.category.nama_kategori :
+                            return row.category ? row.category.jenis_kategori :
                                 'N/A'; // Display category name
                         }
                     },

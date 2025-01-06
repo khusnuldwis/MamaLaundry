@@ -5,10 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>MamaLaundry</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="{{asset('assets/img/kaiadmin/favicon.ico')}}" type="image/x-icon" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
     <script>
         WebFont.load({
             google: {
@@ -27,310 +31,27 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/plugins.min.css">
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/kaiadmin.min.css')}}">
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
+    
 </head>
 
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar" data-background-color="dark">
-            <div class="sidebar-logo">
-                <!-- Logo Header -->
-                <div class="logo-header" data-background-color="dark">
-
-                    <a href="index.html" class="logo">
-                        <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
-                            height="20">
-                    </a>
-                    <div class="nav-toggle">
-                        <button class="btn btn-toggle toggle-sidebar">
-                            <i class="gg-menu-right"></i>
-                        </button>
-                        <button class="btn btn-toggle sidenav-toggler">
-                            <i class="gg-menu-left"></i>
-                        </button>
-                    </div>
-                    <button class="topbar-toggler more">
-                        <i class="gg-more-vertical-alt"></i>
-                    </button>
-
-                </div>
-                <!-- End Logo Header -->
-            </div>
-            <div class="sidebar-wrapper scrollbar scrollbar-inner">
-                <div class="sidebar-content">
-                    <ul class="nav nav-secondary">
-                        <li class="nav-item active">
-                            <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
-                                <i class="fas fa-home"></i>
-                                <p>Dashboard</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="dashboard">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="/home">
-                                            <span class="sub-item">Home</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#base">
-                                <i class="fas fa-layer-group"></i>
-                                <p>Pesanan Masuk</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="base">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="/orderMasuk">
-                                            <span class="sub-item">Order Masuk</span>
-                                        </a>
-                                    </li>
-                                    {{-- <li>
-                                        <a href="components/buttons.html">
-                                            <span class="sub-item">Buttons</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/gridsystem.html">
-                                            <span class="sub-item">Grid System</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/panels.html">
-                                            <span class="sub-item">Panels</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/notifications.html">
-                                            <span class="sub-item">Notifications</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/sweetalert.html">
-                                            <span class="sub-item">Sweet Alert</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/font-awesome-icons.html">
-                                            <span class="sub-item">Font Awesome Icons</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/simple-line-icons.html">
-                                            <span class="sub-item">Simple Line Icons</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="components/typography.html">
-                                            <span class="sub-item">Typography</span>
-                                        </a>
-                                    </li> --}}
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                                <i class="fas fa-th-list"></i>
-                                <p>Layanan</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="sidebarLayouts">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="/layanan">
-                                            <span class="sub-item">Data Layanan</span>
-                                        </a>
-                                    </li>
-                                    {{-- <li>
-                                        <a href="icon-menu.html">
-                                            <span class="sub-item">Icon Menu</span>
-                                        </a>
-                                    </li> --}}
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Kategori Layanan</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="/kategori">
-                                            <span class="sub-item">Kategori Layanan</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#tables">
-                                <i class="fas fa-table"></i>
-                                <p>Pesanan Belum Diambil</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="tables">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="/belumDiambil">
-                                            <span class="sub-item">Pesanan Belum Diambil</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#maps">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Maps</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="maps">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="maps/googlemaps.html">
-                                            <span class="sub-item">Google Maps</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="maps/jsvectormap.html">
-                                            <span class="sub-item">Jsvectormap</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#charts">
-                                <i class="far fa-chart-bar"></i>
-                                <p>Charts</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="charts">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="charts/charts.html">
-                                            <span class="sub-item">Chart Js</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="charts/sparkline.html">
-                                            <span class="sub-item">Sparkline</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="widgets.html">
-                                <i class="fas fa-desktop"></i>
-                                <p>Widgets</p>
-                                <span class="badge badge-success">4</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../documentation/index.html">
-                                <i class="fas fa-file"></i>
-                                <p>Documentation</p>
-                                <span class="badge badge-secondary">1</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#submenu">
-                                <i class="fas fa-bars"></i>
-                                <p>Menu Levels</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="submenu">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a data-bs-toggle="collapse" href="#subnav1">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav1">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a data-bs-toggle="collapse" href="#subnav2">
-                                            <span class="sub-item">Level 1</span>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <div class="collapse" id="subnav2">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">Level 2</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="sub-item">Level 1</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> --}}
-                    </ul>
-                </div>
-            </div>
-        </div>
+        @include('layout.sidebar')
         <!-- End Sidebar -->
 
         <div class="main-panel">
-            <div class="main-header">
-                <div class="main-header-logo">
-                    <!-- Logo Header -->
-                    <div class="logo-header" data-background-color="dark">
+            @include('layout.nav')
 
-                        <a href="index.html" class="logo">
-                            <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
-                                height="20">
-                        </a>
-                        <div class="nav-toggle">
-                            <button class="btn btn-toggle toggle-sidebar">
-                                <i class="gg-menu-right"></i>
-                            </button>
-                            <button class="btn btn-toggle sidenav-toggler">
-                                <i class="gg-menu-left"></i>
-                            </button>
-                        </div>
-                        <button class="topbar-toggler more">
-                            <i class="gg-more-vertical-alt"></i>
-                        </button>
 
-                    </div>
-                    <!-- End Logo Header -->
-                </div>
-                <!-- Navbar Header -->
-                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
 
+<<<<<<< HEAD
                     <div class="container-fluid">
                         <nav
                             class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
@@ -604,6 +325,8 @@
                 <!-- End Navbar -->
             </div>
 
+=======
+>>>>>>> dd752ff0bcfd7ed3d136bd8f74ba61307971ccd8
             <div class="container">
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -611,10 +334,10 @@
                             <h3 class="fw-bold mb-3">Dashboard</h3>
                             <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
                         </div>
-                        <div class="ms-md-auto py-2 py-md-0">
+                        {{-- <div class="ms-md-auto py-2 py-md-0">
                             <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                             <a href="#" class="btn btn-primary btn-round">Add Customer</a>
-                        </div>
+                        </div> --}}
                     </div>
                     {{-- <div class="row">
                         <div class="col-sm-6 col-md-3">
@@ -696,7 +419,7 @@
                     </div> --}}
                     <div class="row">
                         <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/orderMasuk" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
+                            <a href="/orders" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
                                 <div class="d-flex align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-primary bubble-shadow-small">
@@ -711,7 +434,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
                             <a href="/layanan" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                                 <div class="d-flex align-items-center">
@@ -728,7 +451,7 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
                             <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
                                 <div class="d-flex align-items-center">
@@ -745,26 +468,25 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/belumDiambil" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
-                                <div class="d-flex align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-warning bubble-shadow-small">
-                                            <i class="fas fa-luggage-cart"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ps-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-title fs-6 fw-bold">Belum Diambil</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+    <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+        <div class="d-flex align-items-center">
+            <div class="icon-big text-center icon-warning bubble-shadow-small">
+                <i class="fas fa-luggage-cart"></i>
+            </div>
+            <div class="col col-stats ps-3 ms-sm-0">
+                <div class="numbers">
+                    <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
                     </div>
                     <br>
-                    
+
                     @yield('content')
 
                     <div class="row">
@@ -868,7 +590,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/id.png"
+                                                                    <img src="{{asset('assets/img/flags/id.png')}}"
                                                                         alt="indonesia">
                                                                 </div>
                                                             </td>
@@ -883,7 +605,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/us.png"
+                                                                    <img src="{{asset('assets/img/flags/us.png')}}"
                                                                         alt="united states">
                                                                 </div>
                                                             </td>
@@ -898,7 +620,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/au.png"
+                                                                    <img src="{{asset('assets/img/flags/au.png')}}"
                                                                         alt="australia">
                                                                 </div>
                                                             </td>
@@ -913,7 +635,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/ru.png" alt="russia">
+                                                                    <img src="{{asset('assets/img/flags/ru.png')}}" alt="russia">
                                                                 </div>
                                                             </td>
                                                             <td>Russia</td>
@@ -927,7 +649,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/cn.png" alt="china">
+                                                                    <img src="{{asset('assets/img/flags/cn.png')}}" alt="china">
                                                                 </div>
                                                             </td>
                                                             <td>China</td>
@@ -941,7 +663,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="flag">
-                                                                    <img src="assets/img/flags/br.png" alt="brazil">
+                                                                    <img src="{{asset('assets/img/flags/br.png')}}" alt="brazil">
                                                                 </div>
                                                             </td>
                                                             <td>Brasil</td>
@@ -990,7 +712,7 @@
                                     <div class="card-list py-4">
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/jm_denis.jpg" alt="..."
+                                                <img src="{{asset('assets/img/jm_denis.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1021,7 +743,7 @@
                                         </div>
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/talha.jpg" alt="..."
+                                                <img src="{{asset('assets/img/talha.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1037,7 +759,7 @@
                                         </div>
                                         <div class="item-list">
                                             <div class="avatar">
-                                                <img src="assets/img/chadengle.jpg" alt="..."
+                                                <img src="{{asset('assets/img/chadengle.jpg')}}" alt="..."
                                                     class="avatar-img rounded-circle">
                                             </div>
                                             <div class="info-user ms-3">
@@ -1345,41 +1067,42 @@
 
     </div>
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="{{asset('assets/js/core/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
 
     <!-- Chart JS -->
-    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="{{asset('assets/js/plugin/chart.js/chart.min.js')}}"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="{{asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
 
     <!-- Chart Circle -->
-    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
 
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="{{asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="{{asset('assets/js/plugin/jsvectormap/jsvectormap.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugin/jsvectormap/world.js')}}"></script>
 
     <!-- Sweet Alert -->
-    <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="{{asset('assets/js/kaiadmin.min.js')}}"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>
+    <script src="{{asset('assets/js/setting-demo.js')}}"></script>
+    <script src="{{asset('assets/js/demo.js')}}"></script>
+
     <script>
         $('#lineChart').sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: 'line',
@@ -1408,6 +1131,10 @@
             fillColor: 'rgba(255, 165, 52, .14)'
         });
     </script>
+    <!-- Bootstrap JS dan dependensi (Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

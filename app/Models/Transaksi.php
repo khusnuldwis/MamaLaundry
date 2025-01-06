@@ -9,12 +9,11 @@ class Transaksi extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function details()
-{
-    return $this->hasMany(Transaksi_Detail::class, 'transaksi_id');
-}
-public function layanan()
+    public function orderdetail() {
+        return $this->hasMany(Transaksi_Detail::class);
+    }
+public function user()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
