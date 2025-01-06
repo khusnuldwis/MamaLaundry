@@ -63,7 +63,11 @@
                             <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Item</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
+<<<<<<< HEAD
+                                    placeholder="Masukkan nama layanan ">
+=======
                                     placeholder="Masukkan Nama Item ">
+>>>>>>> dd752ff0bcfd7ed3d136bd8f74ba61307971ccd8
                             </div>
                         </div>
                         <div class="mb-3 row">
