@@ -1,3 +1,7 @@
+@php
+    $status = $status ?? null; // Nilai default jika tidak didefinisikan
+@endphp
+
 <div class="sidebar" data-background-color="dark">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
