@@ -142,71 +142,81 @@
                         </div>
                     </div> --}}
                     <div class="row">
-                        <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/orders" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
-                                <div class="d-flex align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                            <i class="fas fa-users"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ps-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-title fs-6 fw-bold">Orderan Masuk</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/layanan" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
-                                <div class="d-flex align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-info bubble-shadow-small">
-                                            <i class="fas fa-user-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ps-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-title fs-6 fw-bold">Layanan</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-3 col-md-3 mt-3">
-                            <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
-                                <div class="d-flex align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-info bubble-shadow-small">
-                                            <i class="fas fa-user-check"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ps-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-title fs-6 fw-bold">Kategori</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-3 col-md-3 mt-3">
-    <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
-        <div class="d-flex align-items-center">
-            <div class="icon-big text-center icon-warning bubble-shadow-small">
-                <i class="fas fa-luggage-cart"></i>
-            </div>
-            <div class="col col-stats ps-3 ms-sm-0">
-                <div class="numbers">
-                    <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
+    <!-- Kartu Orderan Masuk (Tampil untuk Admin dan Karyawan) -->
+    <div class="col-sm-3 col-md-3 mt-3">
+        <a href="/orders" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
+            <div class="d-flex align-items-center">
+                <div class="col-icon">
+                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="col col-stats ps-3 ms-sm-0">
+                    <div class="numbers">
+                        <p class="card-title fs-6 fw-bold">Orderan Masuk</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </div>
+
+    <!-- Kartu Layanan (Hanya untuk Admin) -->
+    @if(auth()->user()->role_id == \App\Models\User::ROLE_ADMIN)
+    <div class="col-sm-3 col-md-3 mt-3">
+        <a href="/layanans" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+            <div class="d-flex align-items-center">
+                <div class="col-icon">
+                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="col col-stats ps-3 ms-sm-0">
+                    <div class="numbers">
+                        <p class="card-title fs-6 fw-bold">Layanan</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    @endif
+
+    <!-- Kartu Kategori (Hanya untuk Admin) -->
+    @if(auth()->user()->role_id == \App\Models\User::ROLE_ADMIN)
+    <div class="col-sm-3 col-md-3 mt-3">
+        <a href="/kategori" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+            <div class="d-flex align-items-center">
+                <div class="col-icon">
+                    <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="col col-stats ps-3 ms-sm-0">
+                    <div class="numbers">
+                        <p class="card-title fs-6 fw-bold">Kategori</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    @endif
+
+    <!-- Kartu Belum Diambil (Tampil untuk Admin dan Karyawan) -->
+    <!-- <div class="col-sm-3 col-md-3 mt-3">
+        <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+            <div class="d-flex align-items-center">
+                <div class="icon-big text-center icon-warning bubble-shadow-small">
+                    <i class="fas fa-luggage-cart"></i>
+                </div>
+                <div class="col col-stats ps-3 ms-sm-0">
+                    <div class="numbers">
+                        <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div> -->
 </div>
+
 
                     </div>
                     <br>
