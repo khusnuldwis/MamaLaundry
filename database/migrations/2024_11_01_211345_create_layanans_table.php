@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('layanans', function (Blueprint $table) {
+<<<<<<< Updated upstream:database/migrations/2024_11_01_211345_create_layanans_table.php
             $table->id();
+=======
+            $table->id('layanan_id');
+
+>>>>>>> Stashed changes:database/migrations/2024_09_20_163004_create_layanans_table.php
             $table->string('nama_layanan');
             $table->string('thumbnail');
             $table->enum('jenis_layanan', ['1', '2'])->comment('1=Reguler, 2=Kilat,3=Express');
