@@ -7,23 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaksi_Detail extends Model
 {
-    protected $table = 'transaksi_details'; // Explicitly set the table name
+    use HasFactory;
+
+    protected $table = 'transaksi_details';
+
     protected $guarded = [];
+
+
+    public $timestamps = false;
 
     public function transaksi()
     {
         return $this->belongsTo(Transaksi::class, 'transaksi_id');
     }
-    public function layanan()
-    {
-        return $this->belongsTo(Layanan::class, 'layanan_id');
-    }
-    public function metode()
+    public function metode_layanan()
     {
         return $this->belongsTo(Metode_Layanan::class, 'metode_layanan_id');
     }
-    public function user()
+    public function layanan()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Layanan::class, 'layanan_id');
     }
 }

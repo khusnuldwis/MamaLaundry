@@ -1,114 +1,112 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
+use App\Models\Layanan;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Models\Transaksi_Detail;
-use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+
 class TransaksiController extends Controller
 {
-    // Menampilkan semua data transaksi
+    // Fungsi untuk mengambil semua transaksi
     public function index()
     {
-        $transaksis = Transaksi::with('details')->get();
-        return response()->json($transaksis, 200);
+        $transaksis = Transaksi_Detail::with("layanan")->get();
+        return response()->json($transaksis);
     }
 
-    // Menampilkan form untuk membuat transaksi baru
-    public function create()
-    {
-        return view('transaksi.create');
-    }
-
-    // Menyimpan data transaksi baru ke database
+    // Fungsi untuk menyimpan transaksi baru
     public function store(Request $request)
-   
-       {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
-            'services' => 'required|array|min:1', // Pastikan layanan dipilih
-            'services.*.layanan_id' => 'required|exists:layanans,id', // Pastikan ID layanan ada
-            'services.*.quantity' => 'required|integer|min:1', // Pastikan quantity valid
+{
+    DB::transaction(function () use ($request) {
+        // Buat kode transaksi otomatis
+        $kode_transaksi = 'TRX-' . now()->format('YmdHis');
+
+        // Simpan transaksi
+        $transaksi = Transaksi::create([
+            'kode_transaksi' => $kode_transaksi,
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'no_hp' => $request->no_hp,
+            'tanggal_pemesanan' => $request->tanggal_pemesanan,
+            'tanggal_selesai' => $request->tanggal_selesai,
+            'status_pembayaran' => $request->status_pembayaran,
+            'total_harga' => 0, // Diupdate setelah menghitung detail
         ]);
-    
-        // Jika validasi gagal, kembalikan error
-        if ($validator->fails()) {
-            Log::error('Validation failed: ', $validator->errors()->toArray());
-            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
-        }
-    
-        DB::beginTransaction();
-        try {
-            // Simpan data transaksi
-            $transaksi = Transaksi::create([
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'no_hp' => $request->no_hp,
+
+        // Simpan detail transaksi
+        $total_harga = 0;
+        foreach ($request->details as $detail) {
+            $layanan = Layanan::findOrFail($detail['layanan_id']);
+            $subtotal = $detail['berat'] * $layanan->harga_per_kg;
+            $total_harga += $subtotal;
+
+            Transaksi_Detail::create([
+                'transaksi_id' => $transaksi->id,
+                'layanan_id' => $layanan->id,
+                'berat' => $detail['berat'],
+                'harga_per_kg' => $layanan->harga_per_kg,
+                'subtotal' => $subtotal,
             ]);
-    
-            // Simpan layanan yang dipilih dengan quantity ke tabel pivot
-            foreach ($request->services as $service) {
-                // Pastikan ID layanan dan quantity valid
-                $transaksi->layanans()->attach($service['layanan_id'], ['quantity' => $service['quantity']]);
-            }
-    
-            // Commit transaksi jika tidak ada error
-            DB::commit();
-    
-            return response()->json(['success' => true, 'message' => 'Transaksi berhasil disimpan!']);
-        } catch (\Exception $e) {
-            // Rollback jika terjadi error
-            DB::rollBack();
-            Log::error("Error during transaction: " . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menyimpan data.']);
         }
-    }
+
+        // Update total harga transaksi
+        $transaksi->update(['total_harga' => $total_harga]);
+    });
+
+    return response()->json(['success' => 'Transaksi berhasil disimpan.']);
+}
+
+
+    
     
 
-    // Menampilkan detail transaksi
+    // Fungsi untuk menampilkan detail transaksi
     public function show($id)
     {
-        $transaksi = Transaksi::with('details')->findOrFail($id);
-        return view('transaksi.show', compact('transaksi'));
+        $transaksi = Transaksi::find($id);
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi tidak ditemukan!'], 404);
+        }
+
+        return response()->json($transaksi);
     }
 
-    // Menampilkan form edit transaksi
-    public function edit($id)
-    {
-        $transaksi = Transaksi::with('details')->findOrFail($id);
-        return view('transaksi.edit', compact('transaksi'));
-    }
-
-    // Mengupdate data transaksi
+    // Fungsi untuk memperbarui transaksi
     public function update(Request $request, $id)
     {
-        // Validasi input
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'no_hp' => 'required|string',
+        $transaksi = Transaksi::find($id);
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi tidak ditemukan!'], 404);
+        }
+
+        $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'total_harga' => 'required|numeric|min:0',
         ]);
 
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->update($validated);
+        $transaksi->update([
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'total_harga' => $request->total_harga,
+        ]);
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui!');
+        return response()->json(['message' => 'Transaksi berhasil diperbarui!', 'data' => $transaksi]);
     }
 
-    // Menghapus data transaksi
+    // Fungsi untuk menghapus transaksi
     public function destroy($id)
     {
-        $transaksi = Transaksi::findOrFail($id);
+        $transaksi = Transaksi::find($id);
+
+        if (!$transaksi) {
+            return response()->json(['message' => 'Transaksi tidak ditemukan!'], 404);
+        }
+
         $transaksi->delete();
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus!');
+        return response()->json(['message' => 'Transaksi berhasil dihapus!']);
     }
 }
