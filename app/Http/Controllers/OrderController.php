@@ -29,35 +29,47 @@ class OrderController extends Controller
     // }
     public function index(Request $request)
     {
-        // Ambil status dan range dari input request, dengan default 'masuk' untuk status dan 'hari' untuk range
-        $status = $request->input('status', 'masuk'); // Status default
-        $range = $request->input('range', 'hari'); // Default range 'hari'
-        
-        // Query transaksi berdasarkan status dan range waktu
-        $ordersQuery = Transaksi::where('status_pengerjaan', $status);
+        // Ambil input dari request
+        $status = $request->input('status', 'semua'); // Default 'semua'
+        $range = $request->input('range', 'hari');   // Default 'hari'
     
-        // Filter berdasarkan rentang waktu
-        if ($range == 'hari') {
-            // Ambil transaksi hari ini
-            $ordersQuery->whereDate('created_at', Carbon::today());
-        } elseif ($range == 'minggu') {
-            // Ambil transaksi minggu ini
-            $ordersQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-        } elseif ($range == 'bulan') {
-            // Ambil transaksi bulan ini
-            $ordersQuery->whereMonth('created_at', Carbon::now()->month)
-                        ->whereYear('created_at', Carbon::now()->year);
+        // Mulai query
+        $ordersQuery = Transaksi::query();
+    
+        // Tambahkan filter status pengerjaan
+        if ($status !== 'semua') { 
+            $ordersQuery->where('status_pengerjaan', $status);
         }
     
-        // Ambil data transaksi berdasarkan status dan rentang waktu
+        // Tambahkan filter berdasarkan range waktu
+        switch ($range) {
+            case 'hari':
+                $ordersQuery->whereDate('created_at', Carbon::today());
+                break;
+            case 'minggu':
+                $ordersQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                break;
+            case 'bulan':
+                $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+                            ->whereYear('created_at', Carbon::now()->year);
+                break;
+        }
+    
+        // Eksekusi query
         $order = $ordersQuery->orderBy('id', 'desc')->get();
     
-        // Hitung total harga untuk transaksi yang ditemukan
-        $totalHarga = $order->sum('total_harga'); // Asumsi ada kolom total_harga
+        // Hitung total harga
+        $totalHarga = $order->sum('total_harga');
+    
+        // Debugging query
+        // dd($ordersQuery->toSql(), $ordersQuery->getBindings(), $order);
     
         // Kirim data ke view
         return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
     }
+    
+    
+
     
     
 

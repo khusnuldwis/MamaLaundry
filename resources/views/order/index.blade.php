@@ -6,18 +6,21 @@ Order
 
 @section('content')
 <div class="container mt-5">
-    <div class="card card-round">
-        <div class="card-header">
-            <div class="card-head-row">
-                <div class="card-title">Transaksi</div>
-                <div class="card-tools">
-                    <div class="ms-md-auto py-2 py-md-0 float-end">
+<div class="card card-round">
+    <div class="card-header">
+        <div class="card-head-row">
+            <div class="card-title">Transaksi</div>
+            <div class="card-tools">
+                <div class="ms-md-auto py-2 py-md-0 float-end">
+                    @if($status == 'masuk') <!-- Kondisi untuk memeriksa status -->
                         <a href="{{ route('order.create') }}" class="btn btn-primary box-title m-b-0">Buat Transaksi</a>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     <!-- Tabel Transaksi -->
     <div class="card">
         <div class="card-body">
