@@ -385,7 +385,9 @@
                 </div>
                 
                 <div class="col-sm-4 col-md-3 mt-3">
-                    <a href="/belumDiambil" class="btn btn-outline-warning btn-lg w-100 text-start" style="border-radius: 15px;">
+                <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-warning btn-round">
+    Filter Belum Diambil
+</a>
                         <div class="d-flex align-items-center">
                             <div class="col-icon">
                                 <div class="icon-big text-center icon-warning bubble-shadow-small">

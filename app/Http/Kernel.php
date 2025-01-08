@@ -67,6 +67,13 @@ class Kernel extends HttpKernel
     ];
     protected $routeMiddleware = [
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'must-admin' => \App\Http\Middleware\MustAdmin::class,
+        'checkUser Policy' => \App\Http\Middleware\CheckUser_Policy::class,
+
+    ];
+    protected $policies = [
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
+        
     ];
     
 }

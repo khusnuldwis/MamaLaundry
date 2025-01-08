@@ -12,19 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi_details', function (Blueprint $table) {
-            $table->id('transaksi_details_id');
-            $table->unsignedBigInteger('transaksi_id');
-            $table->unsignedBigInteger('layanan_id');  // Reference to the layanan table
-            $table->float('berat');
-            $table->enum('status_barang', ['Diterima', 'Proses', 'Selesai', 'Diambil']);
-            $table->enum('status_pembayaran', ['Belum Dibayar', 'Lunas']);
-            $table->decimal('total_pembayaran', 10, 2);
+            $table->id(); // Primary Key
+            $table->unsignedBigInteger('transaksi_id')->index(); // Foreign Key ke tabel transaksi
+            $table->unsignedBigInteger('layanan_id')->index(); // Foreign Key ke tabel layanan (jenis layanan yang diambil)
+            $table->unsignedBigInteger('metode_layanan_id')->index(); 
+            $table->integer('berat')->nullable(); // Berat barang dalam kilogram (untuk laundry)
+            $table->integer('harga'); // Harga per kilogram layanan
+            $table->integer('total_harga'); // Total harga untuk layanan ini (berat x harga_per_kg)
             $table->timestamps();
         
-            // Foreign keys
-            $table->foreign('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
-            $table->foreign('layanan_id')->references('id')->on('layanans')->onDelete('cascade');  // Foreign key for layanan
+            
         });
+        
         
     }
 
