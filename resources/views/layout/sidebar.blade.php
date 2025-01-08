@@ -121,12 +121,12 @@
                             <div class="collapse" id="sidebarLayouts">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="{{ url('/order?range=hari') }}">
+                                        <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'hari']) }}">
                                             <span class="sub-item">Order Per Hari</span>
                                         </a>
                                     </li>
                                      <li>
-                                        <a href="{{ url('/order?range=minggu') }}">
+                                        <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'minggu']) }}">
                                             <span class="sub-item">Order Per Minggu</span>
                                         </a>
                                     </li> 
