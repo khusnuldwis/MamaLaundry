@@ -32,8 +32,8 @@ Order
                         <thead>
                             <tr>
                                 <th>Order Masuk</th>
-                                <th>Order Selesai</th>
-                                <th> Order Number</th>
+                              
+                                <th>Kode Transaksi</th>
                                 <th>Nama Pelanggan</th>
                                 <th>No Hp</th>
                                 <th>Total Harga</th>
@@ -48,8 +48,7 @@ Order
                             @foreach ($order as $item)
                             <tr>
                                 <td>{{ $item->created_at->format('Y-m-d H:i:s') }}</td>
-                                <td>{{ $item->tanggal_selesai ?? null }}</td>
-                                <td>{{ $item->number ?? null }}</td>
+                                <td>{{ $item->kode_transaksi ?? null }}</td>
                                 <td>{{ $item->nama_pelanggan}}</td>
                                 <td>{{ $item->no_hp ?? null }}</td>
                                 <td> Rp. {{ number_format($item->total_harga) ?? null }}</td>

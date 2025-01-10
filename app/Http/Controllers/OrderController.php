@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Durasi;
 use App\Models\Layanan;
 use App\Models\Metode_Layanan;
 use App\Models\Transaksi;
@@ -88,8 +89,9 @@ class OrderController extends Controller
         ];
         $layanan = Layanan::orderBy('nama_layanan', 'asc')->get();
         $metode_layanan = Metode_Layanan::orderBy('nama_metode_layanan', 'asc')->get();
+        $durasi = Durasi::orderBy('nama', 'asc')->get();
 
-        return view('order.create', compact('layanan','metode_layanan','jenisLayananMapping'));
+        return view('order.create', compact('layanan','metode_layanan','jenisLayananMapping','durasi'));
     }
 
     /**
@@ -102,45 +104,60 @@ class OrderController extends Controller
          $user_id = $request->user()->id;
      
          $transaksi = Transaksi::create([
-             'number' => 'GS' . now()->format('YmdHis') . rand(100, 999),
+             'kode_transaksi' => 'GS' . now()->format('YmdHis') . rand(5,10),
              'total_harga' => 0,
              'status_pembayaran' => $data['status_pembayaran'] ?? 'Belum Dibayar',
              'status_pengerjaan' => $data['status_pengerjaan'] ?? 'Masuk',
              'nama_pelanggan' => $data['nama_pelanggan'] ?? null,
              'no_hp' => $data['no_hp'] ?? null,
-             'tanggal_selesai' => $data['tanggal_selesai'] ?? null,
              'user_id' => $user_id,
          ]);
      
          $total_harga = 0;
-     
-         if (isset($data['layanan_id'])) {
-             foreach ($data['layanan_id'] as $key => $layanan_id) {
-                 $layanan = Layanan::find($layanan_id);
-                 $berat = $data['berat_item'][$key] ?? 1;
-                 $metode_layanan_id = $data['metode_layanan_id'];
-                 $metode_layanan = Metode_Layanan::find($metode_layanan_id);
-     
-                 if ($layanan && $berat >= 1 && $metode_layanan) {
-                     $harga_layanan = $layanan->harga;
-                     $harga_metode = $metode_layanan->harga;
-     
-                     $orderDetail = Transaksi_Detail::create([
-                         'layanan_id' => $layanan_id,
-                         'transaksi_id' => $transaksi->id,
-                         'metode_layanan_id' => $metode_layanan->id,
-                         'berat' => $berat,
-                         'harga' => $harga_layanan,
-                         'total_harga' => ($berat * $harga_layanan) + $harga_metode,
-                     ]);
-     
-                     $total_harga += $orderDetail->total_harga;
-                 }
-             }
-         }
-     
-         $transaksi->total_harga = $total_harga;
-         $transaksi->save();
+$sub_total = 0;
+
+if (!empty($data['layanan_id'])) {
+    foreach ($data['layanan_id'] as $key => $layanan_id) {
+        // Ambil data layanan, metode layanan, dan durasi
+        $layanan = Layanan::find($layanan_id);
+        $berat = $data['berat_item'][$key] ?? 1; // Default berat = 1 jika tidak ada input
+        $metode_layanan_id = $data['metode_layanan_id'];
+        $metode_layanan = Metode_Layanan::find($metode_layanan_id);
+        $durasi_id = $data['durasi_id'];
+        $durasi = Durasi::find($durasi_id);
+
+        // Validasi semua data ada dan berat valid
+        if ($layanan && $berat >= 1 && $metode_layanan && $durasi) {
+            $harga_layanan = $layanan->harga;
+            $harga_metode = $metode_layanan->harga;
+            $harga_durasi = $durasi->harga;
+
+            // Hitung subtotal dan total harga
+            $sub_total = $berat * $harga_layanan;
+            $total_item_harga = $sub_total + $harga_metode + $harga_durasi;
+
+            // Buat detail transaksi
+            $orderDetail = Transaksi_Detail::create([
+                'layanan_id' => $layanan_id,
+                'transaksi_id' => $transaksi->id,
+                'metode_layanan_id' => $metode_layanan->id,
+                'durasi_id' => $durasi->id,
+                'berat' => $berat,
+                'harga' => $harga_layanan,
+                'sub_total' => $sub_total,
+                'total_harga' => $total_item_harga
+            ]);
+
+            // Tambahkan ke total harga transaksi
+            $total_harga += $orderDetail->total_harga;
+        }
+    }
+}
+
+// Update total harga transaksi
+$transaksi->total_harga = $total_harga;
+$transaksi->save();
+
      
          return redirect()->route('order.show', [$transaksi->id])->with('success', 'Lakukan Pembayaran Terlebih Dahulu');
      }
@@ -161,6 +178,7 @@ class OrderController extends Controller
                 ];
             $layanan = Layanan::orderBy('nama_layanan', 'asc')->get();
             $metode_layanan = Metode_Layanan::orderBy('nama_metode_layanan', 'asc')->get();
+            $durasi = Durasi ::orderBy('nama', 'asc')->get();
         $order = Transaksi::find($id);
         $orderdetail = $order->orderdetail;
 

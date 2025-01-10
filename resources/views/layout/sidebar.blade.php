@@ -113,44 +113,45 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a data-bs-toggle="collapse" href="#pemasukan">
                                 <i class="fas fa-th-list"></i>
                                 <p>Pemasukan</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="sidebarLayouts">
+                            <div class="collapse" id="pemasukan">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'hari']) }}">
                                             <span class="sub-item">Order Per Hari</span>
                                         </a>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'minggu']) }}">
                                             <span class="sub-item">Order Per Minggu</span>
                                         </a>
-                                    </li> 
+                                    </li>
                                 </ul>
                             </div>
                         </li>
+                        
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                            <a data-bs-toggle="collapse" href="#layanan">
                                 <i class="fas fa-th-list"></i>
                                 <p>Layanan</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="sidebarLayouts">
+                            <div class="collapse" id="layanan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="/layanan">
+                                        <a href="/layanans">
                                             <span class="sub-item">Data Layanan</span>
                                         </a>
                                     </li>
-                                    {{-- <li>
-                                        <a href="icon-menu.html">
-                                            <span class="sub-item">Icon Menu</span>
+                                    <li>
+                                        <a href="/durasi">
+                                            <span class="sub-item">Durasi Layanan</span>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                 </ul>
                             </div>
                         </li>

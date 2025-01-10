@@ -34,11 +34,7 @@
                             <input type="text" id="no_hp" name="no_hp" class="form-control" placeholder="Input Nomor HP" required>
                         </div>
 
-                        <!-- Tanggal Selesai -->
-                        <div class="form-group">
-                            <label for="tanggal_selesai">Tanggal Selesai</label>
-                            <input type="date" id="tanggal_selesai" name="tanggal_selesai" class="form-control" required>
-                        </div>
+                        
 
                         <!-- Status Pembayaran -->
                         <div class="form-group">
@@ -74,7 +70,7 @@
                                     <select name="layanan_id[]" class="form-control" required>
                                         @foreach ($layanan as $item)
                                             <option value="{{ $item->id }}">
-                                                {{ $item->nama_layanan }} - {{ $jenisLayananMapping[$item->jenis_layanan] ?? 'N/A' }} - {{ $item->category->jenis_kategori ?? 'N/A' }}
+                                                {{ $item->nama_layanan }} - {{ $item->category->jenis_kategori ?? 'N/A' }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -107,6 +103,16 @@
                                 <option value="" selected disabled>Pilih</option>
                                 @foreach ($metode_layanan as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_metode_layanan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- Durasi Layanan -->
+                        <div class="form-group mt-4">
+                            <label for="durasi_id">Durasi Layanan</label>
+                            <select class="form-control" id="durasi_id" name="durasi_id" required>
+                                <option value="" selected disabled>Pilih</option>
+                                @foreach ($durasi as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

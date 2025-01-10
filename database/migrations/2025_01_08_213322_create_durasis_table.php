@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('layanans', function (Blueprint $table) {
+        Schema::create('durasis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_layanan');
-            $table->string('thumbnail');
-            $table->enum('unit', ['1', '2'])->comment('1=Kg, 2=Pcs');
-            $table->unsignedBigInteger('category_id')->index();
+            $table->string('nama');
+            $table->string('waktu');
             $table->integer('harga');
-         $table->timestamps();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('layanans');
+        Schema::dropIfExists('durasis');
     }
 };

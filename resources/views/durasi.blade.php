@@ -7,16 +7,17 @@
     <div class="card card-round">
         <div class="card-header">
             <div class="card-head-row">
-                <div class="card-title">Layanan</div>
+                <div class="card-title">Durasi</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
+                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal"
                             data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="card">
         <div class="card-body">
             <div class="container">
@@ -24,77 +25,50 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Nama Item</th>
-                            <th scope="col">Gambar Item</th>
-                            <th scope="col">Jenis Layanan</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Nama Kategori</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Durasi</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 
     <form id="dataForm">
+        @csrf
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Kategori</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3 row">
-                            <label for="thumbnail" class="col-sm-4 col-form-label">Gambar
-                                Item</label>
+                            <label for="nama" class="col-sm-4 col-form-label">Nama</label>
                             <div class="col-sm-8">
-                                <input type="file" class="form-control" id="thumbnail" name="thumbnail"
-                                    placeholder="Masukkan gambar Layanan">
+                                <input type="text" class="form-control" id="nama" name="nama"
+                                    placeholder="Masukkan Nama Kategori" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="nama_layanan" class="col-sm-4 col-form-label">Nama Item</label>
+                            <label for="waktu" class="col-sm-4 col-form-label">waktu</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama_layanan" name="nama_layanan"
-                                    placeholder="Masukkan nama layanan ">
+                                <input type="text" class="form-control" id="waktu" name="waktu"
+                                    placeholder="Masukkan waktu Kategori" required>
                             </div>
                         </div>
-                       
-                        <div class="mb-3 row">
-                            <label for="unit" class="col-sm-4 col-form-label">Unit</label>
-                            <div class="col-sm-8">
-                                <select class="form-select" id="unit" name="unit">
-                                    <option value="">Pilih Unit</option>
-                                    <option value="1">Kg</option>
-                                    <option value="2">Pcs</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="category_id" class="col-sm-4 col-form-label">category</label>
-                            <div class="col-sm-8">
-                                <select class="form-select" id="category_id" name="category_id">
-                                    <option value="">Pilih category</option>
-
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="mb-3 row">
                             <label for="harga" class="col-sm-4 col-form-label">Harga</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="harga" name="harga"
-                                    placeholder="Masukkan Harga">
+                                    placeholder="Masukkan harga Kategori" required>
                             </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -116,122 +90,73 @@
     <script>
         // new DataTable('#example');
         $(document).ready(function() {
-            // Enum mappings
-            const jenisLayananMapping = {
-                1: 'Reguler',
-                2: 'Kilat',
-                3: 'Express'
-            };
-
-            const unitMapping = {
-                1: 'Kg',
-                2: 'Pcs'
-            };
-            $.ajax({
-                url: 'http://127.0.0.1:8000/api/categorys',
-                method: 'GET',
-                success: function(data) {
-                    let timSelect = $('#category_id');
-                    timSelect.empty(); // Hapus opsi yang ada
-                    timSelect.append(
-                        '<option value="">Pilih Categori</option>'); // Tambahkan opsi default
-                    $.each(data, function(key, category) {
-                        timSelect.append('<option value="' + category.id + '">' + category
-                            .jenis_kategori + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching proyek data:', error);
-                }
-            });
-
+            
             $('#example').DataTable({
                 ajax: {
-                    url: 'http://127.0.0.1:8000/api/layanans', // Your API endpoint
+                    url: 'http://127.0.0.1:8000/api/durasis', // URL API Anda
                     dataSrc: ''
                 },
                 columns: [{
                         "data": null,
                         "render": function(data, type, row, index) {
-                            return index.row + 1; // Auto numbering
+                            return index.row + 1;
                         }
                     },
+
                     {
-                        "data": "nama_layanan" // Display service name directly
+                        "data": "nama"
                     },
                     {
-                        "data": "thumbnail",
-                        "render": function(data) {
-                            return `<img src="/storage/${data}" width="50" height="50">`; // Thumbnail image
-                        }
-                    },
-                    
-                    {
-                        "data": "unit",
-                        "render": function(data) {
-                            return unitMapping[data] || 'N/A'; // Map to readable name
-                        }
+                        "data": "waktu"
                     },
                     {
-                        "data": null,
-                        "render": function(data, type, row) {
-                            return row.category ? row.category.jenis_kategori :
-                                'N/A'; // Display category name
-                        }
-                    },
-                    {
-                        "data": "harga" // Display price
+                        "data": "harga"
                     },
                     {
                         "data": null,
                         "render": function(data, type, row) {
                             return `
-                                <td>
-                                    <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
-                                        <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-                                    </a>
-                                    <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
-                                        <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-                                    </a>
-                                </td>
-                    `;
+    <td>
+        <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
+            <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+        </a>
+        <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
+            <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+        </a>
+    </td>
+`;
                         }
                     }
+
+
+
+
                 ]
+
             });
         });
-
-
         //const data tidak bisa diubah  dan let bisa diubah 
         // Event listener untuk membuka modal
-
         const targetModal = document.getElementById('exampleModal');
-        let setIdlayanan = null; // Inisialisasi ID tim
+        let setIdKategori = null; // Inisialisasi ID tim
 
         if (targetModal) {
             targetModal.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget; // Tombol yang memicu modal
                 const jenisModal = button.getAttribute('data-bs-jenis'); // Ambil jenis modal
-                setIdlayanan = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
+                setIdKategori = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
 
                 // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
                 if (jenisModal === "Ubah") {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/layanans/' +
-                            setIdlayanan, // Menggunakan endpoint show
+                        url: 'http://127.0.0.1:8000/api/durasis/' +
+                            setIdKategori, // Menggunakan endpoint show
                         method: 'GET',
                         success: function(data) {
-                            $('#nama_layanan').val(data.data.nama_layanan);
-                            $('#unit').val(data.data.unit);
+                            $('#nama').val(data.data.nama);
+                            $('#waktu').val(data.data.waktu);
                             $('#harga').val(data.data.harga);
-                            $('#category_id').val(data.data.category_id);
 
-                            $('#pr_thumbnail').remove();
-                            if (data.data.thumbnail) {
-                                $('#thumbnail').after(
-                                    `<div id="pr_thumbnail"><img src="/storage/${data.data.thumbnail}" width="30px">`
-                                );
-                            }
 
                         },
                         error: function(xhr, status, error) {
@@ -240,14 +165,13 @@
                     });
                 } else {
                     // Kosongkan input saat menambah data baru
-                    $('#thumbnail').val('');
-                    $('#unit').val('');
-                    $('#harga').val('');
-                    $('#nama_layanan').val('');
-                    $('#category_id').val('');
-                    setIdlayanan = null; // Reset ID tim
 
-                    $('#pr_gambar_tim').remove();
+                    $('#nama').val('');
+                    $('#harga').val('');
+                    $('#waktu').val('');
+
+                    setIdKategori = null; // Reset ID tim
+
 
                 }
 
@@ -261,12 +185,12 @@
         $("#dataForm").submit(function(event) {
             event.preventDefault();
             let formData = new FormData(this);
-            let sendData = 'http://127.0.0.1:8000/api/layanans/';
+            let sendData = 'http://127.0.0.1:8000/api/durasis/';
             let setMethod = 'POST'; // Default method adalah POST
 
             // Jika ada ID, gunakan PUT untuk update
-            if (setIdlayanan) {
-                sendData += setIdlayanan;
+            if (setIdKategori) {
+                sendData += setIdKategori;
                 setMethod =
                     'POST'; // Method harus tetap POST karena Anda menggunakan _method untuk menyimulasikan PUT
                 formData.append('_method', 'PUT');
@@ -317,7 +241,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/layanans/' + id,
+                        url: 'http://127.0.0.1:8000/api/durasis/' + id,
                         method: 'DELETE',
                         success: function(data) {
                             Swal.fire({

@@ -56,7 +56,6 @@ class LayananController extends Controller
 
         $validatedData = $request->validate([
             'nama_layanan' => 'required|string|max:255',
-            'jenis_layanan' => 'required',
             'unit' => 'required',
             'harga' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',

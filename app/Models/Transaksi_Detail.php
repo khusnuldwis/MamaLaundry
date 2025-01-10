@@ -20,6 +20,10 @@ class Transaksi_Detail extends Model
     {
         return $this->belongsTo(Transaksi::class, 'transaksi_id');
     }
+    public function durasi()
+    {
+        return $this->belongsTo(Durasi::class, 'durasi_id');
+    }
     public function metode_layanan()
     {
         return $this->belongsTo(Metode_Layanan::class, 'metode_layanan_id');

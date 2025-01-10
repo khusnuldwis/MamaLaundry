@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
     <!-- Fonts and icons -->
     <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
@@ -37,7 +37,7 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
-    
+
 </head>
 
 <body>
@@ -53,17 +53,17 @@
 
             <div class="container">
                 <div class="page-inner">
-                    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                         <div>
-                            <h3 class="fw-bold mb-3">Dashboard</h3>
-                            <h6 class="op-7 mb-2">MamaLaundry</h6>
+                            <h3 class="fw-bold">Dashboard</h3>
+                            <!-- <h6 class="op-7 mb-2">MamaLaundry</h6> -->
                         </div>
-                        {{-- <div class="ms-md-auto py-2 py-md-0">
+                        <!-- {{-- <div class="ms-md-auto py-2 py-md-0">
                             <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                             <a href="#" class="btn btn-primary btn-round">Add Customer</a>
-                        </div> --}}
+                        </div> --}} -->
                     </div>
-                    {{-- <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-6 col-md-3">
                             <div class="card card-stats card-round">
                                 <div class="card-body ">
@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="row">
                         <div class="col-sm-3 col-md-3 mt-3">
                             <a href="/orders" class="btn btn-outline-primary btn-lg w-100 text-start" style="border-radius: 15px;">
@@ -194,29 +194,29 @@
                         </div>
 
                         <div class="col-sm-3 col-md-3 mt-3">
-    <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
-        <div class="d-flex align-items-center">
-            <div class="icon-big text-center icon-warning bubble-shadow-small">
-                <i class="fas fa-luggage-cart"></i>
-            </div>
-            <div class="col col-stats ps-3 ms-sm-0">
-                <div class="numbers">
-                    <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
-                </div>
-            </div>
-        </div>
-    </a>
-</div>
+                            <a href="{{ route('orderMasuk.belumDiambil') }}" class="btn btn-outline-info btn-lg w-100 text-start" style="border-radius: 15px;">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-big text-center icon-warning bubble-shadow-small">
+                                        <i class="fas fa-luggage-cart"></i>
+                                    </div>
+                                    <div class="col col-stats ps-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-title fs-6 fw-bold mb-0">Belum Diambil</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-                    </div>
-                    <br>
+                    </div> -->
+                    <!-- <br> -->
 
                     @yield('content')
 
-                  
-    <!-- Bootstrap JS dan dependensi (Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+                    <!-- Bootstrap JS dan dependensi (Popper.js) -->
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 </body>
 

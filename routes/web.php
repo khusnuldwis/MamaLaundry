@@ -83,6 +83,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', function () {
         return view('orderMasuk');
     });
+    Route::get('/durasi', function () {
+        return view('durasi');
+    });
     });
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/home', [HomeController::class, 'index'])->name('home');

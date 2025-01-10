@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('transaksi_id')->index(); // Foreign Key ke tabel transaksi
             $table->unsignedBigInteger('layanan_id')->index(); // Foreign Key ke tabel layanan (jenis layanan yang diambil)
             $table->unsignedBigInteger('metode_layanan_id')->index(); 
+            $table->unsignedBigInteger('durasi_id')->index(); 
             $table->integer('berat')->nullable(); // Berat barang dalam kilogram (untuk laundry)
             $table->integer('harga'); // Harga per kilogram layanan
             $table->integer('total_harga'); // Total harga untuk layanan ini (berat x harga_per_kg)

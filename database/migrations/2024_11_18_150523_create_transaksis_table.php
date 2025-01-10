@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id(); // Primary Key
-            $table->string('number')->unique(); // Kode unik transaksi
+            $table->string('kode_transaksi')->unique(); // Kode unik transaksi
             $table->unsignedBigInteger('user_id')->index();
             $table->string('nama_pelanggan'); // Nama pelanggan
             $table->string('no_hp'); // Nomor telepon pelanggan
-            $table->date('tanggal_selesai')->nullable(); // Tanggal selesai
             $table->enum('status_pembayaran', ['Belum Dibayar', 'Lunas']); // Status pembayaran
             $table->integer('total_harga')->nullable(); // Total harga transaksi (dihitung dari detail transaksi)
             $table->timestamps();
