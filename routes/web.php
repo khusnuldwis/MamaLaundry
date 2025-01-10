@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\CategoryLayananController as ApiCategoryLayananCont
 use App\Http\Controllers\Back\CategoryLayananController;
 use App\Http\Controllers\Back\KaryawanController;
 use App\Http\Controllers\Back\MetodeLayananController;
-use App\Http\Controllers\CategoriController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\OrderController;
@@ -41,6 +40,11 @@ Route::get('/tes', function () {
 Route::get('/', function () {
     return view('auth.login');
 });
+<<<<<<< HEAD
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
+=======
 
 Route::middleware(['auth', 'verified','must-admin'])->group(function () {
     
@@ -52,8 +56,14 @@ Route::middleware(['auth', 'verified','must-admin'])->group(function () {
     Route::resource('categori',CategoriController::class);
     Route::resource('order',OrderController::class);
     Route::post('/transaksi/update-status/{id}', [OrderController::class, 'updateStatus']);
+>>>>>>> ac5a93aad188f3e4aa46d4e76834f9df84425dff
 
 
+// Register only the index route
+Route::resource('daftarLayanan', LayananController::class)->only(['index']);
+Route::resource('layanan', LayananController::class)->only(['index', 'store', 'update']);
+Route::resource('orderMasuk', OrderMasukController::class);
+Route::resource('belumDiambil', OrderMasukController::class);
 
 Route::resource('kategori', ApiCategoryLayananController::class);
 
@@ -127,6 +137,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // });
 // });
 
+<<<<<<< HEAD
+// Route::middleware(['role:user'])->group(function () {
+//     Route::get('/user', [UserController::class, 'index']);
+// });
+
+// Route::middleware(['role:member'])->group(function () {
+//     Route::get('/member', [MemberController::class, 'index']);
+// });
+=======
 // Route::middleware(['role:karyawan2'])->group(function () {
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 //     Route::get('/landingPage', [HomeController::class, 'index'])->name('landingPage');
@@ -137,3 +156,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //         return view('orderMasuk');
 //     });});
 
+>>>>>>> ac5a93aad188f3e4aa46d4e76834f9df84425dff

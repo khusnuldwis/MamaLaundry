@@ -16,20 +16,6 @@ class OrderMasukController extends Controller
 
         return view('orderMasuk', compact('transaksis', 'layanans'));
     }
-<<<<<<< HEAD
-=======
-    public function belumDiambil()
-{
-    $transaksis = Transaksi::with('layanan')
-        ->where('status_barang', 'Belum Diambil')
-        ->get();
-
-    return view('belum_diambil', compact('transaksis'));
-}
-
-
-
->>>>>>> ac5a93aad188f3e4aa46d4e76834f9df84425dff
 
     public function store(Request $request)
     {

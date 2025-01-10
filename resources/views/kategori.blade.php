@@ -3,6 +3,7 @@
 @section('title')
     Single Tabel
 @endsection
+
 @section('content')
     <div class="card card-round">
         <div class="card-header">
@@ -10,7 +11,7 @@
                 <div class="card-title">Kategori</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
-                        <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal"
+                        <a href="#" class="btn btn-primary btn-round" data-bs-toggle="modal"
                             data-bs-target="#exampleModal" data-bs-jenis="Tambah">Tambah</a>
                     </div>
                 </div>
@@ -63,194 +64,165 @@
         </div>
     </form>
 
-
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
     <script src="{{ url('dist/js/Tables.js') }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+
     <script>
-        // new DataTable('#example');
-        $(document).ready(function() {
-            $.ajax({
-                url: 'http://127.0.0.1:8000/api/category',
-                method: 'GET',
-                success: function(data) {
-                    let CategorySelect = $('#category_id');
-                    CategorySelect.empty(); // Hapus opsi yang ada
-                    CategorySelect.append(
-                        '<option value="">Pilih Category</option>'); // Tambahkan opsi default
-                    $.each(data, function(key, category) {
-                        CategorySelect.append('<option value="' + category.id + '">' + category
-                            .jenis_category + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching Layan data:', error);
-                }
-            });
+        $(document).ready(function () {
+            // Inisialisasi DataTable
             $('#example').DataTable({
                 ajax: {
-                    url: 'http://127.0.0.1:8000/api/categorys', // URL API Anda
+                    url: 'http://127.0.0.1:8000/api/categorys', // URL API untuk mendapatkan data
                     dataSrc: ''
                 },
                 columns: [{
                         "data": null,
-                        "render": function(data, type, row, index) {
+                        "render": function (data, type, row, index) {
                             return index.row + 1;
                         }
                     },
-
                     {
                         "data": "jenis_kategori"
                     },
                     {
                         "data": null,
-                        "render": function(data, type, row) {
+                        "render": function (data, type, row) {
                             return `
-    <td>
-        <a href="#" class="btn btn-label-success btn-round btn-sm me-2" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-jenis="Ubah" data-bs-id="${row.id}">
-            <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-        </a>
-        <a href="#" class="btn btn-label-danger btn-round btn-sm" onclick="hapusData(${row.id})">
-            <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-        </a>
-    </td>
-`;
+                                <a href="#" class="btn btn-label-success btn-round btn-sm me-2" 
+                                   data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                   data-bs-jenis="Ubah" data-bs-id="${row.id}">
+                                    <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+                                </a>
+                                <a href="#" class="btn btn-label-danger btn-round btn-sm" 
+                                   onclick="hapusData(${row.id})">
+                                    <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                </a>`;
                         }
                     }
-
-
-
-
                 ]
-
             });
-        });
-        //const data tidak bisa diubah  dan let bisa diubah 
-        // Event listener untuk membuka modal
-        const targetModal = document.getElementById('exampleModal');
-        let setIdKategori = null; // Inisialisasi ID tim
 
-        if (targetModal) {
-            targetModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget; // Tombol yang memicu modal
-                const jenisModal = button.getAttribute('data-bs-jenis'); // Ambil jenis modal
-                setIdKategori = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
+            const targetModal = document.getElementById('exampleModal');
+            let setIdKategori = null;
 
-                // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
-                if (jenisModal === "Ubah") {
-                    $.ajax({
-                        url: 'http://127.0.0.1:8000/api/categorys/' +
-                            setIdKategori, // Menggunakan endpoint show
-                        method: 'GET',
-                        success: function(data) {
-                            $('#jenis_kategori').val(data.data.jenis_kategori);
+            if (targetModal) {
+                targetModal.addEventListener('show.bs.modal', event => {
+                    const button = event.relatedTarget; // Tombol yang memicu modal
+                    const jenisModal = button.getAttribute('data-bs-jenis'); // Jenis modal (Tambah/Ubah)
+                    setIdKategori = button.getAttribute('data-bs-id'); // ID kategori untuk edit (jika ada)
 
+                    // Jika jenis modal adalah "Ubah", ambil data kategori berdasarkan ID
+                    if (jenisModal === "Ubah" && setIdKategori) {
+                        $.ajax({
+                            url: `http://127.0.0.1:8000/api/categorys/${setIdKategori}`, // Endpoint API untuk detail kategori
+                            method: 'GET',
+                            success: function (response) {
+                                if (response.data) {
+                                    // Isi form dengan data yang sudah ada
+                                    $('#jenis_kategori').val(response.data.jenis_kategori);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error fetching data for edit:', error);
+                            }
+                        });
+                    } else {
+                        // Reset form jika modal untuk tambah
+                        $('#jenis_kategori').val('');
+                        setIdKategori = null; // Reset ID kategori
+                    }
 
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error fetching data for edit:', error);
-                        }
-                    });
-                } else {
-                    // Kosongkan input saat menambah data baru
-
-                    $('#jenis_kategori').val('');
-
-                    setIdKategori = null; // Reset ID tim
-
-
-                }
-
-                // Update judul modal
-                const modalTitle = targetModal.querySelector('.modal-title');
-                modalTitle.textContent = `${jenisModal} Layanan`;
-            });
-        }
-
-        // Submit form untuk tambah dan ubah
-        $("#dataForm").submit(function(event) {
-            event.preventDefault();
-            let formData = new FormData(this);
-            let sendData = 'http://127.0.0.1:8000/api/categorys/';
-            let setMethod = 'POST'; // Default method adalah POST
-
-            // Jika ada ID, gunakan PUT untuk update
-            if (setIdKategori) {
-                sendData += setIdKategori;
-                setMethod =
-                    'POST'; // Method harus tetap POST karena Anda menggunakan _method untuk menyimulasikan PUT
-                formData.append('_method', 'PUT');
+                    // Ubah judul modal berdasarkan jenis modal
+                    const modalTitle = targetModal.querySelector('.modal-title');
+                    modalTitle.textContent = `${jenisModal} Kategori`;
+                });
             }
 
-            // Kirim data ke server
-            $.ajax({
-                url: sendData,
-                method: setMethod,
-                data: formData,
-                contentType: false, // Pastikan untuk tidak mengatur konten tipe
-                processData: false, // Pastikan untuk tidak memproses data
-                success: function(response) {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: response.pesan || "Data berhasil disimpan.",
-                        icon: "success",
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didClose: () => {
-                            location.reload(); // Refresh DataTable
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error saving data:', error);
-                    Swal.fire({
-                        title: "Gagal!",
-                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON
-                            .pesan,
-                        icon: "error"
-                    });
+            // Submit form untuk tambah/ubah
+            $("#dataForm").submit(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData(this);
+                let url = 'http://127.0.0.1:8000/api/categorys';
+                let method = 'POST';
+
+                if (setIdKategori) {
+                    url += `/${setIdKategori}`;
+                    formData.append('_method', 'PUT');
                 }
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Sukses!",
+                            text: response.pesan || "Data berhasil disimpan.",
+                            icon: "success",
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didClose: () => {
+                                location.reload(); // Refresh DataTable
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error saving data:', error);
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: "Terjadi kesalahan saat menyimpan data.",
+                            icon: "error"
+                        });
+                    }
+                });
             });
+
+            // Fungsi hapus data
+            function hapusData(id) {
+                Swal.fire({
+                    title: "Yakin ingin menghapus?",
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya, hapus!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `http://127.0.0.1:8000/api/categorys/${id}`,
+                            method: 'DELETE',
+                            success: function (data) {
+                                Swal.fire({
+                                    title: "Dihapus!",
+                                    text: "Data berhasil dihapus.",
+                                    icon: "success",
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didClose: () => {
+                                        location.reload();
+                                    }
+                                });
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error deleting data:', error);
+                                Swal.fire({
+                                    title: "Gagal!",
+                                    text: "Terjadi kesalahan saat menghapus data.",
+                                    icon: "error"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         });
-
-
-
-        function hapusData(id) {
-            Swal.fire({
-                title: "Bener Mau Hapus Dia?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'http://127.0.0.1:8000/api/categorys/' + id,
-                        method: 'DELETE',
-                        success: function(data) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success",
-                                timer: 2000, //timer dalam Milidetik (2000 ms = 2 detik)
-                                timerProgressBar: true, //menampilkan progress bar pada SweetAlert
-                                didClose: () => {
-                                    location
-                                        .reload(); //merefresh halaman setelah SweetAlert ditutup
-                                }
-                            })
-                        }
-                    });
-
-
-                }
-            });
-        }
     </script>
 @endsection
