@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <form id="dataForm" method="POST" action="{{ route('kategori.store') }}">
+        <form id="dataForm">
         @csrf
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">

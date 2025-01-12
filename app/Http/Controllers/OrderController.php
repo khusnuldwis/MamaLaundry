@@ -42,7 +42,7 @@ class OrderController extends Controller
             $ordersQuery->where('status_pengerjaan', $status);
         }
     
-        // Tambahkan filter berdasarkan range waktu
+        // // Tambahkan filter berdasarkan range waktu
         switch ($range) {
             case 'hari':
                 $ordersQuery->whereDate('created_at', Carbon::today());
@@ -66,7 +66,7 @@ class OrderController extends Controller
         // dd($ordersQuery->toSql(), $ordersQuery->getBindings(), $order);
     
         // Kirim data ke view
-        return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
+        return view('order.index', compact('order', 'totalHarga', 'status', 'range',));
     }
     
     
@@ -104,7 +104,7 @@ class OrderController extends Controller
          $user_id = $request->user()->id;
      
          $transaksi = Transaksi::create([
-             'kode_transaksi' => 'GS' . now()->format('YmdHis') . rand(5,10),
+             'kode_transaksi' => 'GS' . substr(uniqid(), -5),
              'total_harga' => 0,
              'status_pembayaran' => $data['status_pembayaran'] ?? 'Belum Dibayar',
              'status_pengerjaan' => $data['status_pengerjaan'] ?? 'Masuk',
@@ -159,8 +159,8 @@ $transaksi->total_harga = $total_harga;
 $transaksi->save();
 
      
-         return redirect()->route('order.show', [$transaksi->id])->with('success', 'Lakukan Pembayaran Terlebih Dahulu');
-     }
+return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaksi berhasil dibuat. Silakan lakukan pembayaran.');
+}
      
     /**
      * Display the specified resource.
@@ -185,10 +185,36 @@ $transaksi->save();
         // dd($orderdetail);
         return view('order.show', compact('order', 'orderdetail','layanan','metode_layanan','jenisLayananMapping','satuan'));
     }
-
+    public function pay($id)
+    {
+        $order = Transaksi::findOrFail($id); // Ambil data transaksi berdasarkan ID
+        return view('order.pay', compact('order'));
+    }
+    
+    public function processPayment(Request $request, $id)
+    {
+        $order = Transaksi::findOrFail($id);
+    
+        // Validasi input pembayaran
+        $validated = $request->validate([
+            'bayar' => 'required|numeric|min:0',
+        ]);
+    
+        // Hitung kembalian
+        $kembalian = $validated['bayar'] - $order->total;
+    
+        // Update status pembayaran menjadi 'Lunas'
+        $order->update([
+            'status_pembayaran' => 'Lunas',
+        ]);
+    
+        return redirect()->route('order.index')->with('success', 'Pembayaran berhasil dilakukan.');
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */
+  
     public function edit(string $id)
     {
         

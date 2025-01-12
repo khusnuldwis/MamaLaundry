@@ -55,6 +55,7 @@
                                 <option value="proses">Proses</option>
                                 <option value="selesai">Selesai</option>
                                 <option value="diambil">Diambil</option>
+                                <option value="belum_diambil"> Belum Diambil</option>
                             </select>
                         </div>
                     </div>

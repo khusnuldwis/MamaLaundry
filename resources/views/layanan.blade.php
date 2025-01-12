@@ -26,7 +26,6 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama Item</th>
                             <th scope="col">Gambar Item</th>
-                            <th scope="col">Jenis Layanan</th>
                             <th scope="col">Unit</th>
                             <th scope="col">Nama Kategori</th>
                             <th scope="col">Harga</th>
@@ -43,6 +42,7 @@
     </div>
 
     <form id="dataForm">
+        @CSRF
         <div class="modal fade" id="Layanan" tabindex="-1" aria-labelledby="LayananLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -109,9 +109,7 @@
     <script src="{{ url('dist/js/jquery1.js') }}"></script>
     <script src="{{ url('dist/js/Tables.js') }}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+   
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -209,7 +207,7 @@
                 const jenisModal = button.getAttribute('data-bs-jenis'); // Get modal type
                 setIdlayanan = button.getAttribute('data-bs-id'); // Get service ID if present
     
-                if (jenisModal === "Ubah") {
+                if (jenisModal === "Ubah" && setIdlayanan) {
                     // Fetch the service data for editing
                     $.ajax({
                         url: `http://127.0.0.1:8000/api/layanans/${setIdlayanan}`,
@@ -248,47 +246,46 @@
             });
         }
     
-        // Handle form submission for both adding and updating
-        $("#dataForm").submit(function(event) {
-            event.preventDefault();
-            let formData = new FormData(this);
-            let sendData = 'http://127.0.0.1:8000/api/layanans/';
-            let setMethod = 'POST'; // Default method for adding
-    
-            if (setIdlayanan) {
-                sendData += setIdlayanan;
-                setMethod = 'PUT'; // Use PUT for updating
-            }
-    
-            $.ajax({
-                url: sendData,
-                method: setMethod,
-                data: formData,
-                contentType: false, 
-                processData: false,
-                success: function(response) {
-                    Swal.fire({
-                        title: "Sukses!",
-                        text: response.pesan || "Data berhasil disimpan.",
-                        icon: "success",
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didClose: () => {
-                            location.reload(); // Reload the page after success
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error saving data:', error);
-                    Swal.fire({
-                        title: "Gagal!",
-                        text: "Terjadi kesalahan saat menyimpan data: " + xhr.responseJSON.pesan,
-                        icon: "error"
-                    });
+        $("#dataForm").submit(function (event) {
+                event.preventDefault();
+
+                let formData = new FormData(this);
+                let url = 'http://127.0.0.1:8000/api/layanans';
+                let method = 'POST';
+
+                if (setIdlayanan) {
+                    url += `/${setIdlayanan}`;
+                    formData.append('_method', 'PUT');
                 }
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Sukses!",
+                            text: response.pesan || "Data berhasil disimpan.",
+                            icon: "success",
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didClose: () => {
+                                location.reload(); // Refresh DataTable
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error saving data:', error);
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: "Terjadi kesalahan saat menyimpan data.",
+                            icon: "error"
+                        });
+                    }
+                });
             });
-        });
-    
         // Handle delete
         function hapusData(id) {
             Swal.fire({

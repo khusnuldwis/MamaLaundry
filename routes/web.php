@@ -43,7 +43,6 @@ Route::middleware(['auth', 'verified','must-admin'])->group(function () {
     // Register only the index route
     Route::resource('daftarLayanan', LayananController::class)->only(['index']);
     Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
-    Route::resource('categori',CategoriController::class);
     
     Route::post('/transaksi/update-status/{id}', [OrderController::class, 'updateStatus']);
 
@@ -56,7 +55,7 @@ Route::middleware(['auth', 'verified','must-admin'])->group(function () {
 Route::get('/kategori', function () {
     return view('kategori');
 });
-Route::get('/layanans', function () {
+Route::get('/layanan', function () {
     return view('layanan');
 });
 
@@ -75,7 +74,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', function () {
         return view('orderMasuk');
     });
+    Route::get('/order/{id}', [OrderController::class, 'ordershow'])->name('order.detail');
+    Route::get('/nota/{id}', [OrderController::class, 'nota'])->name('order.nota');
+
     Route::get('/durasi', function () {
         return view('durasi');
     });
+    Route::get('order/{id}/pay', [OrderController::class, 'pay'])->name('order.pay');
+Route::post('order/{id}/pay', [OrderController::class, 'processPayment'])->name('order.processPayment');
+
     });

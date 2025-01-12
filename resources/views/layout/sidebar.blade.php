@@ -143,7 +143,7 @@
                             <div class="collapse" id="layanan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="/layanans">
+                                        <a href="/layanan">
                                             <span class="sub-item">Data Layanan</span>
                                         </a>
                                     </li>

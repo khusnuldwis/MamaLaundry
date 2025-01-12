@@ -12,7 +12,7 @@ class Layanan extends Model
    
     public function category()
     {
-        return $this->belongsTo(CategoriLayanan::class);
+        return $this->belongsTo(KategoriLayanan::class);
     }
     public function transaksi()
     {

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CategoriLayanan;
+use App\Models\KategoriLayanan;
 use Illuminate\Http\Request;
 
-class CategoryLayananController extends Controller
+class KategoryLayananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = CategoriLayanan::all();
+        $data = KategoriLayanan::all();
         return response()->json($data, 200);
     }
 
@@ -31,7 +31,7 @@ class CategoryLayananController extends Controller
             'jenis_kategori' => 'required|string',
         ]);
 
-        $categoriLayanan = CategoriLayanan::create([
+        $categoriLayanan = KategoriLayanan::create([
             'jenis_kategori' => $request->jenis_kategori,
             
         ]);
@@ -44,14 +44,11 @@ class CategoryLayananController extends Controller
      */
     public function show($id)
     {
-               // Ambil data layanan berdasarkan ID, jika tidak ditemukan, kirimkan response error
-               $category = CategoriLayanan::find($id);
-
-               if (!$category) {
-                   return response()->json(['error' => 'Layanan tidak ditemukan'], 404);
-               }
-       
-               return response()->json($category);
+        $data = KategoriLayanan::where('id', $id)->first();
+        return response()->json(
+            ['data' => $data],
+            200
+        );
     }
 
     /**
@@ -69,7 +66,7 @@ class CategoryLayananController extends Controller
 
             
 
-            $update = CategoriLayanan::find($id)->update($data);
+            $update = KategoriLayanan::find($id)->update($data);
 
             return response()->json(['pesan' => "Kategori layanan berhasil diubah"], 200);
         } catch (\Throwable $th) {
@@ -82,7 +79,7 @@ class CategoryLayananController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = CategoriLayanan::where('id', $id)->delete();
+        $data = KategoriLayanan::where('id', $id)->delete();
         return response()->json(['data' => $data], 200);
     }
 }

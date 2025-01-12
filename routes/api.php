@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryLayananController;
 use App\Http\Controllers\Api\DurasiController;
+use App\Http\Controllers\Api\KategoryLayananController;
 use App\Http\Controllers\Api\LayananController;
 use App\Http\Controllers\Api\ManageUserController;
 use App\Http\Controllers\Api\MetodeLayananController;
@@ -23,11 +24,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
     Route::apiResource('user',ManageUserController::class);
-    Route::apiResource('categorys',CategoryLayananController::class);
+    Route::apiResource('categorys',KategoryLayananController::class);
     Route::apiResource('layanans', LayananController::class);
     Route::apiResource('transaksi', TransaksiController::class);
     Route::apiResource('metode_layanans', MetodeLayananController::class);

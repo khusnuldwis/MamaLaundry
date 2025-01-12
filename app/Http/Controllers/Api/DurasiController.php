@@ -48,12 +48,11 @@ class DurasiController extends Controller
      */
     public function show($id)
     {
-        $Durasi = Durasi::with(['tim', 'interior'])->find($id);
-        if ($Durasi) {
-            return view('detail_Durasi', compact('Durasi'));
-        } else {
-            return response()->json(['message' => 'Kategori layanan tidak ditemukan'], 404);
-        }
+        $data = Durasi::where('id', $id)->first();
+        return response()->json(
+            ['data' => $data],
+            200
+        );
     }
 
     /**

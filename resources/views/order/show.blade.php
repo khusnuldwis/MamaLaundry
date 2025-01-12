@@ -52,13 +52,21 @@ hr {
 
 </style>
 <div class="nota" id="nota" style="width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; font-family: Arial, sans-serif; font-size: 14px;">
-    <h4 class="text-center" style="margin: 0; padding: 0;">BANDAR LAUNDRY</h4>
-    <p class="text-center" style="margin: 5px 0;">Jl. Kedondong Raya, Sunter Jaya, Jakarta Utara</p>
+    <h4 class="text-center" style="margin: 0; padding: 0;">Mama LAUNDRY</h4>
+    <p class="text-center" style="margin: 5px 0;">Talun</p>
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
     
-    <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d H:i:s') }}</p>
-    <p><strong>No. Order:</strong> {{ $order->id }}</p>
-    <p><strong>Kasir:</strong> {{ $order->user->name }}</p>
+    <div class="row">
+        <div class="col-md-7">
+        <p><strong>No. Order:</strong> {{ $order->kode_transaksi }}</p>
+        <p><strong>Nama Pelanggan:</strong> {{ $order->nama_pelanggan }}</p>
+        </div>
+        <div class="col-md-5">
+        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d ') }}</p>
+        <p><strong>Kasir:</strong> {{ $order->user->name }}</p>
+        </div>
+    </div>
+
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
 
     <h5 style="margin-bottom: 10px;">Detail Layanan:</h5>
@@ -68,70 +76,41 @@ hr {
                 <th style="text-align: left; padding: 5px;">Layanan</th>
                 <th style="text-align: center; padding: 5px;">Berat</th>
                 <th style="text-align: center; padding: 5px;">Harga</th>
-                <th style="text-align: right; padding: 5px;">Total</th>
+                <th style="text-align: right; padding: 5px;"> Sub Total</th>
             </tr>
         </thead>
         <tbody>
-            @php
-                $subtotal = 0;
-            @endphp
+           
             @foreach ($orderdetail as $data)
             <tr>
                 <td style="padding: 5px;">{{ $data->layanan->nama_layanan }}</td>
                 <td style="text-align: center; padding: 5px;">{{ $data->berat }} kg</td>
                 <td style="text-align: center; padding: 5px;">Rp. {{ number_format($data->harga) }}</td>
-                <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->total_harga) }}</td>
+                <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->sub_total) }}</td>
             </tr>
-            @php
-                $subtotal += $data->total_harga;
-            @endphp
+           
             @endforeach
         </tbody>
     </table>
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
     
-    <h5 style="margin-bottom: 10px;">Durasi Layanan:</h5>
-    <p>
-        <strong>{{ $data->durasi->nama }}</strong> 
-        ({{ $data->durasi->waktu }} Jam) - 
-        Rp. {{ number_format($data->durasi->harga) }}
-    </p>
-    
-    <h5 style="margin-bottom: 10px;">Metode Layanan:</h5>
-    <p>
-        <strong>{{ $data->metode_layanan->nama_metode_layanan }}</strong> 
-        @if($data->metode_layanan)
-        - Rp. {{ number_format($data->metode_layanan->harga) }}
-        @endif
-    </p>
-
-    <h5 style="margin-bottom: 10px;">Antar-Jemput:</h5>
-    <p>
-        <strong>{{ $data->antarjemput ? 'Ya' : 'Tidak' }}</strong> 
-        @if($data->antarjemput)
-        - Rp. {{ number_format($data->antarjemput->harga) }}
-        @endif
-    </p>
-    <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
+   
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+        
         <tr>
-            <td style="padding: 5px;">Subtotal</td>
-            <td style="text-align: right; padding: 5px;">Rp. {{ number_format($subtotal) }}</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px;">Durasi</td>
+            <td style="padding: 5px;">{{$data->durasi->nama}}</td>
             <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->durasi->harga) }}</td>
         </tr>
         <tr>
-            <td style="padding: 5px;">Antar-Jemput</td>
+            <td style="padding: 5px;">Biaya Pengantaran</td>
             <td style="text-align: right; padding: 5px;">
-                Rp. {{ $data->antarjemput ? number_format($data->antarjemput->harga) : '0' }}
+                Rp. {{ number_format($data->metode_layanan->harga) }}
             </td>
         </tr>
         <tr style="border-top: 1px solid #ddd;">
             <td style="padding: 5px;"><strong>Total</strong></td>
-            <td style="text-align: right; padding: 5px;"><strong>Rp. {{ number_format($subtotal + $data->durasi->harga + ($data->antarjemput->harga ?? 0)) }}</strong></td>
+            <td style="text-align: right; padding: 5px;"><strong>Rp. {{ number_format($data->total_harga) }}</strong></td>
         </tr>
         <tr>
             <td style="padding: 5px;">Bayar</td>
@@ -139,7 +118,6 @@ hr {
         </tr>
         <tr>
             <td style="padding: 5px;">Kembali</td>
-            <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->bayar - ($subtotal + $data->durasi->harga + ($data->antarjemput->harga ?? 0))) }}</td>
         </tr>
     </table>
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">

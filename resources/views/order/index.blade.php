@@ -6,20 +6,24 @@ Order
 
 @section('content')
 <div class="container mt-5">
-<div class="card card-round">
-    <div class="card-header">
-        <div class="card-head-row">
-            <div class="card-title">Transaksi</div>
-            <div class="card-tools">
-                <div class="ms-md-auto py-2 py-md-0 float-end">
-                    @if($status == 'masuk') <!-- Kondisi untuk memeriksa status -->
+    <div class="card card-round">
+        <div class="card-header">
+            <div class="card-head-row">
+                <div class="card-title col-md-4">Transaksi</div>
+                @if($status == 'diambil' )
+                <div class="col-md-8 text-end">
+                    <strong>Total Pemasukan: </strong>Rp {{ number_format($totalHarga, 0, ',', '.') }}
+                </div>
+                @endif <div class="card-tools">
+                    <div class="ms-md-auto py-2 py-md-0 float-end">
+                        @if($status == 'masuk') <!-- Kondisi untuk memeriksa status -->
                         <a href="{{ route('order.create') }}" class="btn btn-primary box-title m-b-0">Buat Transaksi</a>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Tabel Transaksi -->
     <div class="card">
@@ -32,7 +36,7 @@ Order
                         <thead>
                             <tr>
                                 <th>Order Masuk</th>
-                              
+
                                 <th>Kode Transaksi</th>
                                 <th>Nama Pelanggan</th>
                                 <th>No Hp</th>
@@ -76,50 +80,50 @@ Order
     </div>
 </div>
 <script src="{{ url('dist/js/jquery1.js') }}"></script>
-            <script src="{{ url('dist/js/Tables.js') }}"></script>
-            <!-- CSS DataTables -->
-            <!-- CSS DataTables -->
+<script src="{{ url('dist/js/Tables.js') }}"></script>
+<!-- CSS DataTables -->
+<!-- CSS DataTables -->
 
 
-            
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
-            <script>
-     $(document).ready(function () {
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+<script>
+    $(document).ready(function() {
         new DataTable('#orderTable');
-     })
-     </script>
-            <script>
-                function confirmDelete(event, id) {
-                    event.preventDefault();
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: 'You will not be able to recover this record!',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes, delete it!',
-                        cancelButtonText: 'No, cancel!',
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            var postForm = {
-                                '_token': '{{ csrf_token() }}',
-                                '_method': 'DELETE',
-                            };
-                            $.ajax({
-                                    url: 'order/' + id,
-                                    type: 'POST',
-                                    data: postForm,
-                                    dataType: 'json',
-                                })
-                                .done(function(data) {
-                                    Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-                                    location.reload();
-                                })
-                                .fail(function() {
-                                    Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
-                                });
-                        }
+    })
+</script>
+<script>
+    function confirmDelete(event, id) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this record!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var postForm = {
+                    '_token': '{{ csrf_token() }}',
+                    '_method': 'DELETE',
+                };
+                $.ajax({
+                        url: 'order/' + id,
+                        type: 'POST',
+                        data: postForm,
+                        dataType: 'json',
+                    })
+                    .done(function(data) {
+                        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                        location.reload();
+                    })
+                    .fail(function() {
+                        Swal.fire('Error!', 'An error occurred while deleting the record.', 'error');
                     });
-                }
-            </script>
-            @endsection
+            }
+        });
+    }
+</script>
+@endsection

@@ -61,13 +61,11 @@ class LayananController extends Controller
     // }
     public function show($id)
     {
-        $layanan = Layanan::find($id);
-
-        if (!$layanan) {
-            return response()->json(['message' => 'Data not found'], 404);
-        }
-
-        return response()->json(['data' => $layanan], 200);
+        $data = Layanan::where('id', $id)->first();
+        return response()->json(
+            ['data' => $data],
+            200
+        );
     }
 
     /**
@@ -81,48 +79,36 @@ class LayananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        // try {
-        //     // Ambil data layanan berdasarkan ID
-        //     $layanan = Layanan::find($id);
-        //     if (!$layanan) {
-        //         return response()->json(['pesan' => 'Layanan tidak ditemukan'], 404);
-        //     }
-
-        //     $data = $request->all();
-
-        //     // Cek apakah ada file thumbnail dan simpan
-        //     if ($request->hasFile('thumbnail')) {
-        //         $file = $request->file('thumbnail')->store('thumbnail', 'public');
-        //         $data['thumbnail'] = $file;
-        //     }
-
-        //     // Update data layanan
-        //     $layanan->update($data);
-
-        //     return response()->json(['pesan' => "Layanan berhasil diubah"], 200);
-        // } catch (\Throwable $th) {
-        //     return response()->json(['pesan' => "Layanan gagal diubah", 'error' => $th->getMessage()], 500);
-        // }
-
-        try {
-            $data = $request->all();
-
-            if ($request->hasFile('thumbnail')) {
-                        $file = $request->file('thumbnail')->store('thumbnail', 'public');
-                        $data['thumbnail'] = $file;
-                    }
-        
-
-            $update = Layanan::find($id)->update($data);
-
-            return response()->json(['pesan' => "Kategori layanan berhasil diubah"], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['pesan' => "Gagal mengubah kategori layanan"], 500);
-        }
+    public function update(Request $request, string $id)
+{
+    $layanan = Layanan::find($id);
+    if (!$layanan) {
+        return response()->json(['pesan' => "Layanan tidak ditemukan"], 404);
     }
 
+    $validatedData = $request->validate([
+        'nama_layanan' => 'required|string|max:255',
+        'unit' => 'required',
+        'harga' => 'required|numeric',
+        'category_id' => 'required|exists:categorys,id',
+        'thumbnail' => 'nullable',
+    ]);
+
+    if ($request->hasFile('thumbnail')) {
+        $file = $request->file('thumbnail')->store('thumbnail', 'public');
+        $validatedData['thumbnail'] = $file;
+    }
+
+    $updated = $layanan->update($validatedData);
+
+    if ($updated) {
+        return response()->json(['pesan' => "Layanan berhasil diubah"], 200);
+    } else {
+        return response()->json(['pesan' => "Layanan gagal diubah"], 500);
+    }
+}
+
+    
     /**
      * Remove the specified resource from storage.
      */
