@@ -5,126 +5,75 @@ Nota Transaksi
 @endsection
 
 @section('content')
-<style>
-    .nota {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    width: 300px;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    line-height: 1.6;
-}
+<div class='card' id="nota">
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center"><b>Mama Laundry - Cabang</b></h3>
+                <p class="text-center">Telepon: 08123456789</p>
+                <hr>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <address>
+                            <p>Kasir: {{ $order->user->name }}</p>
+                            <p>Tanggal Order: {{ \Carbon\Carbon::parse($order->created_at)->format('D, d M Y') }}</p>
+                            <p>Selesai: {{ \Carbon\Carbon::parse($order->tanggal_selesai)->format('D, d M Y') }}</p>
+                        </address>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <address>
+                            <h4>Kepada: {{ $order->nama_pelanggan }}</h4>
+                            <p>No HP: {{ $order->no_hp }}</p>
+                        </address>
+                    </div>
+                </div>
 
-.text-center {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
+                <div class="table-responsive mb-4">
+                    <table class="table table-hover table-bordered" cellspacing="0" width="100%">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Layanan</th>
+                                <th>Berat</th>
+                                <th>Harga Layanan</th>
+                                <th>Metode Layanan</th>
+                                <th>Durasi Layanan</th>
+                                <th>Total Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $totalHarga = 0;
+                            @endphp
+                            @foreach ($orderdetail as $data)
+                            <tr>
+                                <td>
+                                    {{ $data->layanan->nama_layanan }} - 
+                                
+                                    {{ $data->layanan->category->jenis_kategori ?? 'N/A' }}
+                                </td>
+                                <td>{{ $data->berat }} / {{ $satuan[$data->layanan->unit] ?? 'N/A' }}</td>
+                                <td>Rp. {{ number_format($data->harga) }}</td>
+                                <td>{{ $data->metode_layanan->nama_metode_layanan }} - Rp. {{ number_format($data->metode_layanan->harga) }}</td>
+                                <td>{{ $data->durasi->nama }} - Rp. {{ number_format($data->durasi->harga) }}</td>
+                                <td>Rp. {{ number_format($data->total_harga) }}</td>
+                            </tr>
+                            @php
+                            $totalHarga += $data->total_harga;
+                            @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table th, table td {
-    padding: 5px;
-    text-align: left;
-}
-
-table th {
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-}
-
-table td {
-    border-bottom: 1px dashed #ccc;
-}
-
-ul {
-    padding-left: 15px;
-}
-
-hr {
-    border: none;
-    border-top: 1px dashed #ccc;
-}
-
-</style>
-<div class="nota" id="nota" style="width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; font-family: Arial, sans-serif; font-size: 14px;">
-    <h4 class="text-center" style="margin: 0; padding: 0;">Mama LAUNDRY</h4>
-    <p class="text-center" style="margin: 5px 0;">Talun</p>
-    <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
-    
-    <div class="row">
-        <div class="col-md-7">
-        <p><strong>No. Order:</strong> {{ $order->kode_transaksi }}</p>
-        <p><strong>Nama Pelanggan:</strong> {{ $order->nama_pelanggan }}</p>
-        </div>
-        <div class="col-md-5">
-        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d ') }}</p>
-        <p><strong>Kasir:</strong> {{ $order->user->name }}</p>
+                <div class="text-end">
+                    <h3><b>Total :</b> Rp. {{ number_format($totalHarga) }}</h3>
+                    <hr>
+                    <p>Terima kasih telah menggunakan layanan kami!</p>
+                </div>
+            </div>
         </div>
     </div>
-
-    <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
-
-    <h5 style="margin-bottom: 10px;">Detail Layanan:</h5>
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-        <thead>
-            <tr style="border-bottom: 1px solid #ddd;">
-                <th style="text-align: left; padding: 5px;">Layanan</th>
-                <th style="text-align: center; padding: 5px;">Berat</th>
-                <th style="text-align: center; padding: 5px;">Harga</th>
-                <th style="text-align: right; padding: 5px;"> Sub Total</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-            @foreach ($orderdetail as $data)
-            <tr>
-                <td style="padding: 5px;">{{ $data->layanan->nama_layanan }}</td>
-                <td style="text-align: center; padding: 5px;">{{ $data->berat }} kg</td>
-                <td style="text-align: center; padding: 5px;">Rp. {{ number_format($data->harga) }}</td>
-                <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->sub_total) }}</td>
-            </tr>
-           
-            @endforeach
-        </tbody>
-    </table>
-    <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
-    
-   
-
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-        
-        <tr>
-            <td style="padding: 5px;">{{$data->durasi->nama}}</td>
-            <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->durasi->harga) }}</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px;">Biaya Pengantaran</td>
-            <td style="text-align: right; padding: 5px;">
-                Rp. {{ number_format($data->metode_layanan->harga) }}
-            </td>
-        </tr>
-        <tr style="border-top: 1px solid #ddd;">
-            <td style="padding: 5px;"><strong>Total</strong></td>
-            <td style="text-align: right; padding: 5px;"><strong>Rp. {{ number_format($data->total_harga) }}</strong></td>
-        </tr>
-        <tr>
-            <td style="padding: 5px;">Bayar</td>
-            <td style="text-align: right; padding: 5px;">Rp. {{ number_format($data->bayar) }}</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px;">Kembali</td>
-        </tr>
-    </table>
-    <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
-    <p style="text-align: center;">Terima kasih sudah menggunakan layanan kami!</p>
 </div>
-
-
 
 <div class="text-end mt-3">
 
@@ -151,44 +100,63 @@ hr {
 
 <style>
     /* Print-specific styles */
-    .nota {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    width: 250px;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid #ddd;
-    line-height: 1.4;
-}
+    @media print {
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
 
-.text-center {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-}
+        #nota {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed; /* Ensures better control over column widths */
+        }
 
-table th, table td {
-    padding: 3px 0;
-    text-align: left;
-}
+        table th, table td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            word-wrap: break-word; /* Ensures text wraps within cells */
+        }
 
-table th {
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-}
+        /* Prevent page breaks inside the table */
+        table {
+            page-break-inside: auto;
+        }
 
-table td.text-end {
-    text-align: right;
-}
+        table tr {
+            page-break-inside: avoid;
+        }
 
-hr {
-    border: none;
-    border-top: 1px dashed #ccc;
-}
+        table td, table th {
+            page-break-inside: avoid;
+        }
 
+        /* Hide the print button during printing */
+        .print-btn {
+            display: none;
+        }
+
+        /* Set A4 page size and margins */
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        /* Ensure proper text wrapping for long content */
+        td {
+            word-break: break-word;
+        }
+    }
 </style>

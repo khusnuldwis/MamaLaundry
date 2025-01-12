@@ -12,7 +12,12 @@ Order
                 <div class="card-title col-md-4">Transaksi</div>
                 @if($status == 'diambil' )
                 <div class="col-md-8 text-end">
-                    <strong>Total Pemasukan: </strong>Rp {{ number_format($totalHarga, 0, ',', '.') }}
+                    <strong>Total Pemasukan: </strong>@if(isset($totalHarga))
+    <p>Total Harga: {{ $totalHarga }}</p>
+@else
+    <p>Total Harga: 0</p>
+@endif
+
                 </div>
                 @endif <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
@@ -59,19 +64,23 @@ Order
                                 <td>{{ $item->status_pembayaran ?? null }}</td>
                                 <td>{{ $item->status_pengerjaan ?? null }}</td>
                                 <td>
-                                    <a href="{{ route('order.show', [$item->id]) }}" class="btn btn-success m-t-5 m-r-5">
-                                        <i class="icon-eye"></i>
+                                <div class="d-flex justify-content-start gap-2">
+                                    <a href="{{ route('order.show', [$item->id]) }}" class="btn btn-label-warning btn-round btn-sm" >
+                                    <span class="btn-label"><i class="fa fa-eye"></i></span> Detail
+                                    
                                     </a>
-                                    <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-primary m-t-5 m-r-5">
-                                        <i class="icon-pencil"></i>
+                                    <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-label-success btn-round btn-sm">
+                                    <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
                                     </a>
                                     <a href="#" onclick="confirmDelete(event, {{ $item->id }})"
-                                        class="btn btn-danger m-t-5 m-r-5">
-                                        <i class="icon-trash"></i>
+                                    class="btn btn-label-danger btn-round btn-sm" >
+                                    <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
                                     </a>
+                                </div>
                                 </td>
                             </tr>
                             @endforeach
+                            
                         </tbody>
                     </table>
                 </div>

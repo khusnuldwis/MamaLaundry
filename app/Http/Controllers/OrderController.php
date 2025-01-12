@@ -32,7 +32,7 @@ class OrderController extends Controller
     {
         // Ambil input dari request
         $status = $request->input('status', 'semua'); // Default 'semua'
-        $range = $request->input('range', 'hari');   // Default 'hari'
+        $range = $request->input('range', 'semua');   // Default 'hari'
     
         // Mulai query
         $ordersQuery = Transaksi::query();
@@ -42,18 +42,20 @@ class OrderController extends Controller
             $ordersQuery->where('status_pengerjaan', $status);
         }
     
-        // // Tambahkan filter berdasarkan range waktu
-        switch ($range) {
-            case 'hari':
-                $ordersQuery->whereDate('created_at', Carbon::today());
-                break;
-            case 'minggu':
-                $ordersQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-                break;
-            case 'bulan':
-                $ordersQuery->whereMonth('created_at', Carbon::now()->month)
-                            ->whereYear('created_at', Carbon::now()->year);
-                break;
+        // Tambahkan filter berdasarkan range waktu
+        if ($range !== 'semua') {
+            switch ($range) {
+                case 'hari':
+                    $ordersQuery->whereDate('created_at', Carbon::today());
+                    break;
+                case 'minggu':
+                    $ordersQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                    break;
+                case 'bulan':
+                    $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+                                ->whereYear('created_at', Carbon::now()->year);
+                    break;
+            }
         }
     
         // Eksekusi query
@@ -62,12 +64,10 @@ class OrderController extends Controller
         // Hitung total harga
         $totalHarga = $order->sum('total_harga');
     
-        // Debugging query
-        // dd($ordersQuery->toSql(), $ordersQuery->getBindings(), $order);
-    
         // Kirim data ke view
-        return view('order.index', compact('order', 'totalHarga', 'status', 'range',));
+        return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
     }
+    
     
     
 
@@ -165,6 +165,28 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
     /**
      * Display the specified resource.
      */
+//     public function show(string $id)
+// {
+//     $jenisLayananMapping = [
+//         1 => 'Reguler',
+//         2 => 'Kilat',
+//         3 => 'Express',
+//         ];
+//         $satuan = [
+//             1 => 'Kg',
+//             2 => 'Pcs',
+//             ];
+//         $layanan = Layanan::orderBy('nama_layanan', 'asc')->get();
+//         $metode_layanan = Metode_Layanan::orderBy('nama_metode_layanan', 'asc')->get();
+//         $durasi = Durasi ::orderBy('nama', 'asc')->get();
+//     $order = Transaksi::find($id);
+//     $orderdetail = $order->orderdetail;
+    
+//     // Kirim data transaksi dan detail transaksi ke view
+//     return view('order.show', compact('order', 'orderdetail'));
+// }
+
+
     public function show(string $id)
     {
         $jenisLayananMapping = [
@@ -181,9 +203,9 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
             $durasi = Durasi ::orderBy('nama', 'asc')->get();
         $order = Transaksi::find($id);
         $orderdetail = $order->orderdetail;
-
+        $bayar = session('bayar', 0); 
         // dd($orderdetail);
-        return view('order.show', compact('order', 'orderdetail','layanan','metode_layanan','jenisLayananMapping','satuan'));
+        return view('order.nota', compact('order', 'orderdetail','layanan','metode_layanan','jenisLayananMapping','satuan','bayar'));
     }
     public function pay($id)
     {
@@ -191,25 +213,29 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
         return view('order.pay', compact('order'));
     }
     
-    public function processPayment(Request $request, $id)
-    {
-        $order = Transaksi::findOrFail($id);
+    public function processPayment(Request $request, $id) 
+{
+    $order = Transaksi::findOrFail($id);
+
+    // Validasi input pembayaran
+    $validated = $request->validate([
+        'bayar' => 'required|numeric|min:0',
+    ]);
+
+    // Hitung kembalian
+    $kembalian = $validated['bayar'] - $order->total;
+
+    // Update status pembayaran menjadi 'Lunas'
+    $order->update([
+        'status_pembayaran' => 'Lunas',
+    ]);
+
+    // Simpan 'bayar' dalam session
+    $request->session()->flash('bayar', $validated['bayar']);
     
-        // Validasi input pembayaran
-        $validated = $request->validate([
-            'bayar' => 'required|numeric|min:0',
-        ]);
-    
-        // Hitung kembalian
-        $kembalian = $validated['bayar'] - $order->total;
-    
-        // Update status pembayaran menjadi 'Lunas'
-        $order->update([
-            'status_pembayaran' => 'Lunas',
-        ]);
-    
-        return redirect()->route('order.index')->with('success', 'Pembayaran berhasil dilakukan.');
-    }
+    return redirect()->route('order.show', ['order' => $order->id])->with('success', 'Pembayaran berhasil dilakukan.');
+}
+
     
     /**
      * Show the form for editing the specified resource.

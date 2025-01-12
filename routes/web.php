@@ -74,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders', function () {
         return view('orderMasuk');
     });
-    Route::get('/order/{id}', [OrderController::class, 'ordershow'])->name('order.detail');
+  
     Route::get('/nota/{id}', [OrderController::class, 'nota'])->name('order.nota');
 
     Route::get('/durasi', function () {

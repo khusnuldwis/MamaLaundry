@@ -35,6 +35,7 @@
                                 <option value="masuk" {{ ($data->status_pengerjaan == 'masuk') ? 'selected' : '' }}>Masuk</option>
                                 <option value="proses" {{ ($data->status_pengerjaan == 'proses') ? 'selected' : '' }}>Proses</option>
                                 <option value="selesai" {{ ($data->status_pengerjaan == 'selesai') ? 'selected' : '' }} >Selesai</option>
+                                <option value="diambil" {{ ($data->status_pengerjaan == 'diambil') ? 'selected' : '' }} >diambil</option>
                                 <option value="belum_diambil"{{ ($data->status_pengerjaan == 'belum_diambil') ? 'selected' : '' }}> Belum Diambil</option>
                             </select>
                         </div>

@@ -180,7 +180,7 @@
                             <div class="collapse" id="tables">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="/belumDiambil">
+                                        <a href="{{ url('/order?status=belum_diambil') }}" class="nav-link {{ $status == 'selesai' ? 'active' : '' }}">
                                             <span class="sub-item">Pesanan Belum Diambil</span>
                                         </a>
                                     </li>
