@@ -18,15 +18,7 @@
         <form action="{{ url('/transaksi/update-status/' . $data->id) }}" method="POST">
     @csrf
    <!-- Status Pembayaran -->
-   <div class="form-group">
-                            <label for="status_pembayaran">Status Pembayaran</label>
-                            <select class="form-control" id="status_pembayaran" name="status_pembayaran" required>
-                            <option selected>Pilih Status Pembayaran</option>
-                                <option value="Belum Dibayar" {{ ($data->status_pembayaran == 'Belum Dibayar') ? 'selected' : '' }}>Belum Dibayar</option>
-                                <option value="Lunas" {{ ($data->status_pembayaran == 'Lunas') ? 'selected' : '' }}>Lunas</option>
-                            </select>
-                        </div>
-
+ 
                         <!-- Status Pengerjaan -->
                         <div class="form-group">
                             <label for="status_pengerjaan">Status Pengerjaan</label>

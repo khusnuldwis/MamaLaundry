@@ -7,7 +7,7 @@
     <div class="card card-round">
         <div class="card-header">
             <div class="card-head-row">
-                <div class="card-title">Durasi</div>
+                <div class="card-title">Metode Layanan</div>
                 <div class="card-tools">
                     <div class="ms-md-auto py-2 py-md-0 float-end">
                         <a href="#" class="btn btn-primary btn-round"data-bs-toggle="modal"
@@ -25,8 +25,7 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Durasi</th>
+                            <th scope="col">Nama Metode</th>
                             <th scope="col">Harga</th>
                             <th scope="col">Aksi</th>
                         </tr>
@@ -51,22 +50,15 @@
                         <div class="mb-3 row">
                             <label for="nama" class="col-sm-4 col-form-label">Nama</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama" name="nama"
-                                    placeholder="Masukkan Nama Kategori" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="waktu" class="col-sm-4 col-form-label">waktu</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="waktu" name="waktu"
-                                    placeholder="Masukkan waktu Kategori" required>
+                                <input type="text" class="form-control" id="nama_metode_layanan" name="nama_metode_layanan"
+                                    required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="harga" class="col-sm-4 col-form-label">Harga</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="harga" name="harga"
-                                    placeholder="Masukkan harga Kategori" required>
+                                     required>
                             </div>
                         </div>
                     </div>
@@ -93,7 +85,7 @@
             
             $('#example').DataTable({
                 ajax: {
-                    url: 'http://127.0.0.1:8000/api/durasis', // URL API Anda
+                    url: 'http://127.0.0.1:8000/api/metodes', // URL API Anda
                     dataSrc: ''
                 },
                 columns: [{
@@ -104,11 +96,9 @@
                     },
 
                     {
-                        "data": "nama"
+                        "data": "nama_metode_layanan"
                     },
-                    {
-                        "data": "waktu"
-                    },
+                  
                     {
                         "data": "harga"
                     },
@@ -138,23 +128,22 @@
         //const data tidak bisa diubah  dan let bisa diubah 
         // Event listener untuk membuka modal
         const targetModal = document.getElementById('exampleModal');
-        let setIdKategori = null; // Inisialisasi ID tim
+        let setIdMetode = null; // Inisialisasi ID tim
 
         if (targetModal) {
             targetModal.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget; // Tombol yang memicu modal
                 const jenisModal = button.getAttribute('data-bs-jenis'); // Ambil jenis modal
-                setIdKategori = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
+                setIdMetode = button.getAttribute('data-bs-id'); // Ambil ID tim jika ada
 
                 // Jika jenis modal adalah "Ubah", ambil data tim untuk diedit
                 if (jenisModal === "Ubah") {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/durasis/' +
-                            setIdKategori, // Menggunakan endpoint show
+                        url: 'http://127.0.0.1:8000/api/metodes/' +
+                            setIdMetode, // Menggunakan endpoint show
                         method: 'GET',
                         success: function(data) {
-                            $('#nama').val(data.data.nama);
-                            $('#waktu').val(data.data.waktu);
+                            $('#nama_metode_layanan').val(data.data.nama_metode_layanan);
                             $('#harga').val(data.data.harga);
 
 
@@ -166,9 +155,8 @@
                 } else {
                     // Kosongkan input saat menambah data baru
 
-                    $('#nama').val('');
+                    $('#nama_metode_layanan').val('');
                     $('#harga').val('');
-                    $('#waktu').val('');
 
                     setIdKategori = null; // Reset ID tim
 
@@ -177,7 +165,7 @@
 
                 // Update judul modal
                 const modalTitle = targetModal.querySelector('.modal-title');
-                modalTitle.textContent = `${jenisModal} Layanan`;
+                modalTitle.textContent = `${jenisModal}  Metode Layanan`;
             });
         }
 
@@ -185,7 +173,7 @@
         $("#dataForm").submit(function(event) {
             event.preventDefault();
             let formData = new FormData(this);
-            let sendData = 'http://127.0.0.1:8000/api/durasis/';
+            let sendData = 'http://127.0.0.1:8000/api/metodes/';
             let setMethod = 'POST'; // Default method adalah POST
 
             // Jika ada ID, gunakan PUT untuk update
@@ -241,7 +229,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/api/durasis/' + id,
+                        url: 'http://127.0.0.1:8000/api/metodes/' + id,
                         method: 'DELETE',
                         success: function(data) {
                             Swal.fire({

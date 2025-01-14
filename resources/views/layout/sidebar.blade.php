@@ -8,8 +8,8 @@
                 <div class="logo-header" data-background-color="dark">
 
                     <a href="index.html" class="logo">
-                        <img src="{{asset('assets/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand"
-                            height="20">
+                    <img src="{{asset('img/landingPage/logo-mamalaundry.png')}}" alt="navbar brand" class="navbar-brand"
+                    height="67">
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -152,25 +152,20 @@
                                             <span class="sub-item">Durasi Layanan</span>
                                         </a>
                                     </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#forms">
-                                <i class="fas fa-pen-square"></i>
-                                <p>Kategori Layanan</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
                                     <li>
                                         <a href="/kategori">
                                             <span class="sub-item">Kategori Layanan</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="/metode">
+                                            <span class="sub-item">Metode Layanan</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
+                     
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#tables">
                                 <i class="fas fa-table"></i>
@@ -187,27 +182,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#maps">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>Maps</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="maps">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="maps/googlemaps.html">
-                                            <span class="sub-item">Google Maps</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="maps/jsvectormap.html">
-                                            <span class="sub-item">Jsvectormap</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                       
                         {{-- <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#charts">
                                 <i class="far fa-chart-bar"></i>

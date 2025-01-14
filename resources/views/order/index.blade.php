@@ -46,7 +46,6 @@ Order
                                 <th>Nama Pelanggan</th>
                                 <th>No Hp</th>
                                 <th>Total Harga</th>
-                                <th>Status Pembayaran</th>
                                 <th>Status Pengerjaan</th>
                                 <th>Action</th>
 
@@ -61,7 +60,6 @@ Order
                                 <td>{{ $item->nama_pelanggan}}</td>
                                 <td>{{ $item->no_hp ?? null }}</td>
                                 <td> Rp. {{ number_format($item->total_harga) ?? null }}</td>
-                                <td>{{ $item->status_pembayaran ?? null }}</td>
                                 <td>{{ $item->status_pengerjaan ?? null }}</td>
                                 <td>
                                 <div class="d-flex justify-content-start gap-2">

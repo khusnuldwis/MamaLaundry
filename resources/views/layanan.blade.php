@@ -289,7 +289,7 @@
         // Handle delete
         function hapusData(id) {
             Swal.fire({
-                title: "Bener Mau Hapus Dia?",
+                title: "Yakin Dihapus",
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,

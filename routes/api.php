@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\DurasiController;
 use App\Http\Controllers\Api\KategoryLayananController;
 use App\Http\Controllers\Api\LayananController;
 use App\Http\Controllers\Api\ManageUserController;
+use App\Http\Controllers\Api\MetodeController;
 use App\Http\Controllers\Api\MetodeLayananController;
 use App\Http\Controllers\Api\TransaksiController;
 use App\Http\Controllers\Back\ManageUserController as BackManageUserController;
@@ -32,5 +33,6 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('metode_layanans', MetodeLayananController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('durasis', DurasiController::class);
+    Route::apiResource('metodes', MetodeController::class);
 
 

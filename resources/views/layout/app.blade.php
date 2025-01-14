@@ -55,7 +55,7 @@
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                         <div>
-                            <h3 class="fw-bold">Dashboard</h3>
+                            <h3 class="fw-bold">Mama Laundry</h3>
                             <!-- <h6 class="op-7 mb-2">MamaLaundry</h6> -->
                         </div>
                         <!-- {{-- <div class="ms-md-auto py-2 py-md-0">
@@ -213,6 +213,7 @@
 
                     @yield('content')
 
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                     <!-- Bootstrap JS dan dependensi (Popper.js) -->
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

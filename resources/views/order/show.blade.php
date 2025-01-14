@@ -79,8 +79,8 @@ Nota Transaksi
 
                     <a href="{{ route('order.index') }}" class='btn btn-danger float-left ' style="background-color: #eb3a3a; border-color: #eb3a3a;">Kembali</a>
                 
-    <button class="btn btn-warning" onclick="printNota()" style="background-color:red;border-color:red;color:white">Cetak Nota</button>
-</div>
+                    <a href="{{ route('order.pay', $order->id) }}" class='btn btn-danger float-left ' style="background-color: #eb3a3a; border-color: #eb3a3a;">Bayar</a>
+                    </div>
 
 @endsection
 

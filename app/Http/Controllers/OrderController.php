@@ -28,38 +28,94 @@ class OrderController extends Controller
 
     //     return view('order.index', compact('order', 'orderdetail'));
     // }
+    // public function index()
+    // {
+       
+    //     // Ambil input dari request
+    //     $status = $request->input('status', 'semua'); // Default 'semua'
+    //     $range = $request->input('range', 'semua');   // Default 'semua'
+    
+    //     // Mulai query
+    //     $ordersQuery = Transaksi::query();
+    
+    //     // Filter berdasarkan status pengerjaan
+    //     if ($status !== 'semua') {
+    //         $ordersQuery->where('status_pengerjaan', $status);
+    //     }
+    
+    //     // Filter berdasarkan range waktu (hanya jika status = 'semua')
+    //     if ($status === 'semua' && $range !== 'semua') {
+    //         switch ($range) {
+    //             case 'hari':
+    //                 $ordersQuery->whereDate('created_at', Carbon::today());
+    //                 break;
+    //             case 'minggu':
+    //                 $ordersQuery->whereBetween('created_at', [
+    //                     Carbon::now()->startOfWeek(),
+    //                     Carbon::now()->endOfWeek()
+    //                 ]);
+    //                 break;
+    //             case 'bulan':
+    //                 $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+    //                             ->whereYear('created_at', Carbon::now()->year);
+    //                 break;
+    //         }
+    //     }
+    
+    //     // Ambil data berdasarkan query
+    //     $order = $ordersQuery->orderBy('id', 'asc')->get();
+    
+    //     // Hitung total harga
+    //     $totalHarga = $order->sum('total_harga');
+    
+    //     // Kirim data ke view
+    //     return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
+    // }
+    
+    
+    
+   
+    
     public function index(Request $request)
     {
-        // Ambil input dari request
-        $status = $request->input('status', 'semua'); // Default 'semua'
-        $range = $request->input('range', 'semua');   // Default 'hari'
+        $user = auth()->user();
+        
+        // Mulai query berdasarkan role pengguna
+        $transaksiQuery = Transaksi::query();
     
-        // Mulai query
-        $ordersQuery = Transaksi::query();
-    
-        // Tambahkan filter status pengerjaan
-        if ($status !== 'semua') { 
-            $ordersQuery->where('status_pengerjaan', $status);
+        if ($user->role !== 'admin') {
+            // Jika bukan admin, hanya tampilkan data milik pengguna
+            $transaksiQuery->where('user_id', $user->id);
         }
     
-        // Tambahkan filter berdasarkan range waktu
+        // Filter tambahan berdasarkan status
+        $status = $request->input('status', 'semua');
+        if ($status !== 'semua') {
+            $transaksiQuery->where('status_pengerjaan', $status);
+        }
+    
+        // Filter tambahan berdasarkan range waktu
+        $range = $request->input('range', 'semua');
         if ($range !== 'semua') {
             switch ($range) {
                 case 'hari':
-                    $ordersQuery->whereDate('created_at', Carbon::today());
+                    $transaksiQuery->whereDate('created_at', Carbon::today());
                     break;
                 case 'minggu':
-                    $ordersQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                    $transaksiQuery->whereBetween('created_at', [
+                        Carbon::now()->startOfWeek(),
+                        Carbon::now()->endOfWeek()
+                    ]);
                     break;
                 case 'bulan':
-                    $ordersQuery->whereMonth('created_at', Carbon::now()->month)
-                                ->whereYear('created_at', Carbon::now()->year);
+                    $transaksiQuery->whereMonth('created_at', Carbon::now()->month)
+                                   ->whereYear('created_at', Carbon::now()->year);
                     break;
             }
         }
     
-        // Eksekusi query
-        $order = $ordersQuery->orderBy('id', 'desc')->get();
+        // Ambil data berdasarkan query
+        $order = $transaksiQuery->orderBy('created_at', 'desc')->get();
     
         // Hitung total harga
         $totalHarga = $order->sum('total_harga');
@@ -68,9 +124,6 @@ class OrderController extends Controller
         return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
     }
     
-    
-    
-
     
     
 
@@ -106,7 +159,6 @@ class OrderController extends Controller
          $transaksi = Transaksi::create([
              'kode_transaksi' => 'GS' . substr(uniqid(), -5),
              'total_harga' => 0,
-             'status_pembayaran' => $data['status_pembayaran'] ?? 'Belum Dibayar',
              'status_pengerjaan' => $data['status_pengerjaan'] ?? 'Masuk',
              'nama_pelanggan' => $data['nama_pelanggan'] ?? null,
              'no_hp' => $data['no_hp'] ?? null,
@@ -159,35 +211,30 @@ $transaksi->total_harga = $total_harga;
 $transaksi->save();
 
      
-return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaksi berhasil dibuat. Silakan lakukan pembayaran.');
+return redirect()->route('order.index')->with('success', 'Transaksi berhasil dibuat. Silakan lakukan pembayaran.');
 }
      
     /**
      * Display the specified resource.
      */
-//     public function show(string $id)
-// {
-//     $jenisLayananMapping = [
-//         1 => 'Reguler',
-//         2 => 'Kilat',
-//         3 => 'Express',
-//         ];
-//         $satuan = [
-//             1 => 'Kg',
-//             2 => 'Pcs',
-//             ];
-//         $layanan = Layanan::orderBy('nama_layanan', 'asc')->get();
-//         $metode_layanan = Metode_Layanan::orderBy('nama_metode_layanan', 'asc')->get();
-//         $durasi = Durasi ::orderBy('nama', 'asc')->get();
-//     $order = Transaksi::find($id);
-//     $orderdetail = $order->orderdetail;
-    
-//     // Kirim data transaksi dan detail transaksi ke view
-//     return view('order.show', compact('order', 'orderdetail'));
-// }
-
-
     public function show(string $id)
+{
+    $satuan = [
+                    1 => 'Kg',
+                    2 => 'Pcs',
+                    ];
+    $order = Transaksi::with(['orderdetail.layanan.category', 'orderdetail.metode_layanan', 'orderdetail.durasi', 'user'])->find($id);
+
+    if (!$order) {
+        return redirect()->route('order.index')->withErrors('Transaksi tidak ditemukan.');
+    }
+    $orderdetail=$order->orderdetail;
+    return view('order.show', compact('order','orderdetail','satuan'));
+}
+
+
+
+    public function nota(string $id)
     {
         $jenisLayananMapping = [
             1 => 'Reguler',
@@ -225,15 +272,12 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
     // Hitung kembalian
     $kembalian = $validated['bayar'] - $order->total;
 
-    // Update status pembayaran menjadi 'Lunas'
-    $order->update([
-        'status_pembayaran' => 'Lunas',
-    ]);
+    
 
     // Simpan 'bayar' dalam session
     $request->session()->flash('bayar', $validated['bayar']);
     
-    return redirect()->route('order.show', ['order' => $order->id])->with('success', 'Pembayaran berhasil dilakukan.');
+    return redirect()->route('order.nota', ['order' => $order->id])->with('success', 'Pembayaran berhasil dilakukan.');
 }
 
     
@@ -265,12 +309,10 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
 {
     $request->validate([
         'status_pengerjaan' => 'required|string',
-        'status_pembayaran' => 'required|string',
     ]);
 
     $transaksi = Transaksi::findOrFail($id);
     $transaksi->status_pengerjaan = $request->status_pengerjaan;
-    $transaksi->status_pembayaran = $request->status_pembayaran;
     $transaksi->save();
 
     // Log perubahan status
@@ -284,7 +326,6 @@ return redirect()->route('order.pay', $transaksi->id)->with('success', 'Transaks
         // Validasi hanya untuk status_pengerjaan dan status_pembayaran
         $validated = $request->validate([
             'status_pengerjaan' => 'required|in:masuk,proses,selesai',
-            'status_pembayaran' => 'required|in:belum_dibayar,sudah_dibayar',
         ]);
 
         // Cari transaksi berdasarkan ID

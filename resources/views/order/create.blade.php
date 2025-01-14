@@ -36,15 +36,7 @@
 
                         
 
-                        <!-- Status Pembayaran -->
-                        <div class="form-group">
-                            <label for="status_pembayaran">Status Pembayaran</label>
-                            <select class="form-control" id="status_pembayaran" name="status_pembayaran" required>
-                                <option selected>Pilih Status Pembayaran</option>
-                                <option value="Belum Dibayar">Belum Dibayar</option>
-                                <option value="Lunas">Lunas</option>
-                            </select>
-                        </div>
+                        
 
                         <!-- Status Pengerjaan -->
                         <div class="form-group">

@@ -19,7 +19,7 @@
                     <label for="kembalian">Kembalian</label>
                     <input type="text" class="form-control" id="kembalian" placeholder="Kembalian" readonly>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Proses Pembayaran</button>
+                <button type="submit" class="btn btn-primary mt-3">simpan</button>
             </form>
         </div>
     </div>

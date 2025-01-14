@@ -62,7 +62,7 @@ Route::get('/layanan', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
 
         Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
         Route::resource('order',OrderController::class);
@@ -75,8 +75,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('orderMasuk');
     });
   
-    Route::get('/nota/{id}', [OrderController::class, 'nota'])->name('order.nota');
-
+    Route::get('/order/nota/{order}', [OrderController::class, 'nota'])->name('order.nota');
+    Route::get('/metode', function () {
+        return view('metode');
+    }); 
     Route::get('/durasi', function () {
         return view('durasi');
     });
