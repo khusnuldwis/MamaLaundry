@@ -10,13 +10,13 @@ Order
         <div class="card-header">
             <div class="card-head-row">
                 <div class="card-title col-md-4">Transaksi</div>
-                @if($status == 'diambil' )
+                @if($status == 'selesai' )
                 <div class="col-md-8 text-end">
                     <strong>Total Pemasukan: </strong>@if(isset($totalHarga))
-    <p>Total Harga: {{ $totalHarga }}</p>
-@else
-    <p>Total Harga: 0</p>
-@endif
+                    <p>Total Harga: {{ $totalHarga }}</p>
+                    @else
+                    <p>Total Harga: 0</p>
+                    @endif
 
                 </div>
                 @endif <div class="card-tools">
@@ -46,7 +46,7 @@ Order
                                 <th>Nama Pelanggan</th>
                                 <th>No Hp</th>
                                 <th>Total Harga</th>
-                                <th>Status Pengerjaan</th>
+                                <th>Status Layanan</th>
                                 <th>Action</th>
 
                             </tr>
@@ -60,25 +60,25 @@ Order
                                 <td>{{ $item->nama_pelanggan}}</td>
                                 <td>{{ $item->no_hp ?? null }}</td>
                                 <td> Rp. {{ number_format($item->total_harga) ?? null }}</td>
-                                <td>{{ $item->status_pengerjaan ?? null }}</td>
+                                <td>{{ $item->status_layanan ?? null }}</td>
                                 <td>
-                                <div class="d-flex justify-content-start gap-2">
-                                    <a href="{{ route('order.show', [$item->id]) }}" class="btn btn-label-warning btn-round btn-sm" >
-                                    <span class="btn-label"><i class="fa fa-eye"></i></span> Detail
-                                    
-                                    </a>
-                                    <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-label-success btn-round btn-sm">
-                                    <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-                                    </a>
-                                    <a href="#" onclick="confirmDelete(event, {{ $item->id }})"
-                                    class="btn btn-label-danger btn-round btn-sm" >
-                                    <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-                                    </a>
-                                </div>
+                                    <div class="d-flex justify-content-start gap-2">
+                                        <a href="{{ route('order.show', [$item->id]) }}" class="btn btn-label-warning btn-round btn-sm">
+                                            <span class="btn-label"><i class="fa fa-eye"></i></span> Detail
+
+                                        </a>
+                                        <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-label-success btn-round btn-sm">
+                                            <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
+                                        </a>
+                                        <a href="#" onclick="confirmDelete(event, {{ $item->id }})"
+                                            class="btn btn-label-danger btn-round btn-sm">
+                                            <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table>
                 </div>

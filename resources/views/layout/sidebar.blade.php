@@ -48,7 +48,7 @@
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
-                                <p>Pesanan Masuk</p>
+                                <p>Transaksi</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="base">
@@ -58,15 +58,10 @@
                                             <span class="sub-item">Order Masuk</span>
                                         </a>
                                     </li>
-                                    <li>
-                                    
-                                        <a href="{{ url('/order?status=proses') }}" class="nav-link {{ $status == 'proses' ? 'active' : '' }}">
-                                            <span class="sub-item">Order Proses</span>
-                                        </a>
-                                    </li>
+                                
                                     <li>
                                         <a href="{{ url('/order?status=selesai') }}" class="nav-link {{ $status == 'selesai' ? 'active' : '' }}">
-                                            <span class="sub-item">Order Selesai</span>
+                                            <span class="sub-item">Riwayat Transaksi</span>
                                         </a>
                                     </li>
                                     {{-- <li>
@@ -121,13 +116,13 @@
                             <div class="collapse" id="pemasukan">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'hari']) }}">
-                                            <span class="sub-item">Order Per Hari</span>
+                                        <a href="{{ route('order.index', ['status' => 'selesai', 'range' => 'hari']) }}">
+                                            <span class="sub-item">Transaksi Per Hari</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('order.index', ['status' => 'diambil', 'range' => 'minggu']) }}">
-                                            <span class="sub-item">Order Per Minggu</span>
+                                        <a href="{{ route('order.index', ['status' => 'selesai', 'range' => 'minggu']) }}">
+                                            <span class="sub-item">Transaksi Per Minggu</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -136,7 +131,7 @@
                         
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#layanan">
-                                <i class="fas fa-th-list"></i>
+                                <i class="fas fa-credit-card"></i>
                                 <p>Layanan</p>
                                 <span class="caret"></span>
                             </a>
@@ -177,6 +172,21 @@
                                     <li>
                                         <a href="{{ url('/order?status=belum_diambil') }}" class="nav-link {{ $status == 'selesai' ? 'active' : '' }}">
                                             <span class="sub-item">Pesanan Belum Diambil</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#user">
+                            <i class="fas fa-users"></i>
+                            <p>Karyawan</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="user">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="/user" class="nav-link">User
                                         </a>
                                     </li>
                                 </ul>

@@ -39,17 +39,7 @@
                         
 
                         <!-- Status Pengerjaan -->
-                        <div class="form-group">
-                            <label for="status_pengerjaan">Status Pengerjaan</label>
-                            <select class="form-control" id="status_pengerjaan" name="status_pengerjaan" required>
-                                <option selected>Pilih Status Pengerjaan</option>
-                                <option value="masuk">Masuk</option>
-                                <option value="proses">Proses</option>
-                                <option value="selesai">Selesai</option>
-                                <option value="diambil">Diambil</option>
-                                <option value="belum_diambil"> Belum Diambil</option>
-                            </select>
-                        </div>
+                        
                     </div>
 
                     <!-- Order Detail Section -->

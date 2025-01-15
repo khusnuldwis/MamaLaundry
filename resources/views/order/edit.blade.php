@@ -21,14 +21,13 @@
  
                         <!-- Status Pengerjaan -->
                         <div class="form-group">
-                            <label for="status_pengerjaan">Status Pengerjaan</label>
-                            <select class="form-control" id="status_pengerjaan" name="status_pengerjaan" required>
+                            <label for="status_layanan">Status Layanan</label>
+                            <select class="form-control" id="status_layanan" name="status_layanan" required>
                             <option selected >Pilih Status Pengerjaan</option>
-                                <option value="masuk" {{ ($data->status_pengerjaan == 'masuk') ? 'selected' : '' }}>Masuk</option>
-                                <option value="proses" {{ ($data->status_pengerjaan == 'proses') ? 'selected' : '' }}>Proses</option>
-                                <option value="selesai" {{ ($data->status_pengerjaan == 'selesai') ? 'selected' : '' }} >Selesai</option>
-                                <option value="diambil" {{ ($data->status_pengerjaan == 'diambil') ? 'selected' : '' }} >diambil</option>
-                                <option value="belum_diambil"{{ ($data->status_pengerjaan == 'belum_diambil') ? 'selected' : '' }}> Belum Diambil</option>
+                                <option value="masuk" {{ ($data->status_layanan == 'masuk') ? 'selected' : '' }}>Masuk</option>
+                                <option value="diambil" {{ ($data->status_layanan == 'diambil') ? 'selected' : '' }}>diambil</option>
+                                <option value="belum_diambil" {{ ($data->status_layanan == 'belum_diambil') ? 'selected' : '' }} >belum_diambil</option>
+                                <option value="selesai" {{ ($data->status_layanan == 'selesai') ? 'selected' : '' }} >selesai</option>
                             </select>
                         </div>
                         <div class="text-end mt-3">

@@ -21,11 +21,8 @@ class User extends Authenticatable
      const ROLE_ADMIN = '1';
     const ROLE_KARYAWAN1 = '2';
     const ROLE_KARYAWAN2 = '3';
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id'
+    protected $guarded = [
+        
     ];
 
     /**
@@ -51,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+    public function transaksi()
+{
+    return $this->hasMany(Transaksi::class);
+}
+
 }

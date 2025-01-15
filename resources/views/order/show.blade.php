@@ -77,10 +77,11 @@ Nota Transaksi
 
 <div class="text-end mt-3">
 
-                    <a href="{{ route('order.index') }}" class='btn btn-danger float-left ' style="background-color: #eb3a3a; border-color: #eb3a3a;">Kembali</a>
-                
-                    <a href="{{ route('order.pay', $order->id) }}" class='btn btn-danger float-left ' style="background-color: #eb3a3a; border-color: #eb3a3a;">Bayar</a>
-                    </div>
+<div class="d-flex justify-content-end">
+    <a href="{{ route('order.index') }}" class="btn btn-warning me-2">Kembali</a>
+    <a href="{{ route('order.pay', $order->id) }}" class="btn btn-success">Bayar</a>
+</div>
+
 
 @endsection
 

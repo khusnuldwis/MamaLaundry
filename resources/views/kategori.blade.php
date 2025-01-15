@@ -97,10 +97,10 @@
                                    data-bs-jenis="Ubah" data-bs-id="${row.id}">
                                     <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
                                 </a>
-                                <a href="#" class="btn btn-label-danger btn-round btn-sm" 
-                                   onclick="hapusData(${row.id})">
-                                    <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-                                </a>`;
+                               <a href="#" class="btn btn-label-danger btn-round btn-sm" 
+                                    onclick="hapusData(${row.id})">
+                                        <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
+                                    </a>`;
                         }
                     }
                 ]
@@ -186,43 +186,37 @@
 
             // Fungsi hapus data
             function hapusData(id) {
-                Swal.fire({
-                    title: "Yakin ingin menghapus?",
-                    text: "Data yang dihapus tidak dapat dikembalikan!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya, hapus!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: `http://127.0.0.1:8000/api/categorys/${id}`,
-                            method: 'DELETE',
-                            success: function (data) {
-                                Swal.fire({
-                                    title: "Dihapus!",
-                                    text: "Data berhasil dihapus.",
-                                    icon: "success",
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didClose: () => {
-                                        location.reload();
-                                    }
-                                });
-                            },
-                            error: function (xhr, status, error) {
-                                console.error('Error deleting data:', error);
-                                Swal.fire({
-                                    title: "Gagal!",
-                                    text: "Terjadi kesalahan saat menghapus data.",
-                                    icon: "error"
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+            Swal.fire({
+                title: "Yakin Dihapus",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'http://127.0.0.1:8000/api/categorys/' + id,
+                        method: 'DELETE',
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success",
+                                timer: 2000, 
+                                timerProgressBar: true, 
+                                didClose: () => {
+                                    location.reload(); // Reload the page after success
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        
+}
+
         });
     </script>
 @endsection

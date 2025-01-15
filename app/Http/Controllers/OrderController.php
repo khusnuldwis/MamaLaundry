@@ -20,109 +20,58 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $order = Transaksi::orderBy('id', 'desc')->get();
-    //     $orderdetail = Transaksi_Detail::orderBy('id', 'desc')->get();
-
-
-    //     return view('order.index', compact('order', 'orderdetail'));
-    // }
-    // public function index()
-    // {
-       
-    //     // Ambil input dari request
-    //     $status = $request->input('status', 'semua'); // Default 'semua'
-    //     $range = $request->input('range', 'semua');   // Default 'semua'
-    
-    //     // Mulai query
-    //     $ordersQuery = Transaksi::query();
-    
-    //     // Filter berdasarkan status pengerjaan
-    //     if ($status !== 'semua') {
-    //         $ordersQuery->where('status_pengerjaan', $status);
-    //     }
-    
-    //     // Filter berdasarkan range waktu (hanya jika status = 'semua')
-    //     if ($status === 'semua' && $range !== 'semua') {
-    //         switch ($range) {
-    //             case 'hari':
-    //                 $ordersQuery->whereDate('created_at', Carbon::today());
-    //                 break;
-    //             case 'minggu':
-    //                 $ordersQuery->whereBetween('created_at', [
-    //                     Carbon::now()->startOfWeek(),
-    //                     Carbon::now()->endOfWeek()
-    //                 ]);
-    //                 break;
-    //             case 'bulan':
-    //                 $ordersQuery->whereMonth('created_at', Carbon::now()->month)
-    //                             ->whereYear('created_at', Carbon::now()->year);
-    //                 break;
-    //         }
-    //     }
-    
-    //     // Ambil data berdasarkan query
-    //     $order = $ordersQuery->orderBy('id', 'asc')->get();
-    
-    //     // Hitung total harga
-    //     $totalHarga = $order->sum('total_harga');
-    
-    //     // Kirim data ke view
-    //     return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
-    // }
-    
-    
+    // 
     
    
     
     public function index(Request $request)
-    {
-        $user = auth()->user();
+   // Ambil pengguna yang sedang login
+   {
+   $user = auth()->user();
         
-        // Mulai query berdasarkan role pengguna
-        $transaksiQuery = Transaksi::query();
-    
-        if ($user->role !== 'admin') {
-            // Jika bukan admin, hanya tampilkan data milik pengguna
-            $transaksiQuery->where('user_id', $user->id);
-        }
-    
-        // Filter tambahan berdasarkan status
-        $status = $request->input('status', 'semua');
-        if ($status !== 'semua') {
-            $transaksiQuery->where('status_pengerjaan', $status);
-        }
-    
-        // Filter tambahan berdasarkan range waktu
-        $range = $request->input('range', 'semua');
-        if ($range !== 'semua') {
-            switch ($range) {
-                case 'hari':
-                    $transaksiQuery->whereDate('created_at', Carbon::today());
-                    break;
-                case 'minggu':
-                    $transaksiQuery->whereBetween('created_at', [
-                        Carbon::now()->startOfWeek(),
-                        Carbon::now()->endOfWeek()
-                    ]);
-                    break;
-                case 'bulan':
-                    $transaksiQuery->whereMonth('created_at', Carbon::now()->month)
-                                   ->whereYear('created_at', Carbon::now()->year);
-                    break;
-            }
-        }
-    
-        // Ambil data berdasarkan query
-        $order = $transaksiQuery->orderBy('created_at', 'desc')->get();
-    
-        // Hitung total harga
-        $totalHarga = $order->sum('total_harga');
-    
-        // Kirim data ke view
-        return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
-    }
+   // Mulai query untuk mengambil data transaksi
+   $transaksiQuery = Transaksi::query();
+
+   // Jika pengguna bukan admin, filter data transaksi berdasarkan user_id
+   if ($user->role !== 'admin') {
+       $transaksiQuery->where('user_id', $user->id);
+   }
+
+   // Filter data transaksi berdasarkan status jika ada
+   $status = $request->input('status', 'semua');
+   if ($status !== 'semua') {
+       $transaksiQuery->where('status_layanan', $status);
+   }
+
+   // Filter data transaksi berdasarkan range waktu jika ada
+   $range = $request->input('range', 'semua');
+   if ($range !== 'semua') {
+       switch ($range) {
+           case 'hari':
+               $transaksiQuery->whereDate('created_at', Carbon::today());
+               break;
+           case 'minggu':
+               $transaksiQuery->whereBetween('created_at', [
+                   Carbon::now()->startOfWeek(),
+                   Carbon::now()->endOfWeek()
+               ]);
+               break;
+           case 'bulan':
+               $transaksiQuery->whereMonth('created_at', Carbon::now()->month)
+                              ->whereYear('created_at', Carbon::now()->year);
+               break;
+       }
+   }
+
+   // Ambil data transaksi berdasarkan query yang telah difilter
+   $order = $transaksiQuery->orderBy('created_at', 'desc')->get();
+
+   // Hitung total harga semua transaksi yang diambil
+   $totalHarga = $order->sum('total_harga');
+
+   // Kirim data ke view
+   return view('order.index', compact('order', 'totalHarga', 'status', 'range'));
+}
     
     
     
@@ -159,7 +108,7 @@ class OrderController extends Controller
          $transaksi = Transaksi::create([
              'kode_transaksi' => 'GS' . substr(uniqid(), -5),
              'total_harga' => 0,
-             'status_pengerjaan' => $data['status_pengerjaan'] ?? 'Masuk',
+             'status_layanan' => $data['status_layanan'] ?? 'Masuk',
              'nama_pelanggan' => $data['nama_pelanggan'] ?? null,
              'no_hp' => $data['no_hp'] ?? null,
              'user_id' => $user_id,
@@ -271,15 +220,14 @@ return redirect()->route('order.index')->with('success', 'Transaksi berhasil dib
 
     // Hitung kembalian
     $kembalian = $validated['bayar'] - $order->total;
-
-    
+    $order->status_layanan = 'selesai';
+    $order->save();
 
     // Simpan 'bayar' dalam session
     $request->session()->flash('bayar', $validated['bayar']);
     
     return redirect()->route('order.nota', ['order' => $order->id])->with('success', 'Pembayaran berhasil dilakukan.');
 }
-
     
     /**
      * Show the form for editing the specified resource.
@@ -296,7 +244,7 @@ return redirect()->route('order.index')->with('success', 'Transaksi berhasil dib
             ];
             $layanan = Layanan::orderBy('nama_layanan', 'asc')->get();
             $metode_layanan = Metode_Layanan::orderBy('nama_metode_layanan', 'asc')->get();
-            $status = $data->status_pengerjaan; // Ambil status pengerjaan transaksi yang sedang diedit
+            $status = $data->status_layanan; // Ambil status pengerjaan transaksi yang sedang diedit
 
         $datas = $data->orderdetail;
         return view('order.edit', compact('data', 'datas','jenisLayananMapping','layanan','metode_layanan','status'));
@@ -308,11 +256,11 @@ return redirect()->route('order.index')->with('success', 'Transaksi berhasil dib
     public function updateStatus(Request $request, $id)
 {
     $request->validate([
-        'status_pengerjaan' => 'required|string',
+        'status_layanan' => 'required|string',
     ]);
 
     $transaksi = Transaksi::findOrFail($id);
-    $transaksi->status_pengerjaan = $request->status_pengerjaan;
+    $transaksi->status_layanan = $request->status_layanan;
     $transaksi->save();
 
     // Log perubahan status
@@ -323,9 +271,9 @@ return redirect()->route('order.index')->with('success', 'Transaksi berhasil dib
     public function update(Request $request, $id)
 {
     try {
-        // Validasi hanya untuk status_pengerjaan dan status_pembayaran
+        // Validasi hanya untuk status_layanan dan status_pembayaran
         $validated = $request->validate([
-            'status_pengerjaan' => 'required|in:masuk,proses,selesai',
+            'status_layanan' => 'required|in:masuk,diambil,belum_diambil,selesai',
         ]);
 
         // Cari transaksi berdasarkan ID

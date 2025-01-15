@@ -86,7 +86,7 @@ Nota Transaksi
 
 <div class="nota" id="nota">
     <h4 class="text-center" style="margin: 0; padding: 0;">Mama LAUNDRY</h4>
-    <p class="text-center" style="margin: 5px 0;">Talun</p>
+    <p class="text-center" style="margin: 5px 0;">{{ $order->user->cabang }}</p>
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
 
     <div style="display: flex; justify-content: space-between; font-size: 14px;">

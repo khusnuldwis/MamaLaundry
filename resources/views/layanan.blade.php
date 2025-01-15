@@ -130,11 +130,11 @@
                 url: 'http://127.0.0.1:8000/api/categorys',
                 method: 'GET',
                 success: function(data) {
-                    let timSelect = $('#category_id');
-                    timSelect.empty(); // Remove existing options
-                    timSelect.append('<option value="">Pilih Categori</option>'); // Add default option
+                    let categorySelect = $('#category_id');
+                    categorySelect.empty(); // Remove existing options
+                    categorySelect.append('<option value="">Pilih Categori</option>'); // Add default option
                     $.each(data, function(key, category) {
-                        timSelect.append('<option value="' + category.id + '">' + category.jenis_kategori + '</option>');
+                        categorySelect.append('<option value="' + category.id + '">' + category.jenis_kategori + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {

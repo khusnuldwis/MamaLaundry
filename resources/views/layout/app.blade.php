@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>MamaLaundry</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{asset('assets/img/kaiadmin/favicon.ico')}}" type="image/x-icon" />
     <!-- Bootstrap CSS -->
@@ -55,7 +56,6 @@
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                         <div>
-                            <h3 class="fw-bold">Mama Laundry</h3>
                             <!-- <h6 class="op-7 mb-2">MamaLaundry</h6> -->
                         </div>
                         <!-- {{-- <div class="ms-md-auto py-2 py-md-0">

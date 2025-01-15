@@ -37,52 +37,46 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth', 'verified','must-admin'])->group(function () {
-    
-    
+Route::middleware(['auth', 'verified', 'must-admin'])->group(function () {
+
+
     // Register only the index route
     Route::resource('daftarLayanan', LayananController::class)->only(['index']);
     Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
-    
+    Route::get('/transactions/by-branch', [HomeController::class, 'getByBranch'])->name('get.transactions.by.branch');
+
     Route::post('/transaksi/update-status/{id}', [OrderController::class, 'updateStatus']);
 
-
-
-
-
-
-
-Route::get('/kategori', function () {
-    return view('kategori');
-});
-Route::get('/layanan', function () {
-    return view('layanan');
-});
-
+    Route::get('/kategori', function () {
+        return view('kategori');
+    });
+    Route::get('/user', function () {
+        return view('user');
+    });
+    Route::get('/layanan', function () {
+        return view('layanan');
+    });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'dashboard'])->name('home');
+    Route::get('/order/getByRole', [HomeController::class, 'getByRole'])->name('order.getByRole');
 
-        Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
-        Route::resource('order',OrderController::class);
-        Route::post('/transaksi/update-status/{id}', [OrderController::class, 'updateStatus']);
-    
-    
-    
-   
+    Route::get('/order-masuk/belum-diambil', [OrderMasukController::class, 'belumDiambil'])->name('orderMasuk.belumDiambil');
+    Route::resource('order', OrderController::class);
+    Route::post('/transaksi/update-status/{id}', [OrderController::class, 'updateStatus']);
+
     Route::get('/orders', function () {
         return view('orderMasuk');
     });
-  
+
     Route::get('/order/nota/{order}', [OrderController::class, 'nota'])->name('order.nota');
     Route::get('/metode', function () {
         return view('metode');
-    }); 
+    });
     Route::get('/durasi', function () {
         return view('durasi');
     });
     Route::get('order/{id}/pay', [OrderController::class, 'pay'])->name('order.pay');
-Route::post('order/{id}/pay', [OrderController::class, 'processPayment'])->name('order.processPayment');
-
-    });
+    Route::post('order/{id}/pay', [OrderController::class, 'processPayment'])->name('order.processPayment');
+});
