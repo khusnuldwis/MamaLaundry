@@ -33,49 +33,30 @@ class HomeController extends Controller
     
     public function dashboard(Request $request)
     {
-        // Get the authenticated user
         $user = auth()->user();
-        
-        // Mulai query untuk mengambil data transaksi
+    
+        // Start transaction query
         $transaksiQuery = Transaksi::query();
-     
-        // Jika pengguna bukan admin, filter data transaksi berdasarkan user_id
-        if ($user->role !== 'admin') {
-            $transaksiQuery->where('user_id', $user->id);
-        }
-     
-        // Filter data transaksi berdasarkan status jika ada
+    
+        
         $cabang = $request->input('cabang', 'semua');
         if ($cabang !== 'semua') {
-            $transaksiQuery->where('cabang', $cabang);
+            $transaksiQuery->whereHas('user', fn($query) => $query->where('cabang', $cabang));
         }
-     
     
-        // Data transaksi hari ini
-        $totalTransaksiHariIni = Transaksi::whereDate('created_at', Carbon::today())->count();
-        $totalPendapatanHariIni = Transaksi::whereDate('created_at', Carbon::today())->sum('total_harga');
-    
-        // Data layanan
-        $totalLayanan = Layanan::count();
-    
-        // Laundry yang belum diambil
-        $laundryBelumDiambil = Transaksi::where('status_layanan', 'belum_diambil')->count();
-        $transaksiQuery = Transaksi::query();
-
         $transaksi = $transaksiQuery->with('user')->orderBy('created_at', 'desc')->get();
-
-
-        // Get transactions
-        $transaksi = $transaksiQuery->orderBy('created_at', 'desc')->get();
-        // Return the view with the necessary data
-        return view('home', compact(
-            'user','transaksi',
-            'totalTransaksiHariIni',
-            'totalPendapatanHariIni',
-            'totalLayanan',
-            'laundryBelumDiambil','cabang'
-        ));
+    
+        return view('home', [
+            'user' => $user,
+            'transaksi' => $transaksi,
+            'totalTransaksiHariIni' => Transaksi::whereDate('created_at', Carbon::today())->count(),
+            'totalPendapatanHariIni' => Transaksi::whereDate('created_at', Carbon::today())->sum('total_harga'),
+            'totalLayanan' => Layanan::count(),
+            'laundryBelumDiambil' => Transaksi::where('status_layanan', 'belum_diambil')->count(),
+            'cabang' => $cabang,
+        ]);
     }
+    
     public function getByRole(Request $request)
     {
         try {

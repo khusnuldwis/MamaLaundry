@@ -101,7 +101,14 @@ Pilih Cabang Laundry
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <a href="{{ url('/home?cabang=wlingi') }}">Lihat Cabang Wlingi</a>
+                    <a href="{{ url('/home?cabang=Wlingi') }}">Lihat Cabang Wlingi</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <a href="{{ url('/home?cabang=Talun') }}">Lihat Cabang Talun</a>
                 </div>
             </div>
         </div>
