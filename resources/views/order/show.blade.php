@@ -79,7 +79,7 @@ Nota Transaksi
 
 <div class="d-flex justify-content-end">
     <a href="{{ route('order.index') }}" class="btn btn-warning me-2">Kembali</a>
-    <a href="{{ route('order.pay', $order->id) }}" class="btn btn-success">Bayar</a>
+    <a href="{{ route('order.nota', $order->id) }}" class="btn btn-success">Bayar</a>
 </div>
 
 

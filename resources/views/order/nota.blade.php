@@ -139,14 +139,7 @@ Nota Transaksi
             <td><strong>Total</strong></td>
             <td class="text-end"><strong>Rp. {{ number_format($data->total_harga) }}</strong></td>
         </tr>
-        <tr>
-            <td>Bayar</td>
-            <td class="text-end">Rp. {{ number_format($bayar) }}</td>
-        </tr>
-        <tr>
-            <td>Kembali</td>
-            <td class="text-end">Rp. {{ number_format($bayar - $order->total_harga) }}</td>
-        </tr>
+       
     </table>
 
     <hr style="border-top: 1px solid #ccc; margin: 10px 0;">

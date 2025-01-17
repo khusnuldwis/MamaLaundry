@@ -14,7 +14,7 @@ Pilih Cabang Laundry
                 </div>
                
                 <div class="row mb-">
-                    <div class="col-sm-6 col-md-6">
+                    <div class="col-sm-3 col-md-3">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -33,7 +33,7 @@ Pilih Cabang Laundry
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6">
+                    <div class="col-sm-3 col-md-3">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -52,6 +52,44 @@ Pilih Cabang Laundry
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                                            <i class="fas fa-th-list"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Layanan</p>
+                                            <h4 class="card-title">Rp {{ number_format($totalPendapatanHariIni, 0, ',', '.') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                            <i class="fas fa-pen-square"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Laundry Yang belum diambil</p>
+                                            <h4 class="card-title">Rp {{ number_format($totalPendapatanHariIni, 0, ',', '.') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,13 +98,7 @@ Pilih Cabang Laundry
                 <div class="card-header">
                     <div class="card-head-row">
                         <div class="card-title col-md-4">Transaksi</div>
-                        <div class="col-md-8 text-end">
-                            <div class="card-tools">
-                                <div class="ms-md-auto py-2 py-md-0 float-end">
-                                    <a href="{{ route('order.create') }}" class="btn btn-primary box-title m-b-0">Buat Transaksi</a>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -84,30 +116,17 @@ Pilih Cabang Laundry
                                             <th>Nama Pelanggan</th>
                                             <th>No Hp</th>
                                             <th>Total Harga</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($transaksi as $item)
                                         <tr>
-                                            <td>{{ $item->created_at->format('Y-m-d H:i:s') }}</td>
+                                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                             <td>{{ $item->kode_transaksi ?? null }}</td>
                                             <td>{{ $item->nama_pelanggan}}</td>
                                             <td>{{ $item->no_hp ?? null }}</td>
                                             <td>Rp. {{ number_format($item->total_harga) ?? null }}</td>
-                                            <td>
-                                                <div class="d-flex justify-content-start gap-2">
-                                                    <a href="{{ route('order.show', [$item->id]) }}" class="btn btn-label-warning btn-round btn-sm">
-                                                        <span class="btn-label"><i class="fa fa-eye"></i></span> Detail
-                                                    </a>
-                                                    <a href="{{ route('order.edit', [$item->id]) }}" class="btn btn-label-success btn-round btn-sm">
-                                                        <span class="btn-label"><i class="fa fa-pen"></i></span> Edit
-                                                    </a>
-                                                    <a href="#" onclick="confirmDelete(event, {{ $item->id }})" class="btn btn-label-danger btn-round btn-sm">
-                                                        <span class="btn-label"><i class="fa fa-trash"></i></span> Hapus
-                                                    </a>
-                                                </div>
-                                            </td>
+                                           
                                         </tr>
                                         @endforeach
                                     </tbody>
