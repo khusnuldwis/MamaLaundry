@@ -80,6 +80,9 @@ class KategoryLayananController extends Controller
     public function destroy(string $id)
     {
         $data = KategoriLayanan::where('id', $id)->delete();
-        return response()->json(['data' => $data], 200);
+        return response()->json(
+            ['data' => $data],
+            200
+        );
     }
 }

@@ -105,7 +105,7 @@
                     }
                 ]
             });
-
+        });
             const targetModal = document.getElementById('exampleModal');
             let setIdKategori = null;
 
@@ -186,15 +186,15 @@
 
             // Fungsi hapus data
             function hapusData(id) {
-            Swal.fire({
-                title: "Yakin Dihapus",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
+                Swal.fire({
+                    title: "Yakin Dihapus",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
                         url: 'http://127.0.0.1:8000/api/categorys/' + id,
@@ -215,8 +215,9 @@
                 }
             });
         
+        
 }
 
-        });
+    
     </script>
 @endsection
